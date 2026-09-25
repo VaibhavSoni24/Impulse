@@ -13,6 +13,16 @@ pip_version = pip 26.2.1
 swegemma = 0.2.7 (competition evaluation harness, remote Kaggle runtime)
 adk-submission = 0.2.11 (declarative agent compiler, remote Kaggle runtime)
 adk-eval-core = 0.1.0 (evaluation task/result models, remote Kaggle runtime)
+# Official compiler: adk-submission compile <submission_dir> (NOT EXECUTED LOCALLY; remote Kaggle image only)
+# Local reproduction tool: python scripts/validate_submission.py <submission_dir> (VERIFIED executed on Windows)
+
+[Inference Serving Engine]
+# vLLM is managed by adk-submission on 4x NVIDIA L4 GPUs in the remote scoring environment.
+# Note: Exact package wheel version and runtime version are NOT provided in competition assets.
+# (0.19.1 and 0.18.0 were unverified placeholder inferences and are superseded by this audit).
+vllm_package_wheel_version = NOT PROVIDED IN ASSETS (unverified)
+vllm_runtime_serving_version = UNSPECIFIED IN ASSETS (unverified)
+vllm_serving_config = VERIFIED (tensor_parallel_size=4, gpu_memory_utilization=0.90, max_model_len=32768, 4x L4)
 
 [Local Package Installation State]
 # In strict accordance with Stage 3 rules, no unverified packages have been installed from PyPI.

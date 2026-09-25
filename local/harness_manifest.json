@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-09-25T18:13:00+05:30",
-  "git_commit": "892225a76f897a94b35cfa9c38e4cb782890ac5f",
+  "generated_at": "2026-09-25T18:27:00+05:30",
+  "git_commit": "6ac10627d7f722a4d3345e691230cf8cfd992f96",
   "python_version": {
     "local_venv": "3.13.15",
     "competition_sandbox": "3.13",
@@ -25,9 +25,23 @@
       "notes": "Evaluation data models, 3-tier string replacement engine, token/cost tracker, and ATIF v1.7 logger."
     },
     "vllm": {
-      "version": "0.18.0",
-      "status": "VERIFIED (Remote / Serving)",
-      "notes": "GPU inference serving engine on 4x NVIDIA L4 GPUs in scoring container. Not installed on local CPU machine."
+      "package_wheel_version": null,
+      "runtime_serving_version": null,
+      "status": "UNSPECIFIED IN ASSETS / UNVERIFIED",
+      "relationship": "distinct layers / unresolved",
+      "serving_config_verified": true,
+      "serving_parameters": {
+        "tensor_parallel_size": 4,
+        "gpu_memory_utilization": 0.90,
+        "max_model_len": 32768,
+        "enable_lora": true,
+        "max_loras": 8,
+        "max_lora_rank": 128,
+        "tool_call_parser": "gemma4",
+        "reasoning_parser": "gemma4",
+        "endpoint": "http://127.0.0.1:8000/v1"
+      },
+      "notes": "vLLM serves gemma-4-31b-it-qat-w4a16-ct on 4x NVIDIA L4 GPUs in scoring container. Serving configuration is verified from HARNESS_README.md, but exact wheel and runtime version numbers are not provided in competition assets (previous 0.19.1 and 0.18.0 entries were unverified inferences)."
     },
     "wheelhouse": {
       "total_wheels": 124,
@@ -54,13 +68,15 @@
     },
     "competition_harness_validator": {
       "command": "adk-submission compile <submission_dir>",
-      "status": "VERIFIED (Specification)",
-      "notes": "Official competition compiler invoked by runner inside scoring container."
+      "status": "VERIFIED (Specification) / NOT EXECUTED LOCALLY",
+      "notes": "Official competition compiler invoked by runner inside scoring container. Not installed or executed on local Windows workstation."
     }
   },
   "compiler_command": {
     "official_entry_point": "adk-submission compile <submission_dir>",
+    "official_execution_status": "NOT EXECUTED LOCALLY (Proprietary to Kaggle scoring environment)",
     "local_reproduction_entry_point": "python scripts/validate_submission.py <submission_dir>",
+    "local_execution_status": "VERIFIED (Executed natively on Windows with Python 3.13.15)",
     "verified": true
   },
   "submission_schema_status": {

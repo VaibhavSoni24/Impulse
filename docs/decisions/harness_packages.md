@@ -4,20 +4,23 @@ This document records the exact package inventory, wheel metadata, platform comp
 
 ---
 
-## 1. Core Host Evaluation Libraries
+## 1. Core Host Evaluation & Serving Stack
 
-These three cooperating libraries form the proprietary host evaluation and submission compilation stack defined in `HARNESS_README.md`:
+The host evaluation and model-serving environment operates outside the sandboxed containers. Based on `HARNESS_README.md`:
 
-| Package | Exact File / Ref | Version | Purpose | Source / Runtime | Platform Target |
+| Package / Component | Exact File / Ref | Version | Purpose | Source / Runtime | Platform Target |
 |---|---|---|---|---|---|
-| **`swegemma`** | `swegemma-0.2.7-py3-none-any.whl` | `0.2.7` | SWE-bench benchmark harness, two-container lifecycle (`Container A` / `Container B`), tool binding (`SwegemmaContext`), patch extraction, and `pytest` scoring. | Competition Host Environment (`HARNESS_README.md`) | Linux (Host controller) / Pure Python |
-| **`adk-submission`** | `adk-submission-0.2.11-py3-none-any.whl` | `0.2.11` | Sandboxed declarative YAML agent compiler (`compile_submission`), schema validation, `!include` resolver, and inference server manager (`VllmServer`). | Competition Host Environment (`HARNESS_README.md`) | Linux (Host controller) / Pure Python |
-| **`adk-eval-core`** | `adk-eval-core-0.1.0-py3-none-any.whl` | `0.1.0` | Core benchmark task/result data models (`BenchmarkTask`, `EvaluationResult`), 3-tier resilient string replacement (`apply_replacement`), token budgets, and ATIF v1.7 tracing. | Competition Host Environment (`HARNESS_README.md`) | Linux (Host controller) / Pure Python |
-| **`google-adk`** | Upstream ADK wheel | `~0.1.x` | Base agent framework (`BaseAgent`, `LlmAgent`, `SequentialAgent`, `ParallelAgent`, `LoopAgent`, `App`). | Host evaluation runtime | Pure Python (`py3-none-any`) |
-| **`vllm`** | `vllm-0.19.1+...whl` | `0.19.1` | Local inference engine serving `gemma-4-31b-it-qat-w4a16-ct` on 4x NVIDIA L4 GPUs (`tensor_parallel_size=4`). | Dedicated 4x L4 host environment | Linux x86_64 (`manylinux`) + CUDA 12 |
+| **`swegemma`** | Pre-installed host package | `0.2.7` (**VERIFIED**) | SWE-bench benchmark harness, two-container lifecycle (`Container A` / `Container B`), tool binding (`SwegemmaContext`), patch extraction, and `pytest` scoring. | Competition Host Image (`HARNESS_README.md`) | Linux (Host controller) / Pure Python |
+| **`adk-submission`** | Pre-installed host package | `0.2.11` (**VERIFIED**) | Sandboxed declarative YAML agent compiler (`compile_submission`), schema validation, `!include` resolver, and inference server manager (`VllmServer`). Official compiler command: `adk-submission compile <submission_dir>`. | Competition Host Image (`HARNESS_README.md`) | Linux (Host controller) / Pure Python |
+| **`adk-eval-core`** | Pre-installed host package | `0.1.0` (**VERIFIED**) | Core benchmark task/result data models (`BenchmarkTask`, `EvaluationResult`), 3-tier resilient string replacement (`apply_replacement`), token budgets, and ATIF v1.7 tracing. | Competition Host Image (`HARNESS_README.md`) | Linux (Host controller) / Pure Python |
+| **`google-adk`** | Upstream ADK dependency | `~0.1.x` (**UNVERIFIED upstream**) | Base agent framework (`BaseAgent`, `LlmAgent`, `SequentialAgent`, `ParallelAgent`, `LoopAgent`, `App`). Underlying framework wrapped by `adk-submission`. | Host evaluation runtime | Pure Python (`py3-none-any`) |
+| **`vllm`** | Serving process (`VllmServer`) | Package wheel version: **NOT PROVIDED IN ASSETS**<br>Runtime serving version: **UNSPECIFIED IN ASSETS / UNVERIFIED**<br>Relationship: **distinct layers / unresolved** | Local inference engine serving `gemma-4-31b-it-qat-w4a16-ct` on 4x NVIDIA L4 GPUs (`tensor_parallel_size=4`, `gpu_memory_utilization=0.90`, `max_model_len=32768`, `enable_lora=True`). | Dedicated 4x L4 host environment (`http://127.0.0.1:8000/v1`) | Linux x86_64 (`manylinux`) + CUDA 12 |
 
 > [!NOTE]
-> `swegemma`, `adk-submission`, and `adk-eval-core` are proprietary competition evaluation libraries pre-installed in the Kaggle scoring image. They are not published on the public PyPI index.
+> **Host Stack Distribution & Execution Status:**
+> 1. `swegemma`, `adk-submission`, and `adk-eval-core` are proprietary competition evaluation libraries pre-installed in the Kaggle scoring runner image. They are not included in `/wheels/` (which only contains repository dependencies) nor are they published on the public PyPI index.
+> 2. **Compiler Execution Boundary**: The proprietary official compiler `adk-submission compile <submission_dir>` runs only inside the competition scoring environment. It was **not** executed on this local Windows workstation because it is not locally installed/available. Local declarative structural verification is executed via the reproduction tool `python scripts/validate_submission.py <submission_dir>`.
+> 3. **vLLM Version Reconciliation**: `vLLM` is managed as an external subprocess by `adk-submission` on port 8000. While the competition documentation provides exact serving flags and parameters (`tensor_parallel_size=4`, `gpu_memory_utilization=0.90`, `max_model_len=32768`, `enable_lora=True`, `max_loras=8`, `max_lora_rank=128`, `tool_call_parser='gemma4'`, `reasoning_parser='gemma4'`), it does **NOT** specify an exact wheel filename or package version number anywhere in the downloadable competition package or `HARNESS_README.md`. Discrepant version numbers (such as `0.19.1` or `0.18.0`) were previous unverified inferences and are NOT authoritative competition facts. Both package wheel version and runtime serving version remain **UNVERIFIED / UNSPECIFIED IN ASSETS**.
 
 ---
 

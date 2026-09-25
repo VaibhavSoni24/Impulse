@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
-"""Submission structure and schema validator for IMPULSE.
+"""Local structural reproduction validator for IMPULSE submissions.
 
-Implements the exact validation checks defined by `adk-submission` and `swegemma`
-in `HARNESS_README.md` Section 2:
+IMPORTANT ARCHITECTURAL DISTINCTION:
+- Official competition compiler: `adk-submission compile <submission_dir>`
+  (Proprietary competition harness package pre-installed in the Kaggle scoring container)
+- Local structural reproduction: `python scripts/validate_submission.py <submission_dir>`
+  (Local Python 3.13 verification tool implementing the exact schema, inclusion, and constraint rules)
+
+Implements the exact declarative validation checks defined in `HARNESS_README.md` Section 2:
 1. Root config discovery (agent.yaml / agent.yml).
 2. Sandboxed `!include` resolution with cycle and traversal detection.
 3. Single declared base model rule (`gemma-4-31b-it-qat-w4a16-ct`).
