@@ -16,6 +16,10 @@
     },
     "registered_versions": [
       {
+        "version": "3.13.15",
+        "executable": "C:\\Users\\shubh\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
+      },
+      {
         "version": "3.11.9",
         "executable": "C:\\Users\\shubh\\AppData\\Local\\Programs\\Python\\Python311\\python.exe"
       },
@@ -24,8 +28,14 @@
         "executable": "D:\\Softwares\\Python\\python.exe"
       }
     ],
-    "target_version_for_impulse": "3.13",
-    "target_python_status": "Not installed locally; available via winget (Python.Python.3.13) or uv"
+    "target_version_for_impulse": "3.13.15",
+    "target_python_status": "Installed side-by-side at C:\\Users\\shubh\\AppData\\Local\\Programs\\Python\\Python313\\python.exe; system default Python 3.10.11 untouched",
+    "venv": {
+      "path": "E:\\Projects\\Impulse\\.venv",
+      "executable": "E:\\Projects\\Impulse\\.venv\\Scripts\\python.exe",
+      "version": "3.13.15",
+      "pip_version": "26.2.1"
+    }
   },
   "pip": {
     "version": "26.1.2",
@@ -34,7 +44,7 @@
   "git": {
     "version": "2.54.0.windows.1",
     "branch": "main",
-    "commit": "6bcad9ced132becd22ce8da49d1e87a102e0334a",
+    "commit": "82d13506398d321b6a80755369b97ab021de8825",
     "user_email": "vaibhavsoni280506@gmail.com"
   },
   "docker": {
@@ -61,5 +71,5 @@
     "compute_allocation_policy": "GPU-dependent execution will use Kaggle/free compatible compute when required."
   },
   "selected_development_mode": "D (Current Workstation: Native Windows host for agent authoring, packaging, and validation; Kaggle GPU cloud for model serving and container evaluation)",
-  "timestamp": "2026-09-25T17:24:00Z"
+  "timestamp": "2026-09-25T17:42:00Z"
 }

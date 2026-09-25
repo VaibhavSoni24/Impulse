@@ -8,62 +8,69 @@ This document records the installed Python interpreters on the host workstation,
 
 | Executable Path | Version | Managed By | Active Default? |
 |---|---|---|:---:|
-| `D:\Softwares\Python\python.exe` | **Python 3.10.11** | Custom installation | Yes (Default in system PATH) |
+| `D:\Softwares\Python\python.exe` | **Python 3.10.11** | Custom installation | **Yes** (System default in PATH via `python`) |
 | `C:\Users\shubh\AppData\Local\Programs\Python\Python311\python.exe` | **Python 3.11.9** | User installation | No (Accessible via `py -3.11`) |
+| `C:\Users\shubh\AppData\Local\Programs\Python\Python313\python.exe` | **Python 3.13.15** | User installation | No (Accessible via `py -3.13`; default target in `py`) |
 
 ### Exact Command Outputs
 
-- **`python --version`**:
+- **`python --version` (System Default in PATH)**:
   ```text
   Python 3.10.11
   ```
 - **`py -0p` (Python Launcher Registry)**:
   ```text
-   -V:3.11 *        C:\Users\shubh\AppData\Local\Programs\Python\Python311\python.exe
+   -V:3.13 *        C:\Users\shubh\AppData\Local\Programs\Python\Python313\python.exe
+   -V:3.11          C:\Users\shubh\AppData\Local\Programs\Python\Python311\python.exe
    -V:3.10          D:\Softwares\Python\python.exe
+  ```
+- **`py -3.13 --version`**:
+  ```text
+  Python 3.13.15
   ```
 - **`py --version`**:
   ```text
   Python 3.11.9
   ```
-- **`pip --version`**:
+- **`pip --version` (System Default Python 3.10)**:
   ```text
   pip 26.1.2 from D:\Softwares\Python\lib\site-packages\pip (python 3.10)
   ```
-- **`uv --version`**:
+
+---
+
+## 2. Dedicated IMPULSE Virtual Environment (`.venv`)
+
+The project uses an isolated virtual environment built strictly with Python 3.13:
+
+- **Virtual Environment Location:** `E:\Projects\Impulse\.venv`
+- **Interpreter Path:** `E:\Projects\Impulse\.venv\Scripts\python.exe`
+- **Interpreter Version:**
   ```text
-  Not installed on PATH
+  Python 3.13.15
   ```
+- **Virtual Environment Pip Version:**
+  ```text
+  pip 26.2.1 from E:\Projects\Impulse\.venv\Lib\site-packages\pip (python 3.13)
+  ```
+- **Git Protection:** `.venv/` is explicitly excluded from version control via `.gitignore` (`.gitignore:20:.venv/`).
 
 ---
 
-## 2. Selected Target Python Version for IMPULSE
+## 3. Four-Tier Python Environment Separation
 
-- **Target Version:** **Python 3.13** (specifically matching `python:3.13-slim`).
-- **Rationale:**
-  1. **Strict Sandbox Alignment:** The competition harness sandbox (`Dockerfile.sandbox`, `Dockerfile.public`) is explicitly built on **Python 3.13-slim**.
-  2. **Standard Library Compatibility:** Python 3.13 removes several legacy modules (`imp`, `telnetlib`), which the competition sandbox restores via explicit shims (`imp.py`, `telnetlib.py`). Developing against Python 3.13 ensures that local code, imports, and AST tools do not depend on removed standard library features.
-  3. **Wheelhouse Pre-compilation:** The 124 pre-compiled offline wheels in `/wheels/` include packages compiled for Python 3.13 CPython ABI (`cp313-cp313-manylinux...`).
+To guarantee complete reproducibility and eliminate system-wide contamination, the development environment enforces four clearly distinguished tiers:
 
----
+1. **System Default Python (`Python 3.10.11`):**
+   - Executable: `D:\Softwares\Python\python.exe`
+   - Role: Preserves existing system and workstation toolchain defaults. Untouched by IMPULSE.
+2. **Registered Legacy Python (`Python 3.11.9`):**
+   - Executable: `C:\Users\shubh\AppData\Local\Programs\Python\Python311\python.exe`
+   - Role: Retained for secondary compatibility and user tools. Untouched by IMPULSE.
+3. **Host Target Python (`Python 3.13.15`):**
+   - Executable: `C:\Users\shubh\AppData\Local\Programs\Python\Python313\python.exe`
+   - Role: Side-by-side host installation matching the competition container base (`python:3.13-slim`).
+4. **IMPULSE Active Environment (`.venv` — `Python 3.13.15`):**
+   - Executable: `E:\Projects\Impulse\.venv\Scripts\python.exe`
+   - Role: Dedicated hermetic runtime for all IMPULSE code, package compilation, testing, and linting.
 
-## 3. Host Python Management & Isolation Strategy
-
-To avoid disrupting existing system workflows:
-
-1. **Zero System Disruption:**
-   - Existing Python 3.10 and 3.11 installations will **not** be modified, replaced, or uninstalled.
-   - The system default Python in PATH remains unchanged.
-2. **Side-by-Side Python 3.13 Provisioning:**
-   - Python 3.13 can be installed side-by-side using the official Windows installer via `winget`:
-     ```powershell
-     winget install Python.Python.3.13
-     ```
-   - Alternatively, `uv` (`astral-sh.uv`) can be installed to download and manage hermetic Python 3.13 toolchains without modifying system settings:
-     ```powershell
-     winget install astral-sh.uv
-     uv venv .venv --python 3.13
-     ```
-3. **Dedicated Virtual Environment:**
-   - All IMPULSE development, linting, packaging, and testing will run strictly inside an isolated virtual environment (`.venv`) targeting Python 3.13.
-   - The virtual environment directory `.venv/` is excluded from Git via `.gitignore`.
