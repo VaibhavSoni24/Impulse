@@ -1,0 +1,83 @@
+{
+  "competition_slug": "gemma-4-developer-agent",
+  "competition_title": "Google - The Gemma 4 Developer Agent Competition",
+  "sponsor": "Google LLC / Google DeepMind",
+  "competition_url": "https://www.kaggle.com/competitions/gemma-4-developer-agent",
+  "paper_track_url": "https://www.kaggle.com/competitions/gemma-4-developer-agent-paper",
+  "start_date": "2026-09-23T00:00:00Z",
+  "entry_deadline": "2026-11-25T23:59:00Z",
+  "team_merger_deadline": "2026-11-25T23:59:00Z",
+  "final_submission_deadline": "2026-12-02T23:59:00Z",
+  "paper_track_deadline": "2026-11-12T23:59:00Z",
+  "total_prize_pool": "$100,000 ($65,000 main track, $35,000 paper track)",
+  "supported_model": "gemma-4-31b-it-qat-w4a16-ct",
+  "submission_format": "zip archive containing agent.yaml at root (submission.zip)",
+  "root_config_filename": "agent.yaml",
+  "submission_budget": "12 hours aggregate limit across all tasks, inclusive of sandbox setup time, excluding patch validation",
+  "available_predefined_tools": [
+    "run_command(command: str) -> str",
+    "submit_patch() -> str",
+    "get_status() -> str",
+    "read_file(filepath: str, start_line: int | None = None, end_line: int | None = None) -> str",
+    "edit_file(filepath: str, old_string: str, new_string: str, allow_multiple: bool = False) -> str",
+    "write_file(filepath: str, content: str) -> str",
+    "get_code_neighbors(node: str, edge_type: str | None = None, max_neighbors: int = 50) -> str",
+    "search_similar_code(query: str, k: int = 10) -> str",
+    "get_code_subgraph(nodes: list[str]) -> str"
+  ],
+  "skill_constraints": "Directories with SKILL.md manifest (name: <skill-name>); executed via run_skill_script in persistent Docker sandbox sharing filesystem with run_command; execution debited against central 12-hour budget; load_skill_resource for domain knowledge markdown inspection",
+  "adapter_format": "PEFT LoRA .safetensors directories placed in adapters/<adapter_name>/ containing adapter_config.json and adapter_model.safetensors, referenced via adapter: <adapter_name> on any LlmAgent or AgentTool",
+  "current_harness_version": null,
+  "harness_packages_identified": [
+    "swegemma",
+    "adk-submission",
+    "adk-eval-core"
+  ],
+  "sandbox_environment": {
+    "base_os": "Linux",
+    "python_version": "3.13",
+    "docker_images": [
+      "Dockerfile.sandbox",
+      "Dockerfile.public"
+    ],
+    "compatibility_shims": [
+      "imp.py",
+      "telnetlib.py"
+    ],
+    "offline_wheels_mount": "/wheels/ (124 pre-compiled wheels)"
+  },
+  "dataset_specifications": {
+    "total_files": 782,
+    "total_size": "22.42 GB",
+    "manifest_file": "tasks.jsonl",
+    "public_dev_tasks_count": 129,
+    "test_tasks_count_estimate": 120,
+    "directories": [
+      "snapshots/ (129 .tgz archives)",
+      "graphs/ (256 NetworkX AST JSON files)",
+      "embeddings/ (256 NumPy .npz float32 256-dim feature archives)",
+      "wheels/ (124 .whl packages)",
+      "docker/",
+      "sandbox/",
+      "sample_submission/"
+    ],
+    "harness_readme_filename": "HARNESS_README.md",
+    "harness_readme_size": "46.29 kB"
+  },
+  "evaluation_output": {
+    "file_path": "/kaggle/working/submission.parquet",
+    "columns": ["id", "prediction"]
+  },
+  "source_urls": [
+    "https://www.kaggle.com/competitions/gemma-4-developer-agent",
+    "https://www.kaggle.com/competitions/gemma-4-developer-agent/data",
+    "https://www.kaggle.com/competitions/gemma-4-developer-agent/rules",
+    "https://www.kaggle.com/competitions/gemma-4-developer-agent-paper",
+    "https://www.kaggle.com/models/google/gemma-4/other/gemma-4-31b-it-qat-w4a16-ct"
+  ],
+  "verified_at": "2026-09-25T15:27:00Z",
+  "notes": {
+    "current_harness_version": "Exact numerical version strings of swegemma, adk-submission, and adk-eval-core require extracting the competition wheelhouse; full 22.42 GB dataset download is currently blocked pending user authentication and competition rules acceptance on Kaggle.",
+    "authentication_status": "Kaggle session currently unauthenticated; rules acceptance required before automated CLI download can proceed."
+  }
+}
