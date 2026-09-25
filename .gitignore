@@ -1,0 +1,98 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# C extensions
+*.dylib
+*.dll
+
+# Distribution / packaging
+build/
+dist/
+eggs/
+*.egg-info/
+*.egg
+wheels/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables & local secrets
+.env
+.env.*
+!.env.example
+kaggle.json
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+secrets.*
+
+# Testing & coverage caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+
+# IDE & editor metadata
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Operating System metadata
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Logs & debugging outputs
+*.log
+logs/
+run_logs/
+
+# Local run outputs & intermediate experiment artifacts
+runs/
+scratch/
+local/tmp/
+local/cache/
+
+# Local raw datasets & unpacked competition resources (must not be committed)
+data/raw/
+data/competition/
+
+# Model checkpoints, large weights, & inference caches
+checkpoints/
+models/
+weights/
+hf_cache/
+vllm_cache/
+*.bin
+*.pt
+*.pth
+*.onnx
+*.gguf
+*.safetensors
+# Allow validated competition LoRA adapters inside agent/adapters/ if explicitly versioned
+!agent/adapters/**/*.safetensors
+!agent/adapters/**/adapter_config.json
+
+# Packaging artifacts (generated submission archives)
+submission.zip
+*.zip
+*.tar.gz
+*.tgz
