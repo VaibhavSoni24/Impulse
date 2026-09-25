@@ -1,13 +1,13 @@
-# IMPULSE-HARNESS-PROBE
-# Temporary Stage 3 probe configuration solely to validate declarative parsing and schema compliance.
-# This is NOT IMPULSE-E0. It contains no retrieval, no sub-agents, no LoRA, and no specialized prompts.
-
-name: impulse_harness_probe
+name: impulse_e0_baseline
 model: gemma-4-31b-it-qat-w4a16-ct
-description: Minimal Stage 3 harness probe to verify schema compilation and tool resolution.
-instruction: You are an autonomous software engineering agent evaluating a repository issue. Use available tools to inspect code and submit a patch when resolved.
+description: IMPULSE-E0 minimal baseline software engineering agent.
+instruction: !include prompts/root.md
 tools:
   - run_command
+  - read_file
+  - edit_file
+  - write_file
+  - get_status
   - submit_patch
 generate_content_config:
   temperature: 0.2
