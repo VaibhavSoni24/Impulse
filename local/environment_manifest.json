@@ -1,0 +1,65 @@
+{
+  "os": "Microsoft Windows 11 Home Single Language",
+  "os_version": "10.0.26200",
+  "os_build": "26200",
+  "architecture": "x86_64 (64-bit)",
+  "wsl2": {
+    "installed": true,
+    "binary_path": "C:\\WINDOWS\\system32\\wsl.exe",
+    "active_distributions": [],
+    "service_status": "LxssManager not running"
+  },
+  "python": {
+    "system_default": {
+      "version": "3.10.11",
+      "executable": "D:\\Softwares\\Python\\python.exe"
+    },
+    "registered_versions": [
+      {
+        "version": "3.11.9",
+        "executable": "C:\\Users\\shubh\\AppData\\Local\\Programs\\Python\\Python311\\python.exe"
+      },
+      {
+        "version": "3.10.11",
+        "executable": "D:\\Softwares\\Python\\python.exe"
+      }
+    ],
+    "target_version_for_impulse": "3.13",
+    "target_python_status": "Not installed locally; available via winget (Python.Python.3.13) or uv"
+  },
+  "pip": {
+    "version": "26.1.2",
+    "location": "D:\\Softwares\\Python\\lib\\site-packages\\pip"
+  },
+  "git": {
+    "version": "2.54.0.windows.1",
+    "branch": "main",
+    "commit": "6bcad9ced132becd22ce8da49d1e87a102e0334a",
+    "user_email": "vaibhavsoni280506@gmail.com"
+  },
+  "docker": {
+    "installed": false,
+    "version": null,
+    "daemon_running": false,
+    "linux_containers": false,
+    "notes": "Docker Desktop not installed on host"
+  },
+  "nvidia_driver": {
+    "installed": false,
+    "version": null
+  },
+  "cuda": {
+    "installed": false,
+    "version": null
+  },
+  "gpu": {
+    "nvidia_gpu_present": false,
+    "count": 0,
+    "primary_adapter": "Intel(R) Iris(R) Xe Graphics",
+    "adapter_ram_bytes": 4122667008,
+    "driver_version": "32.0.101.5542",
+    "compute_allocation_policy": "GPU-dependent execution will use Kaggle/free compatible compute when required."
+  },
+  "selected_development_mode": "D (Current Workstation: Native Windows host for agent authoring, packaging, and validation; Kaggle GPU cloud for model serving and container evaluation)",
+  "timestamp": "2026-09-25T17:24:00Z"
+}
