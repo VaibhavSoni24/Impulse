@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "impulse"
+version = "0.1.0.dev0"
+description = "Autonomous software-engineering agent for repository-level issue resolution (Google Gemma 4 Developer Agent Competition)"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "Custom Source-Available License" }
+authors = [
+    { name = "Vaibhav Soni", email = "vaibhavsoni280506@gmail.com" }
+]
+keywords = [
+    "autonomous-agent",
+    "software-engineering",
+    "swe-bench",
+    "gemma-4",
+    "adk",
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+]
+
+# Application dependencies will be established in Stage 3 from the exact competition wheelhouse.
+# No unverified or guessed dependencies are declared here.
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-ra -q --strict-markers"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["local*", "scripts*"]
+exclude = ["data*", ".venv*", "experiments*"]
