@@ -27,15 +27,64 @@
   ],
   "skill_constraints": "Directories with SKILL.md manifest (name: <skill-name>); executed via run_skill_script in persistent Docker sandbox sharing filesystem with run_command; execution debited against central 12-hour budget; load_skill_resource for domain knowledge markdown inspection",
   "adapter_format": "PEFT LoRA .safetensors directories placed in adapters/<adapter_name>/ containing adapter_config.json and adapter_model.safetensors, referenced via adapter: <adapter_name> on any LlmAgent or AgentTool",
-  "current_harness_version": null,
+  "current_harness_version": "swegemma / adk-submission / adk-eval-core (competition release 2026-09-23)",
   "harness_packages_identified": [
     "swegemma",
     "adk-submission",
     "adk-eval-core"
   ],
+  "hardware_environment": {
+    "gpus": "4x NVIDIA L4 (24 GB GDDR6 per GPU, 96 GB total VRAM)",
+    "serving_engine": "vLLM (OpenAI-compatible server at http://127.0.0.1:8000/v1)",
+    "vllm_config": {
+      "tensor_parallel_size": 4,
+      "gpu_memory_utilization": 0.90,
+      "max_model_len": 32768,
+      "enable_lora": true,
+      "max_loras": 8,
+      "max_lora_rank": 128,
+      "tool_call_parser": "gemma4",
+      "reasoning_parser": "gemma4"
+    }
+  },
+  "submission_constraints": {
+    "max_total_size_bytes": 3221225472,
+    "max_total_size_human": "< 3 GiB unpacked (including all adapters/)",
+    "max_file_count": 10000,
+    "max_yaml_files": 1000,
+    "max_yaml_size_bytes": 52428800,
+    "max_instruction_chars_per_agent": 1000000,
+    "max_instruction_chars_total": 10000000,
+    "max_agents": 500,
+    "max_sub_agent_depth": 50,
+    "max_skills": 1000,
+    "max_loop_iterations": 500,
+    "allowed_file_extensions": [".yaml", ".yml", ".md", ".txt", ".py", ".json", ".safetensors"],
+    "adapter_extensions": [".safetensors"],
+    "single_base_model_rule": "Strictly enforced: all agents in submission tree must declare the exact same base model",
+    "prohibited_config_fields": ["tools", "system_instruction", "http_options", "safety_settings", "response_schema inside generate_content_config"]
+  },
+  "generation_constraints": {
+    "max_output_tokens_ceiling": 32768,
+    "max_output_tokens_default": 16384,
+    "thinking_budget_ceiling": 32768,
+    "thinking_budget_default": 4096,
+    "thinking_levels": ["MINIMAL", "LOW", "MEDIUM", "HIGH", "NONE"],
+    "include_thoughts": [true, false]
+  },
+  "continuation_nudges": {
+    "max_nudges": 3,
+    "reset_condition": "Turn with at least one tool call resets consecutive_nudges to 0",
+    "unclosed_tool_call_nudge": "Injected when response reaches token limit before </tool_call> closes",
+    "max_tokens_nudge": "Injected when response hits finish_reason MAX_TOKENS/LENGTH during thinking",
+    "normal_stop_nudge": "Injected when agent emits text-only response without calling submit_patch"
+  },
   "sandbox_environment": {
     "base_os": "Linux",
-    "python_version": "3.13",
+    "python_version": "3.13-slim",
+    "memory_limit": "4 GiB (killed with exit code 137 on exceed)",
+    "cpu_quota": "2 vCPUs",
+    "network_mode": "none (completely air-gapped, zero external network/PyPI access)",
     "docker_images": [
       "Dockerfile.sandbox",
       "Dockerfile.public"
@@ -44,11 +93,13 @@
       "imp.py",
       "telnetlib.py"
     ],
-    "offline_wheels_mount": "/wheels/ (124 pre-compiled wheels)"
+    "offline_wheels_mount": "/wheels/ (124 pre-compiled wheels, cataloged in wheels_manifest.json)",
+    "workspace_dir": "/workspace",
+    "temp_dir": "/tmp"
   },
   "dataset_specifications": {
     "total_files": 782,
-    "total_size": "22.42 GB",
+    "total_size": "21.93 GB (compressed archive) / ~22.4 GB (unpacked)",
     "manifest_file": "tasks.jsonl",
     "public_dev_tasks_count": 129,
     "test_tasks_count_estimate": 120,
@@ -75,9 +126,10 @@
     "https://www.kaggle.com/competitions/gemma-4-developer-agent-paper",
     "https://www.kaggle.com/models/google/gemma-4/other/gemma-4-31b-it-qat-w4a16-ct"
   ],
-  "verified_at": "2026-09-25T15:27:00Z",
+  "verified_at": "2026-09-25T16:55:00Z",
   "notes": {
-    "current_harness_version": "Exact numerical version strings of swegemma, adk-submission, and adk-eval-core require extracting the competition wheelhouse; full 22.42 GB dataset download is currently blocked pending user authentication and competition rules acceptance on Kaggle.",
-    "authentication_status": "Kaggle session currently unauthenticated; rules acceptance required before automated CLI download can proceed."
+    "authentication_status": "Kaggle API verified with KGAT_... bearer token at ~/.kaggle/access_token; competition rules accepted.",
+    "dataset_download_status": "Essential harness files (HARNESS_README.md, tasks.jsonl, docker/*, sandbox/setup.py, sample_submission/*, wheels_manifest.json) downloaded to data/competition/. Full 22 GB snapshot archive download can be staged on-demand per task or placed on D: partition (101 GB free) to conserve E: drive capacity.",
+    "harness_libraries": "swegemma (harness/scoring), adk-submission (declarative YAML compiler), adk-eval-core (task/result models, 3-tier resilient string replacement: exact -> flexible -> regex)."
   }
 }

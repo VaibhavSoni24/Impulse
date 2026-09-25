@@ -1,6 +1,6 @@
 # Evaluator Flow & Harness Architecture — IMPULSE
 
-This document records the exact evaluator pipeline, sandbox lifecycle, and grading flow established by the Google / Kaggle competition source of truth.
+This document records the exact evaluator pipeline, sandbox lifecycle, tool implementations, and grading flow established by the Google / Kaggle competition source of truth.
 
 ---
 
@@ -11,118 +11,155 @@ This document records the exact evaluator pipeline, sandbox lifecycle, and gradi
   - Data Specification & Files: `https://www.kaggle.com/competitions/gemma-4-developer-agent/data`
   - Competition Rules: `https://www.kaggle.com/competitions/gemma-4-developer-agent/rules`
   - Model Card: `https://www.kaggle.com/models/google/gemma-4/other/gemma-4-31b-it-qat-w4a16-ct`
-- **Harness & Benchmark Metadata:**
-  - Primary Technical Guide: `HARNESS_README.md` (46.29 kB in competition dataset)
-  - Core Libraries: `swegemma`, `adk-submission`, `adk-eval-core`
-  - Sandbox Specifications: `Dockerfile.sandbox`, `Dockerfile.public`, `sandbox/setup.py`
+- **Downloaded Competition Package Artifacts (`data/competition/`):**
+  - Primary Technical Guide: `HARNESS_README.md` (654 lines, 46.29 kB — Complete evaluation harness & competitor guide)
+  - Task Manifest: `tasks.jsonl` (129 public development tasks, 1.98 MB)
+  - Sandbox Specifications: `docker/Dockerfile.sandbox`, `docker/Dockerfile.public`, `docker/imp.py`, `docker/telnetlib.py`, `sandbox/setup.py` (397 lines)
+  - Sample Submission: `sample_submission/agent.yaml`, `sample_submission/eval_config.yaml`, `sample_submission/configs/sampling.yaml`, `sample_submission/sub_agents/code_analyzer.yaml`
+  - Wheelhouse Manifest: `wheels_manifest.json` (124 offline Python wheels in `/wheels/`)
+- **Core Cooperating Harness Libraries:**
+  - **`swegemma`**: Central SWE-bench harness, scoring engine, two-container lifecycle manager, and tool bindings.
+  - **`adk-submission`**: Declarative agent compiler (`compile_submission`), security sandbox validator, and vLLM server manager.
+  - **`adk-eval-core`**: Task/result data models, 3-tier resilient string replacement engine (`apply_replacement`), token/cost tracking, and ATIF v1.7 tracing.
 
 ---
 
-## 2. Two-Container Architecture Overview
+## 2. Hardware Environment & Serving Infrastructure
 
-The competition implements a decoupled **Two-Container Sandbox Architecture**:
+The evaluation environment runs on a dedicated host equipped with **4 × NVIDIA L4 GPUs** (24 GB GDDR6 per GPU, **96 GB total VRAM**):
 
-1. **Host / Evaluation Controller Container:**
-   - Houses the evaluation orchestration runner (`swegemma`), submission compiler (`adk-submission`), and model inference bridge.
-   - Manages model interaction with the primary base model (`gemma-4-31b-it-qat-w4a16-ct`) and routes optional `.safetensors` adapters.
-   - Tracks global execution time (12-hour aggregate budget across all tasks).
-   - Materializes the agent's patch intents and compiles `/kaggle/working/submission.parquet`.
-
-2. **Isolated Task Sandbox Container (`swebench-sandbox:latest`):**
-   - Air-gapped, isolated environment running **Python 3.13** and **Git**.
-   - Contains repository build backends (`setuptools`, `hatchling`, `flit-core`, `poetry-core`, `pdm-backend`) and compatibility shims (`imp.py`, `telnetlib.py`).
-   - Mounts pre-compiled binary wheels read-only at `/wheels/` (124 wheels) allowing offline `pip` installations.
-   - Executes agent shell commands (`run_command`) and sandboxed skill scripts (`run_skill_script`) strictly inside `/workspace`.
+- **Inference Server (`VllmServer` on `127.0.0.1:8000/v1`):**
+  - Base model: `gemma-4-31b-it-qat-w4a16-ct` (INT4 quantized, W4A16, ~16–18 GB weight footprint across 4 GPUs, leaving ~68 GB for 32k KV cache and LoRAs).
+  - Tensor parallelism: `tensor_parallel_size = 4` (sharded across all 4 L4 GPUs).
+  - GPU memory utilization: `gpu_memory_utilization = 0.90` (~86.4 GB usable across 4 GPUs).
+  - Context window ceiling: `max_model_len = 32768` (32,768 tokens maximum combined prompt, reasoning, and output).
+  - LoRA serving: `enable_lora = True`, `max_loras = 8`, `max_lora_rank = 128`.
+  - Parsers: `tool_call_parser = 'gemma4'`, `reasoning_parser = 'gemma4'`.
+- **The Single Base Model Rule:**
+  - All agents in a submission hierarchy (root agent, sub-agents, `agent_tool` delegates) **must declare the exact same base model**. Declaring multiple distinct base models causes immediate validation failure (`ParticipantVisibleError`).
+- **LoRA Adapter Support (`adapters/`):**
+  - Different agents can use different LoRA adapters (e.g., `adapter: main_lora` on root agent, `adapter: tool_lora` on code analyzer).
+  - Formats: Strictly `.safetensors` PEFT LoRA directories (`adapter_config.json` + `adapter_model.safetensors`).
+  - Total unpacked submission size limit: **`< 3 GiB`** (`3,221,225,472` bytes), including all adapter weights.
 
 ---
 
-## 3. Detailed Evaluator Execution Sequence
+## 3. Two-Container Architecture & Isolation
 
-The evaluation pipeline proceeds through two distinct phases:
+The competition strictly separates agent execution from verification using two independent sandboxes:
 
-### Phase 1: Task Execution & Patch Extraction
+| Component | Container A (Agent Sandbox) | Container B (Verification Sandbox) |
+|---|---|---|
+| **Role** | Executes agent tool calls, explorations, and code edits | Applies extracted patch, test patch, and runs `pytest` |
+| **Base Image** | `swebench-sandbox:latest` (built from `Dockerfile.sandbox`) | `swebench-sandbox:latest` |
+| **Python Version** | Python 3.13-slim | Python 3.13-slim |
+| **Resources** | 4 GiB RAM (`-m 4g`), 2 vCPUs (`cpu_quota=200_000`) | 4 GiB RAM, 2 vCPUs |
+| **Network** | `network_mode="none"` (completely air-gapped, no PyPI/internet) | `network_mode="none"` (completely air-gapped) |
+| **Mounts** | `/workspace` (repository snapshot), `/wheels` (124 wheels) | `/workspace` (fresh snapshot), `/wheels` |
+| **Lifecycle** | Created at task start, destroyed/wiped after patch extraction | Created fresh for Phase 2 verification |
+
+---
+
+## 4. Detailed Evaluator Execution Sequence
+
+### Phase 1: Agent Execution & Patch Extraction
 
 ```text
 1. Task Selection & Metadata Load
    ├── Read benchmark task from tasks.jsonl (instance_id, repo, base_commit, problem_statement, hints_text)
-   └── Load pre-computed graph (graphs/<instance_id>.json) and embeddings (embeddings/<instance_id>.npz)
+   └── Verify pre-computed graph (graphs/<repo>.json) and embeddings (embeddings/<repo>.npz)
        ↓
-2. Sandbox Initialization
-   ├── Unpack frozen repository snapshot from snapshots/<instance_id>.tgz into /workspace
-   ├── Execute sandbox/setup.py inside /workspace
-   │   ├── Inspect pyproject.toml / setup.cfg / requirements.txt
-   │   ├── Perform offline editable install: pip install --no-index --find-links=/wheels -e .
-   │   └── Create clean baseline Git commit (so git diff HEAD isolates agent edits)
-   └── Verify /workspace is in a clean git status
+2. Container A Bootstrap Sequence (container_setup.py)
+   ├── Extract snapshot archive into /workspace at base_commit (zero future git history)
+   ├── Append ignore patterns to /workspace/.git/info/exclude (__pycache__, *.pyc, .pytest_cache, build, dist)
+   ├── Run offline editable install: pip install --no-index --find-links=/wheels --no-deps -e /workspace
+   ├── Stream cached test dependencies & execute /sandbox/setup.py --fast-path <repo>
+   ├── Write hermetic /workspace/pytest.ini and prepend hook to /workspace/conftest.py
+   └── Commit baseline: git add -A && git commit -m "baseline" --allow-empty -q
        ↓
-3. Agent Compilation & Invocation
-   ├── adk-submission compiles submitted submission.zip (verifying agent.yaml at root)
-   ├── Bind base model gemma-4-31b-it-qat-w4a16-ct and optional LoRA adapters
-   └── Initialize agent turn loop with problem_statement and hints_text
+3. Agent Session Initialization
+   ├── adk-submission compiles submission directory (agent.yaml, sub-agents, prompts, adapters)
+   ├── Validate single base model and < 3 GiB total size constraint
+   ├── Start agent timer (context.start_agent_session() — container setup excluded from budget)
+   └── Send structured initial user prompt (build_agent_prompt):
+       ├── Problem Statement & Hints
+       ├── Task Budget (time allowance, tool calls allowance, max turns)
+       ├── Execution Environment Rules (offline, 300s command timeout, 5000 chars output limit)
+       ├── Code Intelligence Tool descriptions (if graphs/embeddings exist)
+       └── Workspace directory layout (first 150 entries of find . -maxdepth 3)
        ↓
-4. Tool Execution Loop (Governed by central 12-hour budget)
-   ├── Filesystem / Shell:
-   │   ├── run_command(command) -> executed via /bin/bash -c inside /workspace
-   │   ├── read_file(filepath, start_line, end_line) -> 1-indexed line slicing
-   │   ├── edit_file(filepath, old_string, new_string, allow_multiple)
-   │   │   └── Powered by adk-eval-core 3-tier resilient string replacement (exact -> flexible -> regex)
-   │   └── write_file(filepath, content) -> creates/overwrites file + mkdir -p
-   ├── Graph & Semantic Intelligence:
-   │   ├── search_similar_code(query, k=10) -> top-k cosine similarity over precomputed embeddings
-   │   ├── get_code_neighbors(node, edge_type, max_neighbors=50) -> AST call/dependency edges
-   │   └── get_code_subgraph(nodes) -> induced subgraph for specified symbols
-   └── Status & Monitoring:
-       └── get_status() -> live query of remaining budget and patch status
+4. Multi-Turn Agent Loop & Continuation Nudges
+   ├── Agent invokes tools (run_command, read_file, edit_file, etc.)
+   ├── Budget gate updates tool_calls_used and remaining wall-clock time
+   ├── If turn finishes WITHOUT submit_patch() and without tool calls:
+   │   ├── Increment consecutive_nudges (max 3)
+   │   └── Inject specific nudge prompt (unclosed <|tool_call|>, MAX_TOKENS cutoff, or normal continuation)
+   └── If turn executes at least one tool call: consecutive_nudges resets to 0
        ↓
-5. Patch Extraction
-   ├── Agent invokes submit_patch() (or task terminates / budget expires)
-   ├── Harness executes git add -N . in /workspace (stages untracked file intents)
-   ├── Harness executes git diff HEAD to capture unified patch string
-   └── Record task output into /kaggle/working/submission.parquet:
-       ├── id: instance_id
-       └── prediction: git diff patch string (or "NO_PATCH" if no changes produced)
+5. Patch Extraction & Container A Teardown
+   ├── If agent called submit_patch(): captures git add -N . && git diff HEAD
+   ├── Fallback: if agent terminated without submit_patch(), harness automatically runs git add -N . && git diff HEAD
+   └── Container A is wiped and stopped; proceed to Phase 2 if patch is non-empty
 ```
 
----
-
-### Phase 2: Grading & Validation (Conducted post-task or post-submission)
+### Phase 2: Hermetic Verification & Scoring (Container B)
 
 ```text
-1. Fresh Snapshot Instantiation
-   └── Instantiate a fresh, clean sandbox snapshot at base_commit
+1. Fresh Container B Instantiation
+   └── Perform identical bootstrap sequence 1–7 to create eval_baseline commit (HEAD)
        ↓
-2. Anti-Tampering Test Target Reset
-   ├── Evaluator executes git checkout HEAD -- <test_paths> and git clean on test targets
-   └── Discards any unauthorized modifications to unit tests or grading harnesses
+2. 4-Pass Resilient Patch Application (apply_patch_in_container)
+   ├── Pass 1: git apply --unsafe-paths -p1 (-3, --ignore-space-change, --recount)
+   ├── Pass 2: Symlink-normalized git apply --unsafe-paths -p1
+   ├── Pass 3: Prefixless git apply --unsafe-paths -p0
+   └── Pass 4: GNU patch -p1 / patch -p0 (--batch --forward -l)
        ↓
-3. Patch Application
-   └── Apply agent's generated prediction patch (git apply)
+3. Anti-Tampering Test Target Reset
+   ├── Parse all file paths referenced in task.test_patch (+++ b/<path>)
+   └── Forcefully reset targets: git checkout HEAD -- <targets> && git clean -f -- <targets>
        ↓
-4. Verification Test Application
-   └── Apply official test_patch from benchmark solution
+4. Verification Test Application & pytest Execution
+   ├── Apply official task.test_patch
+   └── Execute hermetic pytest:
+       PYTHONSAFEPATH=1 python3 -m pytest <pytest_targets> \
+         -p no:anyio -o timeout=0 -o norecursedirs=".* build dist venv" \
+         -o python_classes="Test* *Test" -q
        ↓
-5. Test Execution
-   └── Execute pytest inside sandbox
-       ↓
-6. Two-Phase Outcome Determination
-   ├── Fail-to-Pass Verification: Targeted test failed on baseline, must pass with patch
-   ├── Pass-to-Pass Verification: Pre-existing test suite must continue to pass cleanly
-   └── Grade: PASS (exit code 0) or FAIL (non-zero exit code)
+5. Resolution Determination
+   ├── resolved = True (score = 1.0) IF AND ONLY IF test_res.exit_code == 0
+   └── Record metrics to task_results.jsonl and output /kaggle/working/submission.parquet
 ```
 
 ---
 
-## 4. Operational Boundaries & Constraints
+## 5. Built-In Tools Reference & Behavioral Boundaries
 
-1. **Strict 12-Hour Global Budget:** The agent has an aggregate limit of 12 hours to submit patches for all tasks. This time includes sandbox setup but excludes patch validation.
-2. **Context Window & Management:** Gemma 4 31B supports up to 256K context, but the harness documentation identifies a 32,768-token operational target for active context compaction.
-3. **No External Network Access:** Sandboxes are completely offline. Dependencies must resolve exclusively against the 124 wheels in `/wheels/`.
-4. **Prohibited Directory Traversal:** `../` and symlinks pointing outside `/workspace` or outside `submission.zip` root are rejected by `adk-submission`.
-5. **Anti-Tampering Enforcement:** Modifying test files does not allow an agent to pass; the grading runner resets all test targets before running verification.
+The 9 predefined tools in `SwegemmaContext` conform to the following verified specifications:
+
+| Tool | Signature | Budget-Gated? | Key Behavioral Constraints |
+|---|---|:---:|---|
+| **`run_command`** | `run_command(command: str) -> str` | **Yes** | `/bin/bash -c` in `/workspace`. Timeout: 300s (or remaining session time). Output truncated at 5,000 chars. Timeout does NOT kill session. |
+| **`submit_patch`** | `submit_patch() -> str` | **No** (`count_tool_call=False`) | Runs `git add -N . && git diff HEAD`. Sets `patch_submitted=True`. Once current turn completes, harness terminates agent loop. |
+| **`get_status`** | `get_status() -> str` | **No** (un-gated) | Returns JSON with `tool_calls_used`, `tool_calls_remaining`, `time_seconds_remaining`, etc. Never fails on budget exhaustion. |
+| **`read_file`** | `read_file(filepath, start_line, end_line) -> str` | **Yes** | 1-indexed line slicing. Dual truncation: max 150 lines AND max 10,000 chars. `..` traversal prohibited. |
+| **`edit_file`** | `edit_file(filepath, old_string, new_string, allow_multiple) -> str` | **Yes** | **3-Tier Resilient Engine**: (1) `exact` -> (2) `flexible` (whitespace stripped, auto re-indent) -> (3) `regex` (code delimiter tokenization). Fails if `old_string` not unique and `allow_multiple=False`. |
+| **`write_file`** | `write_file(filepath: str, content: str) -> str` | **Yes** | Creates or overwrites `/workspace/<filepath>`. Automatically creates parent directories (`mkdir -p`). |
+| **`get_code_neighbors`** | `get_code_neighbors(node, edge_type, max_neighbors=50) -> str` | **Yes** | Queries in-memory NetworkX call graph. 4-tier symbol resolution (exact -> suffix -> case-insensitive -> substring). |
+| **`search_similar_code`** | `search_similar_code(query: str, k=10) -> str` | **Yes** | Queries precomputed `.npz` cosine similarity. Requires symbol/identifier query (not conversational natural language). |
+| **`get_code_subgraph`** | `get_code_subgraph(nodes: list[str]) -> str` | **Yes** | Extracts induced subgraph of interconnecting edges between symbols. |
 
 ---
 
-## 5. Unresolved Questions & Action Items
+## 6. Resolved Specifications & Architectural Guarantees
 
-1. **Exact Package Wheel Versions:** Numerical version strings of `swegemma`, `adk-submission`, and `adk-eval-core` reside inside the competition dataset archive; downloading requires Kaggle authentication and rules acceptance.
-2. **Local Runner Emulation:** For local development on Windows or Linux, we will need to determine whether to run Docker containers matching `Dockerfile.sandbox` (Python 3.13) or run lightweight process isolation.
+1. **Wheelhouse Composition:**
+   - 124 pre-compiled offline wheels in `/wheels/` (cataloged in `data/competition/wheels_manifest.json`), covering repository dependencies for Flask, Starlette, SQLModel, SQLAlchemy, Pytest, FastAPI, Typer, Pydantic, Click, Jinja2, etc.
+2. **Context Window Ceiling:**
+   - Operational context limit is **32,768 tokens**, matching vLLM's `max_model_len=32768`. Google ADK's `EventsCompactionConfig` compacts events every 15 turns with token threshold 32,768.
+3. **Local Evaluation Command:**
+   - Evaluations can be executed locally via `swegemma eval` with either `--sandbox docker` (default, using `Dockerfile.sandbox`) or `--sandbox subprocess` (for environments without Docker).
+4. **Temporary Reproduction Scripts:**
+   - Any scratch files created under `/workspace` are captured by `git add -N . && git diff HEAD` and contaminate the patch. Reproduction scripts must be written to **`/tmp/`** or deleted before calling `submit_patch()`.
+5. **No Architectural Revisions Required:**
+   - IMPULSE's planned architecture (hierarchical orchestrator, code analyzer specialist, progressive reproduction, 3-tier editing alignment) matches the competition harness in every respect.
+
