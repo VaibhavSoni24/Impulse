@@ -1,0 +1,174 @@
+IMPULSE Custom Source-Available License
+Version 1.0 — September 2026
+
+Copyright © 2026 Vaibhav Soni
+Project: IMPULSE
+
+Notice: This is a custom source-available license. It is NOT an Open Source
+Initiative (OSI) approved open-source license, nor is it an SPDX-standard open-source
+license.
+
+===============================================================================
+1. DEFINITIONS
+===============================================================================
+
+"Software" refers to the computer software, source code, scripts, configurations,
+documentation, prompts, skills, and related materials distributed as part of
+the IMPULSE project.
+
+"Copyright Holder" refers to Vaibhav Soni.
+
+"Commercial Distribution" means distributing, packaging, sublicensing, or making
+available the Software—or any modified version, derivative work, or software
+containing code extracted from the Software—as part of a commercial product,
+paid software product, paid package, paid software-as-a-service (SaaS), paid API,
+cloud service, or other commercial distribution for monetary or commercial
+consideration.
+
+"Derivative Work" means any software or work that is based upon, derived from,
+or incorporates any portion of the Software or its modifications.
+
+"You" (or "Your") refers to an individual or legal entity exercising permissions
+granted by this License.
+
+===============================================================================
+2. GRANT OF RIGHTS (PERMITTED USE)
+===============================================================================
+
+Subject to the terms and conditions of this License, the Copyright Holder grants
+You a worldwide, royalty-free, non-exclusive license to:
+
+  (a) Read, inspect, study, and research the Software;
+  (b) Run, execute, and use the Software for personal, educational, research,
+      academic, or internal development purposes without paying a fee;
+  (c) Copy, reproduce, and redistribute the Software, subject to Section 4;
+  (d) Modify, adapt, translate, and build Derivative Works from the Software,
+      subject to Section 4 and Section 5.
+
+===============================================================================
+3. COMMERCIAL DISTRIBUTION RESTRICTION
+===============================================================================
+
+Commercial Distribution of the Software or any Derivative Work is STRICTLY
+PROHIBITED without prior express written permission from the Copyright Holder.
+
+If You wish to engage in Commercial Distribution, You must submit a formal
+permission request by email to:
+
+    vaibhavsoni280506@gmail.com
+
+Commercial Distribution rights are only granted upon receipt of explicit, written
+authorization signed or confirmed by the Copyright Holder. Any Commercial
+Distribution without such prior written permission constitutes a violation of
+this License and copyright infringement.
+
+===============================================================================
+4. CONDITIONS FOR REDISTRIBUTION
+===============================================================================
+
+You may redistribute copies of the Software or Derivative Works (in source or
+binary form) for permitted non-commercial purposes, provided that You satisfy
+all of the following conditions:
+
+  (a) Retention of License & Copyright: You must retain this entire LICENSE text
+      and the Copyright notice in all copies or substantial portions of the
+      Software;
+  (b) Attribution: You must give prominent and appropriate public credit to
+      the original IMPULSE project and the Copyright Holder (Vaibhav Soni);
+  (c) Link to Original Repository: You must publicly mention and provide a
+      conspicuous hyperlink or text reference to the canonical IMPULSE project
+      repository;
+  (d) Notice of Modifications: If You distribute a modified version or
+      Derivative Work, You must include prominent notices stating that You
+      modified the Software and indicating the nature or date of the changes.
+
+===============================================================================
+5. PRIVATE AND INTERNAL USE
+===============================================================================
+
+You may modify, run, and adapt the Software internally or privately within Your
+own organization, institution, or personal environment without any obligation
+to publicly publish or disclose Your internal modifications, provided that such
+use does not constitute unauthorized Commercial Distribution or public
+redistribution without attribution.
+
+===============================================================================
+6. CONTRIBUTIONS AND PULL REQUESTS
+===============================================================================
+
+Contributions, bug fixes, enhancements, and feature suggestions to IMPULSE are
+welcome and encouraged via Pull Requests to the canonical repository.
+
+  (a) Submission Terms: By submitting a Pull Request or contribution to the
+      IMPULSE project, You agree that Your contributed code may be integrated,
+      modified, and distributed under the terms of this License.
+  (b) No Automatic Commercial Rights: Contributing to the project does not grant
+      You or any third party commercial distribution rights to IMPULSE beyond
+      the terms of this License.
+  (c) Ownership: Contributors retain copyright ownership in their original
+      contributions unless a separate written contributor agreement is executed.
+
+===============================================================================
+7. THIRD-PARTY COMPONENTS AND MODELS
+===============================================================================
+
+The Software may interact with, reference, or depend on third-party components,
+including but not limited to open-weights models (such as Google Gemma models),
+libraries, packages, competition harnesses, or benchmarks.
+
+This License applies solely to the original source code, prompts, configurations,
+and materials authored as part of the IMPULSE project. Nothing in this License
+grants rights to, or alters the licensing terms of, any third-party components,
+which remain subject to their respective licenses and terms of service.
+
+===============================================================================
+8. TRADEMARKS
+===============================================================================
+
+This License does not grant any rights to use the trademarks, service marks,
+trade names, or logos of the Copyright Holder or the IMPULSE project, except as
+reasonably necessary to provide the factual attribution required by Section 4.
+
+===============================================================================
+9. TERMINATION
+===============================================================================
+
+Any failure to comply with the terms of this License—including unauthorized
+Commercial Distribution, omission of copyright notices, or failure to provide
+proper attribution—shall immediately and automatically terminate all rights
+granted to You under this License. Upon termination, You must cease all use,
+distribution, and copying of the Software and all Derivative Works in Your
+possession.
+
+===============================================================================
+10. DISCLAIMER OF WARRANTY
+===============================================================================
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM,
+OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+===============================================================================
+11. LIMITATION OF LIABILITY
+===============================================================================
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, PUNITIVE, OR
+CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR
+LOSS OF PROFITS, DATA LOSS, BUSINESS INTERRUPTION, OR PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES) ARISING OUT OF OR IN ANY WAY RELATED TO THE USE OF OR
+INABILITY TO USE THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
+===============================================================================
+12. SEVERABILITY
+===============================================================================
+
+If any provision of this License is held to be invalid, illegal, or unenforceable
+under applicable law, such provision shall be enforced to the maximum extent
+permissible, and the validity, legality, and enforceability of the remaining
+provisions shall not in any way be affected or impaired.
