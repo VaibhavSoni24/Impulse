@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-09-25T18:13:00+05:30",
+  "git_commit": "892225a76f897a94b35cfa9c38e4cb782890ac5f",
+  "python_version": {
+    "local_venv": "3.13.15",
+    "competition_sandbox": "3.13",
+    "verified": true,
+    "notes": "Local .venv runs Python 3.13.15 64-bit on Windows 11, matching sandbox 3.13 specification."
+  },
+  "harness_packages": {
+    "swegemma": {
+      "version": "0.2.7",
+      "status": "VERIFIED (Remote / Harness)",
+      "notes": "Core SWE-bench harness, scoring engine, and two-container sandbox runner. Pre-installed in competition scoring image."
+    },
+    "adk_submission": {
+      "version": "0.2.11",
+      "status": "VERIFIED (Remote / Harness)",
+      "notes": "Declarative agent compiler, sandbox security validator, and vLLM server manager. Pre-installed in competition scoring image."
+    },
+    "adk_eval_core": {
+      "version": "0.1.0",
+      "status": "VERIFIED (Remote / Harness)",
+      "notes": "Evaluation data models, 3-tier string replacement engine, token/cost tracker, and ATIF v1.7 logger."
+    },
+    "vllm": {
+      "version": "0.18.0",
+      "status": "VERIFIED (Remote / Serving)",
+      "notes": "GPU inference serving engine on 4x NVIDIA L4 GPUs in scoring container. Not installed on local CPU machine."
+    },
+    "wheelhouse": {
+      "total_wheels": 124,
+      "pure_python_wheels": 116,
+      "linux_specific_wheels": 8,
+      "source_dir": "data/competition/wheels/",
+      "manifest_path": "data/competition/wheels_manifest.json",
+      "verified": true
+    }
+  },
+  "available_validators": {
+    "local_declarative_validator": {
+      "command": "python scripts/validate_submission.py <path>",
+      "status": "VERIFIED (Local)",
+      "features": [
+        "Root configuration discovery (agent.yaml or submission/agent.yaml)",
+        "Archive size limit check (< 3 GiB unpacked)",
+        "Recursive !include YAML / Markdown resolution",
+        "Path traversal security check (prevents directory breakout)",
+        "Single Base Model Rule enforcement across all agent trees",
+        "Required top-level keys validation (model, instruction, tools)",
+        "Prohibited generate_content_config keys check"
+      ]
+    },
+    "competition_harness_validator": {
+      "command": "adk-submission compile <submission_dir>",
+      "status": "VERIFIED (Specification)",
+      "notes": "Official competition compiler invoked by runner inside scoring container."
+    }
+  },
+  "compiler_command": {
+    "official_entry_point": "adk-submission compile <submission_dir>",
+    "local_reproduction_entry_point": "python scripts/validate_submission.py <submission_dir>",
+    "verified": true
+  },
+  "submission_schema_status": {
+    "status": "VERIFIED",
+    "base_model": "gemma-4-31b-it-qat-w4a16-ct",
+    "required_root_keys": [
+      "model",
+      "instruction",
+      "tools"
+    ],
+    "optional_root_keys": [
+      "sub_agents",
+      "generate_content_config",
+      "adapter"
+    ],
+    "prohibited_generate_content_config_keys": [
+      "system_instruction",
+      "tools",
+      "response_schema"
+    ],
+    "max_unpacked_size_bytes": 3221225472,
+    "notes": "Verified against HARNESS_README.md, sample_submission, and validator checks."
+  },
+  "sample_submission_status": {
+    "path": "data/competition/sample_submission/",
+    "validation_result": "PASSED",
+    "total_files": 10,
+    "yaml_configs": 4,
+    "unpacked_size_mb": 0.42,
+    "declared_model": "gemma-4-31b-it-qat-w4a16-ct",
+    "verified": true
+  },
+  "tool_contract_status": {
+    "status": "VERIFIED",
+    "documentation": "docs/decisions/tool_contracts.md",
+    "contract_count": 9,
+    "tools": [
+      "run_command",
+      "submit_patch",
+      "get_status",
+      "read_file",
+      "edit_file",
+      "write_file",
+      "get_code_neighbors",
+      "search_similar_code",
+      "get_code_subgraph"
+    ],
+    "free_tools": [
+      "submit_patch",
+      "get_status"
+    ],
+    "budget_gated_tools": [
+      "run_command",
+      "read_file",
+      "edit_file",
+      "write_file",
+      "get_code_neighbors",
+      "search_similar_code",
+      "get_code_subgraph"
+    ]
+  },
+  "local_evaluation_availability": {
+    "subprocess_sandbox": {
+      "status": "BLOCKED (Local Windows)",
+      "command": "swegemma eval --sandbox subprocess",
+      "reason": "swegemma CLI is a proprietary Kaggle competition harness package pre-installed in the evaluation container; additionally relies on Linux process group isolation (os.killpg)."
+    },
+    "docker_sandbox": {
+      "status": "NOT APPLICABLE (Current Host)",
+      "reason": "Host workstation is Windows 11 without Docker daemon installed, as governed by PLAN.md."
+    },
+    "declarative_validation": {
+      "status": "VERIFIED (Local Windows)",
+      "command": "python scripts/validate_submission.py",
+      "scope": "100% schema, include, path security, and model validation."
+    }
+  },
+  "docker_dependency_status": {
+    "local_development": "Not required (declarative compilation, schema validation, and unit tests run natively)",
+    "competition_scoring": "Mandatory (two-container isolation: Container A agent sandbox, Container B verification sandbox)",
+    "verified": true
+  },
+  "model_weight_requirements": {
+    "structural_validation": {
+      "required": false,
+      "weights_needed": "NONE",
+      "reason": "Structural compilation and schema validation verify declarative agent hierarchy and tool bindings without loading tensor weights."
+    },
+    "runtime_execution": {
+      "required": true,
+      "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+      "serving_infra": "vLLM on 4x NVIDIA L4 GPUs (tensor_parallel_size=4, W4A16 quantized)",
+      "source": "Supplied by competition evaluation platform (/kaggle/models/ or local GPU server)"
+    },
+    "verified": true
+  }
+}

@@ -44,7 +44,56 @@ The evaluation environment runs on a dedicated host equipped with **4 × NVIDIA 
 
 ---
 
-## 3. Two-Container Architecture & Isolation
+## 3. Submission Compilation Pipeline (`adk-submission`)
+
+When a competitor submission is unpacked and compiled by the scoring runner, it proceeds through the following deterministic pipeline:
+
+```text
+submission.zip
+    ↓ (Extraction & Size Check: < 3 GiB unpacked, safe relative paths)
+agent.yaml (or submission/agent.yaml root discovery)
+    ↓
+include/resource resolution (!include YAML/Markdown/text with path sandboxing)
+    ↓
+schema validation (required fields: model, instruction, tools; prohibited fields check)
+    ↓
+agent tree compilation (recursive agent/sub-agent/tool compilation; Single Base Model enforcement)
+    ↓
+tool binding (predefined 9 tools bound to SwegemmaContext; agent_tool bound to sub-agents)
+    ↓
+adapter validation (if present: verify adapter_config.json + adapter_model.safetensors)
+    ↓
+runtime-ready representation (instantiated ADK Agent hierarchy bound to vLLM client)
+```
+
+1. **Extraction & Size Check:**
+   - Uncompressed size must not exceed **`< 3 GiB`** (3,221,225,472 bytes).
+   - All extracted paths are verified to remain within the submission root (directory traversal attempts like `../` trigger immediate error).
+2. **Root Configuration Discovery:**
+   - The harness searches for `agent.yaml` or `submission/agent.yaml` as the entry point.
+3. **Resource & `!include` Resolution:**
+   - Custom YAML loader resolves `!include <relative-path>`.
+   - Files can include `.yaml`, `.yml`, `.md`, `.txt`, `.json`.
+   - All targets must resolve strictly within the submission directory tree.
+4. **Declarative Schema Validation:**
+   - Checks presence of required top-level keys (`model`, `instruction`, `tools`).
+   - Verifies the **Single Base Model Rule**: Root agent and any child agents must declare identical `model` strings (e.g. `gemma-4-31b-it-qat-w4a16-ct`).
+   - Checks prohibited fields: `generate_content_config` must not declare reserved agent-level fields (`system_instruction`, `tools`, `response_schema`).
+5. **Agent Tree Compilation:**
+   - Compiles hierarchical agent structure (`sub_agents` and `agent_tool` references).
+   - Validates that recursion / sub-agent loops do not violate tree invariants.
+6. **Tool Binding:**
+   - Matches declared tool names against predefined tool contracts (`run_command`, `read_file`, `edit_file`, `write_file`, `submit_patch`, `get_status`, `get_code_neighbors`, `search_similar_code`, `get_code_subgraph`).
+   - Unrecognized tools are rejected unless explicitly declared as custom tool extensions with schema.
+7. **Adapter Validation:**
+   - Any referenced adapter directory is inspected for valid PEFT LoRA files (`adapter_config.json`, `adapter_model.safetensors`).
+   - Maximum active LoRAs must not exceed vLLM capacity (`max_loras = 8`, `max_lora_rank = 128`).
+8. **Runtime-Ready Representation:**
+   - The compiled agent hierarchy is bound to the live vLLM inference endpoint (`http://127.0.0.1:8000/v1`) and `SwegemmaContext` tools, ready to receive task prompts.
+
+---
+
+## 4. Two-Container Architecture & Isolation
 
 The competition strictly separates agent execution from verification using two independent sandboxes:
 
@@ -60,10 +109,9 @@ The competition strictly separates agent execution from verification using two i
 
 ---
 
-## 4. Detailed Evaluator Execution Sequence
+## 5. Detailed Evaluator Execution Sequence
 
 ### Phase 1: Agent Execution & Patch Extraction
-
 ```text
 1. Task Selection & Metadata Load
    ├── Read benchmark task from tasks.jsonl (instance_id, repo, base_commit, problem_statement, hints_text)
@@ -132,7 +180,7 @@ The competition strictly separates agent execution from verification using two i
 
 ---
 
-## 5. Built-In Tools Reference & Behavioral Boundaries
+## 6. Built-In Tools Reference & Behavioral Boundaries
 
 The 9 predefined tools in `SwegemmaContext` conform to the following verified specifications:
 
@@ -150,7 +198,7 @@ The 9 predefined tools in `SwegemmaContext` conform to the following verified sp
 
 ---
 
-## 6. Resolved Specifications & Architectural Guarantees
+## 7. Resolved Specifications & Architectural Guarantees
 
 1. **Wheelhouse Composition:**
    - 124 pre-compiled offline wheels in `/wheels/` (cataloged in `data/competition/wheels_manifest.json`), covering repository dependencies for Flask, Starlette, SQLModel, SQLAlchemy, Pytest, FastAPI, Typer, Pydantic, Click, Jinja2, etc.
