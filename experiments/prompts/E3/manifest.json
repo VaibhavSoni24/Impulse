@@ -1,0 +1,45 @@
+{
+  "candidate_id": "E3",
+  "parent_candidate": "E2",
+  "parent_git_commit": "5ae9fb9449e0e576cffbf10eb25cca678cd05415",
+  "parent_prompt_sha256": "f8358618a67353d0a456ece8dc037bbdaefe108d99fa4f997e5daf4fb354fd4e",
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "prompt_reference": "experiments/candidates/E3/prompts/root.md",
+  "prompt_sha256": "6925be383fbbdd0f58a885a82c02b5e9fefe434d8cb7f91d6b5107ada9e120cf",
+  "agent_config_reference": "experiments/candidates/E3/agent.yaml",
+  "agent_config_sha256": "2cf03011fc03c37292a1b0cdd74ae9d512f97bd8f1a5148939410e96c5e6b783",
+  "retrieval_tool_name": "search_similar_code",
+  "verified_retrieval_contract_source": "HARNESS_README.md Section 6.3 / swegemma.tools.graph.search_similar_code",
+  "initial_k_semantics": {
+    "chosen_initial_k": 5,
+    "contract_default_k": 10,
+    "supported_k_range": [1, 50],
+    "rationale": "Smallest defensible k providing focused localization candidates while avoiding context bloat."
+  },
+  "retrieval_policy_version": "v1",
+  "validation_status": "structural_only",
+  "evidence_status": "unvalidated",
+  "declared_sampling_configuration": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_output_tokens": 16384,
+    "thinking_config": {
+      "thinking_level": "high",
+      "thinking_budget": 4096,
+      "include_thoughts": true
+    }
+  },
+  "declared_tools": [
+    "run_command",
+    "read_file",
+    "edit_file",
+    "write_file",
+    "get_status",
+    "submit_patch",
+    "search_similar_code"
+  ],
+  "benchmark_scores_asserted": false,
+  "pass_rate": null,
+  "fail_rate": null,
+  "created_at": "2026-09-26T10:35:00+00:00"
+}

@@ -1,0 +1,20 @@
+name: impulse_e3_semantic_retrieval
+model: gemma-4-31b-it-qat-w4a16-ct
+description: IMPULSE-E3 candidate incorporating semantic retrieval (search_similar_code) for selective code localization.
+instruction: !include prompts/root.md
+tools:
+  - run_command
+  - read_file
+  - edit_file
+  - write_file
+  - get_status
+  - submit_patch
+  - search_similar_code
+generate_content_config:
+  temperature: 0.2
+  top_p: 0.95
+  max_output_tokens: 16384
+  thinking_config:
+    thinking_level: high
+    thinking_budget: 4096
+    include_thoughts: true
