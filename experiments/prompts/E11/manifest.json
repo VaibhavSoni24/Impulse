@@ -1,0 +1,61 @@
+{
+  "candidate_id": "E11",
+  "stage": "Stage 20",
+  "parent_candidate": "E10",
+  "parent_git_commit": "7e2fd4aa707c62b6ba03d0adcf27b1212d05bb84",
+  "parent_prompt_sha256": "4766117f671fd7fb4e4e8ade8afe46d7c9412fbe7255ee2a29f9b38ebc25b73f",
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "prompt_reference": "experiments/candidates/E11/prompts/root.md",
+  "prompt_sha256": "42a895fe99b5c537c348e92f02d7c906185b32afb450f393cf0e8255bd407356",
+  "agent_config_reference": "experiments/candidates/E11/agent.yaml",
+  "agent_config_sha256": "688e0269c966db0f7dd367735190dbd3fa193a69c73dc7b3d48eff63237da01a",
+  "declared_skills": [
+    "skills/test_strategy",
+    "skills/repo_triage"
+  ],
+  "repo_triage_skill_name": "repo_triage",
+  "repo_triage_skill_path": "agent/skills/repo_triage/SKILL.md",
+  "repo_triage_skill_sha256": "ac7a967136bba6ebd085511595ecbbcd7b3c258927518bfede77cc82a9bb10ce",
+  "test_strategy_skill_sha256": "3d027b0f9a7f830bfc68452cc98d962bb702ab16963a62574fcd4e85e31b7148",
+  "recovery_controller_version": "v1",
+  "recovery_families": [
+    "SEARCH_FALLBACK",
+    "TEST_FAILURE",
+    "BAD_EDIT",
+    "TOOL_FAILURE",
+    "BUDGET_PRESSURE"
+  ],
+  "no_progress_detector_version": "v1",
+  "failure_taxonomy_version": "v1",
+  "validation_status": "structural_only",
+  "evidence_status": "unvalidated",
+  "declared_sampling_configuration": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_output_tokens": 16384,
+    "thinking_config": {
+      "thinking_level": "high",
+      "thinking_budget": 4096,
+      "include_thoughts": true
+    }
+  },
+  "declared_tools": [
+    "run_command",
+    "read_file",
+    "edit_file",
+    "write_file",
+    "get_status",
+    "submit_patch",
+    "search_similar_code",
+    "get_code_neighbors",
+    "get_code_subgraph"
+  ],
+  "benchmark_scores_asserted": false,
+  "pass_rate": null,
+  "fail_rate": null,
+  "recovery_success_rate": null,
+  "safe_change_revert_accuracy": null,
+  "runtime": null,
+  "tool_count": null,
+  "created_at": "2026-09-26T14:30:00+00:00"
+}
