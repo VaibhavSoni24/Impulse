@@ -1,0 +1,19 @@
+name: impulse_e2_task_state
+model: gemma-4-31b-it-qat-w4a16-ct
+description: IMPULSE-E2 candidate incorporating structured task state representation for continuity across turns.
+instruction: !include prompts/root.md
+tools:
+  - run_command
+  - read_file
+  - edit_file
+  - write_file
+  - get_status
+  - submit_patch
+generate_content_config:
+  temperature: 0.2
+  top_p: 0.95
+  max_output_tokens: 16384
+  thinking_config:
+    thinking_level: high
+    thinking_budget: 4096
+    include_thoughts: true
