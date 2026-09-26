@@ -1,0 +1,53 @@
+{
+  "candidate_id": "E10",
+  "parent_candidate": "E9",
+  "parent_git_commit": "d8ed92d6c2ff347061aecfdb8068708dc4000be8",
+  "parent_prompt_sha256": "a03fba7410c03d0929d95653ad892c42f802d2a0a017eab92a2e2168bee2fc48",
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "prompt_reference": "experiments/candidates/E10/prompts/root.md",
+  "prompt_sha256": "4766117f671fd7fb4e4e8ade8afe46d7c9412fbe7255ee2a29f9b38ebc25b73f",
+  "agent_config_reference": "experiments/candidates/E10/agent.yaml",
+  "agent_config_sha256": "779f70c0feeb9f89b577a62c73361afc3aae7823d86a05e23b6fc246b66babf7",
+  "declared_skills": [
+    "skills/test_strategy",
+    "skills/repo_triage"
+  ],
+  "repo_triage_skill_name": "repo_triage",
+  "repo_triage_skill_path": "agent/skills/repo_triage/SKILL.md",
+  "repo_triage_skill_sha256": "ac7a967136bba6ebd085511595ecbbcd7b3c258927518bfede77cc82a9bb10ce",
+  "test_strategy_skill_sha256": "3d027b0f9a7f830bfc68452cc98d962bb702ab16963a62574fcd4e85e31b7148",
+  "no_progress_detector_version": "v1",
+  "no_progress_threshold_default": 2,
+  "failure_taxonomy_version": "v1",
+  "validation_status": "structural_only",
+  "evidence_status": "unvalidated",
+  "declared_sampling_configuration": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_output_tokens": 16384,
+    "thinking_config": {
+      "thinking_level": "high",
+      "thinking_budget": 4096,
+      "include_thoughts": true
+    }
+  },
+  "declared_tools": [
+    "run_command",
+    "read_file",
+    "edit_file",
+    "write_file",
+    "get_status",
+    "submit_patch",
+    "search_similar_code",
+    "get_code_neighbors",
+    "get_code_subgraph"
+  ],
+  "benchmark_scores_asserted": false,
+  "pass_rate": null,
+  "fail_rate": null,
+  "no_progress_detection_accuracy": null,
+  "repeated_bad_edit_count": null,
+  "runtime": null,
+  "tool_count": null,
+  "created_at": "2026-09-26T13:30:00+00:00"
+}

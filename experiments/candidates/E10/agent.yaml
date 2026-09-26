@@ -1,0 +1,25 @@
+name: impulse_e10_no_progress_detection
+model: gemma-4-31b-it-qat-w4a16-ct
+description: IMPULSE-E10 candidate incorporating systematic repository triage, failure classification, no-progress detection, and testing strategy skills for evidence-based reconnaissance and verification.
+instruction: !include prompts/root.md
+skills:
+  - skills/test_strategy
+  - skills/repo_triage
+tools:
+  - run_command
+  - read_file
+  - edit_file
+  - write_file
+  - get_status
+  - submit_patch
+  - search_similar_code
+  - get_code_neighbors
+  - get_code_subgraph
+generate_content_config:
+  temperature: 0.2
+  top_p: 0.95
+  max_output_tokens: 16384
+  thinking_config:
+    thinking_level: high
+    thinking_budget: 4096
+    include_thoughts: true
