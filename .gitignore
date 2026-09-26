@@ -70,6 +70,9 @@ runs/
 scratch/
 local/tmp/
 local/cache/
+*.db
+*.sqlite
+*.sqlite3
 
 # Local raw datasets & unpacked competition resources (must not be committed)
 data/raw/
