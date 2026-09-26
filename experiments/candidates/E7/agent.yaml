@@ -1,0 +1,24 @@
+name: impulse_e7_testing_skill
+model: gemma-4-31b-it-qat-w4a16-ct
+description: IMPULSE-E7 candidate incorporating the systematic test_strategy skill for evidence-based framework discovery, narrow reproduction, targeted verification, and intelligent broadening.
+instruction: !include prompts/root.md
+skills:
+  - skills/test_strategy
+tools:
+  - run_command
+  - read_file
+  - edit_file
+  - write_file
+  - get_status
+  - submit_patch
+  - search_similar_code
+  - get_code_neighbors
+  - get_code_subgraph
+generate_content_config:
+  temperature: 0.2
+  top_p: 0.95
+  max_output_tokens: 16384
+  thinking_config:
+    thinking_level: high
+    thinking_budget: 4096
+    include_thoughts: true
