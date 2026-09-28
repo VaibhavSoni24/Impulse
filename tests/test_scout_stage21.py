@@ -576,9 +576,9 @@ class TestScoutStage21(unittest.TestCase):
         self.assertFalse((PROJECT_ROOT / "experiments/candidates/E_S2/sub_agents/debugger.yaml").exists())
 
     def test_55_no_reviewer_agent(self) -> None:
-        """55. Verifies Reviewer agent is NOT present."""
-        self.assertFalse((PROJECT_ROOT / "agent/sub_agents/reviewer.yaml").exists())
-        self.assertFalse((PROJECT_ROOT / "agent/prompts/reviewer.md").exists())
+        """55. Verifies Reviewer agent is NOT present in Stage 21 candidates."""
+        self.assertFalse((PROJECT_ROOT / "experiments/candidates/E_S1/sub_agents/reviewer.yaml").exists())
+        self.assertFalse((PROJECT_ROOT / "experiments/candidates/E_S2/sub_agents/reviewer.yaml").exists())
 
     def test_56_no_later_stage_implementation(self) -> None:
         """56. Confirms Stage 22+ files do not exist in Stage 21 candidates."""

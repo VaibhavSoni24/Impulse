@@ -1,0 +1,85 @@
+{
+  "candidate_id": "V0",
+  "stage": "Stage 23",
+  "parent_candidate": "D2",
+  "parent_git_commit": "be36a504ef741466de6b9aa7bd6df171326da6f2",
+  "parent_prompt_sha256": "1d2b329f94439c8b7f92cc21b00347c115f71b24444492afe79b7bc523f7fdb0",
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "prompt_reference": "experiments/candidates/V0/prompts/root.md",
+  "prompt_sha256": "3aeecc3db73e07e699a76059dd847bca6fcf5d90145368b3fb9bf4a79fc2baca",
+  "agent_config_reference": "experiments/candidates/V0/agent.yaml",
+  "agent_config_sha256": "dbc19fe450687636bb2da1adfa65975b928a25f9345f3ebcf562292465673e36",
+  "scout_config_reference": "experiments/candidates/V0/sub_agents/scout.yaml",
+  "scout_config_sha256": "335c1a32d7001271f8b9417e2981e2d3214c55713be99b3da1a6e0634d705877",
+  "scout_prompt_reference": "experiments/candidates/V0/prompts/scout.md",
+  "scout_prompt_sha256": "d57f433cf7459f258c8bc5011f82b5887aea2d07e1ef674c5b95cc8cbe007805",
+  "debugger_config_reference": "experiments/candidates/V0/sub_agents/debugger.yaml",
+  "debugger_config_sha256": "07b936c8abf06d8710138e2ba94611c57e48cd476c0fb945f7c187abd25d9199",
+  "debugger_prompt_reference": "experiments/candidates/V0/prompts/debugger.md",
+  "debugger_prompt_sha256": "a743a30bcc297fcc1335b34ef5851533ca751a4699e6b0d6aede76510f57082f",
+  "debugger_configured": true,
+  "reviewer_configured": false,
+  "reviewer_policy": "UNAVAILABLE",
+  "declared_skills": [
+    "skills/test_strategy",
+    "skills/repo_triage"
+  ],
+  "repo_triage_skill_name": "repo_triage",
+  "repo_triage_skill_path": "agent/skills/repo_triage/SKILL.md",
+  "repo_triage_skill_sha256": "ac7a967136bba6ebd085511595ecbbcd7b3c258927518bfede77cc82a9bb10ce",
+  "test_strategy_skill_sha256": "3d027b0f9a7f830bfc68452cc98d962bb702ab16963a62574fcd4e85e31b7148",
+  "sub_agents": [
+    "scout",
+    "debugger"
+  ],
+  "validation_status": "structural_only",
+  "evidence_status": "unvalidated",
+  "declared_sampling_configuration": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_output_tokens": 16384,
+    "thinking_config": {
+      "thinking_level": "high",
+      "thinking_budget": 4096,
+      "include_thoughts": true
+    }
+  },
+  "declared_tools": [
+    "run_command",
+    "read_file",
+    "edit_file",
+    "write_file",
+    "get_status",
+    "submit_patch",
+    "search_similar_code",
+    "get_code_neighbors",
+    "get_code_subgraph"
+  ],
+  "scout_tools": [
+    "read_file",
+    "get_status",
+    "search_similar_code",
+    "get_code_neighbors",
+    "get_code_subgraph"
+  ],
+  "debugger_tools": [
+    "read_file",
+    "get_status",
+    "search_similar_code",
+    "get_code_neighbors",
+    "get_code_subgraph"
+  ],
+  "reviewer_tools": [],
+  "benchmark_scores_asserted": false,
+  "pass_rate": null,
+  "fail_rate": null,
+  "review_accuracy": null,
+  "reviewer_call_frequency": null,
+  "runtime": null,
+  "tool_count": null,
+  "focused_test_count": 61,
+  "full_test_count": 475,
+  "validator_status": "PASSED",
+  "live_inference_status": "UNEXECUTED",
+  "created_at": "2026-09-28T09:40:00+00:00"
+}

@@ -558,15 +558,16 @@ class TestDebuggerStage22(unittest.TestCase):
         self.assertIn("sub_agents/debugger.yaml", sub_paths)
 
     def test_52_no_reviewer_agent(self) -> None:
-        """52. Confirms Reviewer agent is NOT present."""
-        self.assertFalse((PROJECT_ROOT / "agent/sub_agents/reviewer.yaml").exists())
-        self.assertFalse((PROJECT_ROOT / "agent/prompts/reviewer.md").exists())
+        """52. Confirms Reviewer agent is NOT present in Stage 22 candidates."""
+        self.assertFalse((PROJECT_ROOT / "experiments/candidates/D1/sub_agents/reviewer.yaml").exists())
+        self.assertFalse((PROJECT_ROOT / "experiments/candidates/D2/sub_agents/reviewer.yaml").exists())
 
     def test_53_no_later_stage_agents(self) -> None:
-        """53. Only scout and debugger are present in agent/sub_agents/."""
-        subagent_files = list((PROJECT_ROOT / "agent/sub_agents").glob("*.yaml"))
-        names = sorted(f.stem for f in subagent_files)
-        self.assertEqual(names, ["debugger", "scout"], f"Only scout and debugger allowed in Stage 22, found: {names}")
+        """53. Only allowed sub-agents are present in Stage 22 candidates."""
+        for cand, expected in [("D1", ["scout"]), ("D2", ["debugger", "scout"])]:
+            subagent_files = list((PROJECT_ROOT / f"experiments/candidates/{cand}/sub_agents").glob("*.yaml"))
+            names = sorted(f.stem for f in subagent_files)
+            self.assertEqual(names, expected, f"Expected {expected} in {cand}, found: {names}")
 
     def test_54_no_benchmark_specific_hardcoding(self) -> None:
         """54. Debugger prompt and config contain zero competition task IDs or benchmark solution snippets."""
