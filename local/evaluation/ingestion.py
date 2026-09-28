@@ -372,3 +372,137 @@ def ingest_results(
             count += 1
 
     return count
+
+
+def ingest_clean_eval_record(conn: sqlite3.Connection, record: Any) -> None:
+    """Ingests a Stage 28 EvaluationRunRecord into the SQLite evaluation database."""
+    run_dict = record.to_dict() if hasattr(record, "to_dict") else record
+    run_id = run_dict["run_id"]
+    candidate_id = run_dict["candidate_id"]
+    task_id = run_dict["task_id"]
+    created_at = run_dict.get("start_time") or datetime.now(timezone.utc).isoformat()
+
+    with conn:
+        ensure_candidate(
+            conn=conn,
+            candidate_id=candidate_id,
+            model_id=run_dict.get("model_id", "gemma-4-31b-it-qat-w4a16-ct"),
+            agent_config_sha256=run_dict.get("candidate_config_sha256"),
+        )
+        ensure_task(
+            conn=conn,
+            task_id=task_id,
+            base_commit=run_dict.get("baseline_commit", "unknown"),
+        )
+
+        success_val = 1 if run_dict.get("success") else 0
+        if run_dict.get("execution_status") == "UNAVAILABLE":
+            success_val = None
+
+        fail_class = run_dict.get("failure_class")
+        if isinstance(fail_class, str):
+            f_class_str = fail_class
+        elif fail_class is not None and hasattr(fail_class, "value"):
+            f_class_str = fail_class.value
+        else:
+            f_class_str = None
+
+        fail_stage = run_dict.get("failure_stage")
+        if isinstance(fail_stage, str):
+            f_stage_str = fail_stage
+        elif fail_stage is not None and hasattr(fail_stage, "value"):
+            f_stage_str = fail_stage.value
+        else:
+            f_stage_str = None
+
+        sql = """
+        INSERT INTO runs (
+            run_id, candidate_id, task_id, model_id, execution_backend,
+            status, termination_reason, success, elapsed_seconds,
+            tool_calls, turns, files_changed, diff_lines, patch_generated,
+            failure_class, baseline_commit, candidate_config_sha256,
+            patch_sha256, patch_extraction_status, patch_apply_status,
+            verification_status, failure_stage, workspace_isolated,
+            clean_copy_verified, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(run_id) DO UPDATE SET
+            status=excluded.status,
+            termination_reason=excluded.termination_reason,
+            success=excluded.success,
+            elapsed_seconds=excluded.elapsed_seconds,
+            tool_calls=excluded.tool_calls,
+            turns=excluded.turns,
+            files_changed=excluded.files_changed,
+            diff_lines=excluded.diff_lines,
+            patch_generated=excluded.patch_generated,
+            failure_class=excluded.failure_class,
+            baseline_commit=excluded.baseline_commit,
+            candidate_config_sha256=excluded.candidate_config_sha256,
+            patch_sha256=excluded.patch_sha256,
+            patch_extraction_status=excluded.patch_extraction_status,
+            patch_apply_status=excluded.patch_apply_status,
+            verification_status=excluded.verification_status,
+            failure_stage=excluded.failure_stage,
+            workspace_isolated=excluded.workspace_isolated,
+            clean_copy_verified=excluded.clean_copy_verified;
+        """
+
+        conn.execute(
+            sql,
+            (
+                run_id,
+                candidate_id,
+                task_id,
+                run_dict.get("model_id", "gemma-4-31b-it-qat-w4a16-ct"),
+                "clean-copy-evaluator",
+                run_dict.get("execution_status", "UNKNOWN"),
+                run_dict.get("termination_reason"),
+                success_val,
+                run_dict.get("elapsed_seconds"),
+                run_dict.get("tool_calls"),
+                run_dict.get("turns"),
+                run_dict.get("files_changed"),
+                run_dict.get("patch_lines"),
+                1 if run_dict.get("patch_sha256") else 0,
+                f_class_str,
+                run_dict.get("baseline_commit"),
+                run_dict.get("candidate_config_sha256"),
+                run_dict.get("patch_sha256"),
+                run_dict.get("patch_extraction_status"),
+                run_dict.get("patch_apply_status"),
+                run_dict.get("verification_status"),
+                f_stage_str,
+                1 if run_dict.get("workspace_isolated", True) else 0,
+                1 if run_dict.get("clean_copy_verified", False) else 0,
+                created_at,
+            ),
+        )
+
+        if f_class_str:
+            fail_sql = """
+            INSERT INTO failures (
+                run_id, failure_class, error_message, traceback, is_infrastructure, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?)
+            ON CONFLICT(run_id) DO UPDATE SET
+                failure_class=excluded.failure_class,
+                error_message=excluded.error_message,
+                traceback=excluded.traceback,
+                is_infrastructure=excluded.is_infrastructure,
+                created_at=excluded.created_at;
+            """
+            is_infra = 1 if f_class_str in (
+                "BASELINE_NOT_CLEAN", "BASELINE_NOT_FOUND", "TASK_NOT_FOUND",
+                "CANDIDATE_INVALID", "RUNTIME_UNAVAILABLE", "CLEANUP_FAILURE"
+            ) else 0
+            conn.execute(
+                fail_sql,
+                (
+                    run_id,
+                    f_class_str,
+                    run_dict.get("termination_reason"),
+                    None,
+                    is_infra,
+                    created_at,
+                ),
+            )
+

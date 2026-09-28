@@ -81,7 +81,7 @@ class GitInspector:
             return GitFileStatus.CLEAN, ""
 
         prefix = line[:2]
-        path_part = line[3:].strip()
+        path_part = line[2:].strip()
 
         if "->" in path_part:
             path_part = path_part.split("->")[-1].strip()
@@ -106,7 +106,7 @@ class GitInspector:
     def inspect_snapshot(self) -> GitReviewSnapshot:
         """Collects and returns a complete GitReviewSnapshot."""
         status_raw = self._run_git(["status", "--short"])
-        status_lines = [s for s in status_raw.splitlines() if s.strip()]
+        status_lines = [s for s in status_raw.splitlines() if s.rstrip()]
 
         diff_stat = self._run_git(["diff", "--stat"])
         diff_name_status_raw = self._run_git(["diff", "--name-status"])

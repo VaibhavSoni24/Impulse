@@ -53,10 +53,7 @@ def list_runs(
 ) -> list[dict[str, Any]]:
     """Returns filtered run records."""
     query = """
-    SELECT run_id, candidate_id, task_id, model_id, adapter_id, execution_backend,
-           status, termination_reason, success, elapsed_seconds, timeout_seconds,
-           tool_calls_budget, tool_calls, turns, files_read, files_changed,
-           diff_lines, diff_bytes, patch_generated, failure_class, source_artifact, created_at
+    SELECT *
     FROM runs
     WHERE 1=1
     """

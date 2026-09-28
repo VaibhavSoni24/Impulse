@@ -49,6 +49,7 @@ class BoundedToolCache:
         self.max_entries = max_entries
         # key_string -> CacheEntry
         self._cache: dict[str, CacheEntry] = {}
+        self._access_seq: int = 0
         # Metrics counters
         self.hits_count = 0
         self.misses_count = 0
@@ -101,6 +102,8 @@ class BoundedToolCache:
                 self.misses_count += 1
                 return None
 
+            self._access_seq += 1
+            setattr(entry, "_access_seq", self._access_seq)
             entry.last_accessed = datetime.now(timezone.utc).isoformat()
             entry.access_count += 1
             self.hits_count += 1
@@ -133,6 +136,8 @@ class BoundedToolCache:
             result_payload=result_payload,
             associated_paths=paths,
         )
+        self._access_seq += 1
+        setattr(entry, "_access_seq", self._access_seq)
         self._cache[key_str] = entry
         return entry
 
@@ -140,8 +145,11 @@ class BoundedToolCache:
         """Evicts the least recently accessed cache entry."""
         if not self._cache:
             return
-        # Find entry with oldest last_accessed
-        oldest_key = min(self._cache.keys(), key=lambda k: self._cache[k].last_accessed)
+        # Find entry with oldest access sequence or timestamp
+        oldest_key = min(
+            self._cache.keys(),
+            key=lambda k: getattr(self._cache[k], "_access_seq", 0),
+        )
         del self._cache[oldest_key]
         self.evictions_count += 1
 

@@ -151,6 +151,25 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="List all available task IDs and exit.",
     )
+    parser.add_argument(
+        "--clean-copy",
+        action="store_true",
+        help="Execute task against clean repository copies (Stage 28 Clean-Copy Evaluator).",
+    )
+    parser.add_argument(
+        "--baseline-commit",
+        type=str,
+        default=None,
+        help="Explicit baseline commit SHA for clean snapshotting (optional).",
+    )
+    parser.add_argument(
+        "--mode",
+        dest="execution_mode",
+        type=str,
+        default="fixture",
+        choices=["live", "fixture", "unavailable"],
+        help="Agent execution mode for clean-copy evaluation (default: 'fixture').",
+    )
 
     return parser
 
@@ -253,6 +272,35 @@ def main(argv: list[str] | None = None) -> int:
 
     if not args.task_id:
         parser.error("The --task / -t argument is required (or use --list-tasks).")
+
+    if args.clean_copy:
+        from local.clean_copy.evaluator import CleanCopyEvaluator
+        from local.clean_copy.models import ExecutionMode
+        mode_enum = ExecutionMode(args.execution_mode.upper())
+        evaluator = CleanCopyEvaluator(tasks_file=args.tasks_file, output_dir=args.output_dir)
+        rec = evaluator.evaluate_task(
+            task_id=args.task_id,
+            candidate_ref=args.candidate_dir,
+            baseline_commit=args.baseline_commit,
+            mode=mode_enum,
+        )
+        print("=" * 60)
+        print("IMPULSE CLEAN-COPY EVALUATION SUMMARY")
+        print("=" * 60)
+        print(f"Run ID:                 {rec.run_id}")
+        print(f"Task ID:                {rec.task_id}")
+        print(f"Candidate:              {rec.candidate_id}")
+        print(f"Baseline Commit:        {rec.baseline_commit[:12] if rec.baseline_commit else 'N/A'}")
+        print(f"Execution Status:       {rec.execution_status}")
+        print(f"Patch Extraction:       {rec.patch_extraction_status}")
+        print(f"Patch Apply:            {rec.patch_apply_status}")
+        print(f"Verification Status:    {rec.verification_status}")
+        print(f"Clean-Copy Verified:    {rec.clean_copy_verified}")
+        print(f"Overall Success:        {rec.success}")
+        print(f"Termination Reason:     {rec.termination_reason}")
+        print(f"Elapsed Time:           {rec.elapsed_seconds:.4f}s")
+        print("=" * 60)
+        return 0 if rec.success else 1
 
     spec = RunSpec(
         task_id=args.task_id,

@@ -66,6 +66,15 @@ CREATE TABLE IF NOT EXISTS runs (
     patch_generated INTEGER DEFAULT 0,
     failure_class TEXT,
     source_artifact TEXT,
+    baseline_commit TEXT,
+    candidate_config_sha256 TEXT,
+    patch_sha256 TEXT,
+    patch_extraction_status TEXT,
+    patch_apply_status TEXT,
+    verification_status TEXT,
+    failure_stage TEXT,
+    workspace_isolated INTEGER DEFAULT 1,
+    clean_copy_verified INTEGER DEFAULT 0,
     created_at TEXT NOT NULL,
     FOREIGN KEY (candidate_id) REFERENCES candidates(candidate_id) ON DELETE CASCADE,
     FOREIGN KEY (task_id) REFERENCES tasks(task_id) ON DELETE CASCADE
@@ -153,6 +162,25 @@ def init_schema(conn: sqlite3.Connection) -> None:
 
         for idx_sql in INDEXES_SQL:
             conn.execute(idx_sql)
+
+        # Idempotently add clean-copy columns if migrating an existing database
+        cur = conn.cursor()
+        cur.execute("PRAGMA table_info(runs);")
+        existing_cols = {row[1] for row in cur.fetchall()}
+        clean_copy_cols = [
+            ("baseline_commit", "TEXT"),
+            ("candidate_config_sha256", "TEXT"),
+            ("patch_sha256", "TEXT"),
+            ("patch_extraction_status", "TEXT"),
+            ("patch_apply_status", "TEXT"),
+            ("verification_status", "TEXT"),
+            ("failure_stage", "TEXT"),
+            ("workspace_isolated", "INTEGER DEFAULT 1"),
+            ("clean_copy_verified", "INTEGER DEFAULT 0"),
+        ]
+        for col_name, col_type in clean_copy_cols:
+            if col_name not in existing_cols:
+                conn.execute(f"ALTER TABLE runs ADD COLUMN {col_name} {col_type};")
 
         # Record schema version if not already present
         cur = conn.cursor()
