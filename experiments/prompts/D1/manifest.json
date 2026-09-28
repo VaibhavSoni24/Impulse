@@ -1,0 +1,68 @@
+{
+  "candidate_id": "D1",
+  "stage": "Stage 22",
+  "parent_candidate": "E_S1",
+  "parent_git_commit": "5e8202f0df1f30c41517996fd765bc35f54cbbfb",
+  "parent_prompt_sha256": "1f800d8c0709f1ba2fc3b9771f189c4163e0a292928ec2cbd7be3a26ada37277",
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "prompt_reference": "experiments/candidates/D1/prompts/root.md",
+  "prompt_sha256": "c2242d13e97c944174921c261bffac7223077f27cd7692a7b40047a864660695",
+  "agent_config_reference": "experiments/candidates/D1/agent.yaml",
+  "agent_config_sha256": "68cd2bafd0d4bde105273d62b888ebf651638ef619fea41c7b66a2a3706f236f",
+  "scout_config_reference": "experiments/candidates/D1/sub_agents/scout.yaml",
+  "scout_config_sha256": "335c1a32d7001271f8b9417e2981e2d3214c55713be99b3da1a6e0634d705877",
+  "scout_prompt_reference": "experiments/candidates/D1/prompts/scout.md",
+  "scout_prompt_sha256": "d57f433cf7459f258c8bc5011f82b5887aea2d07e1ef674c5b95cc8cbe007805",
+  "debugger_configured": false,
+  "debugger_policy": "UNAVAILABLE",
+  "declared_skills": [
+    "skills/test_strategy",
+    "skills/repo_triage"
+  ],
+  "repo_triage_skill_name": "repo_triage",
+  "repo_triage_skill_path": "agent/skills/repo_triage/SKILL.md",
+  "repo_triage_skill_sha256": "ac7a967136bba6ebd085511595ecbbcd7b3c258927518bfede77cc82a9bb10ce",
+  "test_strategy_skill_sha256": "3d027b0f9a7f830bfc68452cc98d962bb702ab16963a62574fcd4e85e31b7148",
+  "sub_agents": [
+    "scout"
+  ],
+  "validation_status": "structural_only",
+  "evidence_status": "unvalidated",
+  "declared_sampling_configuration": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_output_tokens": 16384,
+    "thinking_config": {
+      "thinking_level": "high",
+      "thinking_budget": 4096,
+      "include_thoughts": true
+    }
+  },
+  "declared_tools": [
+    "run_command",
+    "read_file",
+    "edit_file",
+    "write_file",
+    "get_status",
+    "submit_patch",
+    "search_similar_code",
+    "get_code_neighbors",
+    "get_code_subgraph"
+  ],
+  "scout_tools": [
+    "read_file",
+    "get_status",
+    "search_similar_code",
+    "get_code_neighbors",
+    "get_code_subgraph"
+  ],
+  "debugger_tools": [],
+  "benchmark_scores_asserted": false,
+  "pass_rate": null,
+  "fail_rate": null,
+  "diagnostic_accuracy": null,
+  "debugger_call_frequency": null,
+  "runtime": null,
+  "tool_count": null,
+  "created_at": "2026-09-28T09:30:00+00:00"
+}

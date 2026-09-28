@@ -571,9 +571,9 @@ class TestScoutStage21(unittest.TestCase):
             self.assertEqual(len(cfg["tools"]), 9)
 
     def test_54_no_debugger_agent(self) -> None:
-        """54. Verifies Debugger agent is NOT present."""
-        self.assertFalse((PROJECT_ROOT / "agent/sub_agents/debugger.yaml").exists())
-        self.assertFalse((PROJECT_ROOT / "agent/prompts/debugger.md").exists())
+        """54. Verifies Debugger agent is NOT present in Stage 21 candidates."""
+        self.assertFalse((PROJECT_ROOT / "experiments/candidates/E_S1/sub_agents/debugger.yaml").exists())
+        self.assertFalse((PROJECT_ROOT / "experiments/candidates/E_S2/sub_agents/debugger.yaml").exists())
 
     def test_55_no_reviewer_agent(self) -> None:
         """55. Verifies Reviewer agent is NOT present."""
@@ -581,10 +581,11 @@ class TestScoutStage21(unittest.TestCase):
         self.assertFalse((PROJECT_ROOT / "agent/prompts/reviewer.md").exists())
 
     def test_56_no_later_stage_implementation(self) -> None:
-        """56. Confirms Stage 22+ files do not exist."""
-        subagent_files = list((PROJECT_ROOT / "agent/sub_agents").glob("*.yaml"))
-        names = [f.stem for f in subagent_files]
-        self.assertEqual(names, ["scout"], f"Only scout subagent allowed in Stage 21, found: {names}")
+        """56. Confirms Stage 22+ files do not exist in Stage 21 candidates."""
+        for cand in ["E_S1", "E_S2"]:
+            subagent_files = list((PROJECT_ROOT / f"experiments/candidates/{cand}/sub_agents").glob("*.yaml"))
+            names = [f.stem for f in subagent_files]
+            self.assertEqual(names, ["scout"], f"Only scout subagent allowed in {cand}, found: {names}")
 
     # -------------------------------------------------------------
     # K. Anti-Cheating & Anti-Overfitting (57)
