@@ -1,0 +1,18 @@
+name: scout
+model: gemma-4-31b-it-qat-w4a16-ct
+description: Read-only repository localization specialist that inspects codebase structure and gathers candidate evidence for the root agent without modifying workspace state.
+instruction: !include ../prompts/scout.md
+tools:
+  - read_file
+  - get_status
+  - search_similar_code
+  - get_code_neighbors
+  - get_code_subgraph
+generate_content_config:
+  temperature: 0.2
+  top_p: 0.95
+  max_output_tokens: 16384
+  thinking_config:
+    thinking_level: high
+    thinking_budget: 4096
+    include_thoughts: true

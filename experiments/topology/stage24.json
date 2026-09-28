@@ -1,0 +1,141 @@
+{
+  "stage": "Stage 24",
+  "experiment_name": "multi_agent_topology_experiments",
+  "parent_git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+  "shared_model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "shared_root_prompt_sha256": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+  "shared_sampling_configuration": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_output_tokens": 16384,
+    "thinking_config": {
+      "thinking_level": "high",
+      "thinking_budget": 4096,
+      "include_thoughts": true
+    }
+  },
+  "shared_root_tools": [
+    "run_command",
+    "read_file",
+    "edit_file",
+    "write_file",
+    "get_status",
+    "submit_patch",
+    "search_similar_code",
+    "get_code_neighbors",
+    "get_code_subgraph"
+  ],
+  "shared_skills": [
+    "skills/test_strategy",
+    "skills/repo_triage"
+  ],
+  "benchmark_protocol": {
+    "dev_split_reference": "benchmark/splits/dev.jsonl",
+    "validation_split_reference": "benchmark/splits/validation.jsonl",
+    "held_out_split_reference": "benchmark/splits/held_out.jsonl",
+    "timeout_per_task_seconds": 900,
+    "max_turns_per_task": 50,
+    "initial_environment": "clean_repository_snapshot",
+    "evaluation_status": "UNEXECUTED",
+    "selection_status": "UNRESOLVED"
+  },
+  "topologies": {
+    "M0": {
+      "topology_id": "M0",
+      "name": "root_only",
+      "description": "Baseline topology with Root agent only; no specialist sub-agents.",
+      "specialists": [],
+      "agent_yaml_sha256": "eafdfbeb847b5d019a1ab527f2ff77ff40c205654f5365ff5166e4ba12e81a0b",
+      "validator_status": "PASSED",
+      "live_evaluation_status": "UNEXECUTED",
+      "metrics": {
+        "pass_rate": null,
+        "avg_runtime_seconds": null,
+        "avg_turns": null,
+        "avg_tool_calls": null,
+        "recovery_success_rate": null
+      }
+    },
+    "M1": {
+      "topology_id": "M1",
+      "name": "root_plus_scout",
+      "description": "Root agent with read-only Scout specialist for pre-edit localization.",
+      "specialists": ["scout"],
+      "agent_yaml_sha256": "5b03a052cb8463708f82ae5c920f03bfe5f3872f85f53285dcef38fe1167d022",
+      "validator_status": "PASSED",
+      "live_evaluation_status": "UNEXECUTED",
+      "metrics": {
+        "pass_rate": null,
+        "avg_runtime_seconds": null,
+        "avg_turns": null,
+        "avg_tool_calls": null,
+        "recovery_success_rate": null
+      }
+    },
+    "M2": {
+      "topology_id": "M2",
+      "name": "root_plus_debugger",
+      "description": "Root agent with read-only Debugger specialist for post-failure diagnostic analysis.",
+      "specialists": ["debugger"],
+      "agent_yaml_sha256": "03c38015313f708c5acdf38c50f6ea41db2bf2c4f005ebba3f39f428a5f3f8e8",
+      "validator_status": "PASSED",
+      "live_evaluation_status": "UNEXECUTED",
+      "metrics": {
+        "pass_rate": null,
+        "avg_runtime_seconds": null,
+        "avg_turns": null,
+        "avg_tool_calls": null,
+        "recovery_success_rate": null
+      }
+    },
+    "M3": {
+      "topology_id": "M3",
+      "name": "root_plus_reviewer",
+      "description": "Root agent with read-only Reviewer specialist for pre-submission patch assessment.",
+      "specialists": ["reviewer"],
+      "agent_yaml_sha256": "8eeb19fb9da9df41d8e8a5d0e47338f27dda71f90b42ad15d5d55f489611d789",
+      "validator_status": "PASSED",
+      "live_evaluation_status": "UNEXECUTED",
+      "metrics": {
+        "pass_rate": null,
+        "avg_runtime_seconds": null,
+        "avg_turns": null,
+        "avg_tool_calls": null,
+        "recovery_success_rate": null
+      }
+    },
+    "M4": {
+      "topology_id": "M4",
+      "name": "root_plus_scout_debugger",
+      "description": "Root agent with Scout and Debugger specialists.",
+      "specialists": ["scout", "debugger"],
+      "agent_yaml_sha256": "63e37a622f8ee84476dcd279571bc6e512efdf50e5b0e7afe2df522bc6812e94",
+      "validator_status": "PASSED",
+      "live_evaluation_status": "UNEXECUTED",
+      "metrics": {
+        "pass_rate": null,
+        "avg_runtime_seconds": null,
+        "avg_turns": null,
+        "avg_tool_calls": null,
+        "recovery_success_rate": null
+      }
+    },
+    "M5": {
+      "topology_id": "M5",
+      "name": "root_full_specialists",
+      "description": "Root agent with all three specialists: Scout, Debugger, and Reviewer.",
+      "specialists": ["scout", "debugger", "reviewer"],
+      "agent_yaml_sha256": "6a860415614d5568fcaa3794f19ceab49ba52c6008078e67d96abb606b2f139f",
+      "validator_status": "PASSED",
+      "live_evaluation_status": "UNEXECUTED",
+      "metrics": {
+        "pass_rate": null,
+        "avg_runtime_seconds": null,
+        "avg_turns": null,
+        "avg_tool_calls": null,
+        "recovery_success_rate": null
+      }
+    }
+  },
+  "created_at": "2026-09-28T10:15:00+00:00"
+}
