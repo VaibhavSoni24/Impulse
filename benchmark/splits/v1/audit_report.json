@@ -1,0 +1,63 @@
+{
+  "leakage_audit": {
+    "status": "PASS",
+    "checks": {
+      "internal_uniqueness": true,
+      "cross_split_task_disjointness": true,
+      "no_cross_split_duplicate_text": true,
+      "repository_isolation": true,
+      "commit_snapshot_isolation": true,
+      "source_fidelity": true,
+      "accounting_completeness": true
+    },
+    "cross_split_task_overlap": [],
+    "cross_split_repo_overlap": {},
+    "cross_split_commit_overlap": {},
+    "duplicate_problem_statements": [],
+    "unaccounted_source_records": [],
+    "timestamp": "2026-09-29T05:47:50.460373+00:00"
+  },
+  "distribution": {
+    "total_records": 129,
+    "split_counts": {
+      "dev": 67,
+      "validation": 48,
+      "held_out": 14
+    },
+    "split_proportions": {
+      "dev": 0.5194,
+      "validation": 0.3721,
+      "held_out": 0.1085
+    },
+    "repos_per_split": {
+      "dev": [
+        "fastapi/fastapi"
+      ],
+      "validation": [
+        "Textualize/rich"
+      ],
+      "held_out": [
+        "encode/httpx",
+        "psf/requests"
+      ]
+    },
+    "tasks_per_repo": {
+      "fastapi/fastapi": 67,
+      "Textualize/rich": 48,
+      "encode/httpx": 1,
+      "psf/requests": 13
+    },
+    "tasks_per_repo_per_split": {
+      "dev": {
+        "fastapi/fastapi": 67
+      },
+      "validation": {
+        "Textualize/rich": 48
+      },
+      "held_out": {
+        "encode/httpx": 1,
+        "psf/requests": 13
+      }
+    }
+  }
+}

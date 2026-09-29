@@ -125,6 +125,9 @@ class EvaluationRunRecord:
     verification_command: str = ""
     verification_output: str = ""
     manifest_hash: str = ""
+    split_name: str = ""
+    split_version: str = ""
+    split_manifest_sha256: str = ""
 
     def compute_manifest_hash(self) -> str:
         """Generates a deterministic hash representing this evaluation outcome."""
@@ -138,6 +141,9 @@ class EvaluationRunRecord:
             "success": self.success,
             "verification_status": self.verification_status,
             "clean_copy_verified": self.clean_copy_verified,
+            "split_name": self.split_name,
+            "split_version": self.split_version,
+            "split_manifest_sha256": self.split_manifest_sha256,
         }
         encoded = json.dumps(payload, sort_keys=True).encode("utf-8")
         self.manifest_hash = hashlib.sha256(encoded).hexdigest()

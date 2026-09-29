@@ -73,6 +73,9 @@ class CleanCopyEvaluator:
         verification_command: Optional[str] = None,
         allow_dirty_baseline: bool = False,
         persist_db: bool = True,
+        split_name: Optional[str] = None,
+        split_version: Optional[str] = None,
+        split_manifest_sha256: Optional[str] = None,
     ) -> EvaluationRunRecord:
         """Executes full clean-copy evaluation for a single task."""
         start_wall = time.perf_counter()
@@ -86,6 +89,9 @@ class CleanCopyEvaluator:
             baseline_commit="",
             candidate_config_sha256="",
             start_time=start_iso,
+            split_name=split_name or "",
+            split_version=split_version or ("v1" if split_name else ""),
+            split_manifest_sha256=split_manifest_sha256 or "",
         )
 
         agent_ws: Optional[CleanRepositorySnapshot] = None
@@ -93,7 +99,14 @@ class CleanCopyEvaluator:
 
         try:
             # 1. Resolve task
-            loader = TaskLoader(self.tasks_file)
+            if split_name:
+                loader = TaskLoader.from_split(
+                    split_name,
+                    record.split_version,
+                    splits_root=self.repo_root / "benchmark" / "splits",
+                )
+            else:
+                loader = TaskLoader(self.tasks_file)
             try:
                 task = loader.get_task(task_id)
             except Exception as e:

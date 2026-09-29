@@ -75,6 +75,9 @@ CREATE TABLE IF NOT EXISTS runs (
     failure_stage TEXT,
     workspace_isolated INTEGER DEFAULT 1,
     clean_copy_verified INTEGER DEFAULT 0,
+    split_name TEXT,
+    split_version TEXT,
+    split_manifest_sha256 TEXT,
     created_at TEXT NOT NULL,
     FOREIGN KEY (candidate_id) REFERENCES candidates(candidate_id) ON DELETE CASCADE,
     FOREIGN KEY (task_id) REFERENCES tasks(task_id) ON DELETE CASCADE
@@ -177,6 +180,9 @@ def init_schema(conn: sqlite3.Connection) -> None:
             ("failure_stage", "TEXT"),
             ("workspace_isolated", "INTEGER DEFAULT 1"),
             ("clean_copy_verified", "INTEGER DEFAULT 0"),
+            ("split_name", "TEXT"),
+            ("split_version", "TEXT"),
+            ("split_manifest_sha256", "TEXT"),
         ]
         for col_name, col_type in clean_copy_cols:
             if col_name not in existing_cols:

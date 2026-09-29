@@ -62,6 +62,14 @@ def main(argv: list[str] | None = None) -> int:
         help="Execution mode (default: 'fixture').",
     )
     parser.add_argument(
+        "--split",
+        dest="split_name",
+        type=str,
+        default=None,
+        choices=["dev", "validation", "held_out"],
+        help="Target benchmark split (e.g. 'dev', 'validation', 'held_out').",
+    )
+    parser.add_argument(
         "--tasks-file",
         type=Path,
         default=DEFAULT_TASKS_FILE,
@@ -117,17 +125,21 @@ def main(argv: list[str] | None = None) -> int:
         baseline_commit=args.baseline_commit,
         mode=mode_enum,
         allow_dirty_baseline=args.allow_dirty_baseline,
+        split_name=args.split_name,
     )
 
     if args.json:
         print(json.dumps(record.to_dict(), indent=2))
     else:
         print("=" * 65)
-        print("IMPULSE CLEAN-COPY EVALUATION REPORT (STAGE 28)")
+        print("IMPULSE CLEAN-COPY EVALUATION REPORT (STAGE 28/29)")
         print("=" * 65)
         print(f"Run ID:                 {record.run_id}")
         print(f"Task ID:                {record.task_id}")
         print(f"Candidate:              {record.candidate_id}")
+        if record.split_name:
+            v_str = record.split_version if record.split_version.startswith("v") else f"v{record.split_version}"
+            print(f"Split:                  {record.split_name.upper()} ({v_str})")
         print(f"Baseline Commit:        {record.baseline_commit[:12] if record.baseline_commit else 'N/A'}")
         print(f"Candidate Config SHA:   {record.candidate_config_sha256[:12] if record.candidate_config_sha256 else 'N/A'}")
         print(f"Execution Status:       {record.execution_status}")

@@ -423,8 +423,8 @@ def ingest_clean_eval_record(conn: sqlite3.Connection, record: Any) -> None:
             failure_class, baseline_commit, candidate_config_sha256,
             patch_sha256, patch_extraction_status, patch_apply_status,
             verification_status, failure_stage, workspace_isolated,
-            clean_copy_verified, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            clean_copy_verified, split_name, split_version, split_manifest_sha256, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(run_id) DO UPDATE SET
             status=excluded.status,
             termination_reason=excluded.termination_reason,
@@ -444,7 +444,10 @@ def ingest_clean_eval_record(conn: sqlite3.Connection, record: Any) -> None:
             verification_status=excluded.verification_status,
             failure_stage=excluded.failure_stage,
             workspace_isolated=excluded.workspace_isolated,
-            clean_copy_verified=excluded.clean_copy_verified;
+            clean_copy_verified=excluded.clean_copy_verified,
+            split_name=excluded.split_name,
+            split_version=excluded.split_version,
+            split_manifest_sha256=excluded.split_manifest_sha256;
         """
 
         conn.execute(
@@ -474,6 +477,9 @@ def ingest_clean_eval_record(conn: sqlite3.Connection, record: Any) -> None:
                 f_stage_str,
                 1 if run_dict.get("workspace_isolated", True) else 0,
                 1 if run_dict.get("clean_copy_verified", False) else 0,
+                run_dict.get("split_name"),
+                run_dict.get("split_version"),
+                run_dict.get("split_manifest_sha256"),
                 created_at,
             ),
         )

@@ -50,10 +50,27 @@ def validate_task_id(task_id: str) -> None:
 
 
 class TaskLoader:
-    """Loads and queries competition tasks from tasks.jsonl."""
+    """Loads and queries competition tasks from tasks.jsonl or benchmark splits."""
 
     def __init__(self, tasks_file: Path | str = DEFAULT_TASKS_FILE) -> None:
         self.tasks_file = Path(tasks_file)
+
+    @classmethod
+    def from_split(
+        cls,
+        split_name: str,
+        split_version: str = "v1",
+        splits_root: Path | str = Path("benchmark/splits"),
+    ) -> TaskLoader:
+        """Constructs a TaskLoader pointing to a specific benchmark split."""
+        root = Path(splits_root)
+        target_file = root / split_version / f"{split_name.lower().strip()}.jsonl"
+        if not target_file.is_file():
+            direct_p = Path(split_name)
+            if direct_p.is_file():
+                return cls(direct_p)
+            raise TaskNotFoundError(f"Benchmark split file not found: {target_file}")
+        return cls(target_file)
 
     def _ensure_file_exists(self) -> None:
         if not self.tasks_file.exists():
