@@ -1,0 +1,2 @@
+candidate_id,split,split_version,evidence_mode,task_count,eligible_run_count,completed_run_count,success_count,failure_count,pass_rate,avg_runtime_seconds,median_runtime_seconds,p95_runtime_seconds,avg_tool_calls,median_tool_calls,avg_turns,median_turns,avg_patch_lines,avg_files_changed,recovery_attempts,recovery_successes,recovery_success_rate,runtime_unavailable_count,patch_apply_conflicts,verification_failures,report_status
+E0,dev,v1,UNAVAILABLE,67,0,0,0,0,,,,,,,,,,,0,0,,2,0,0,NO_LIVE_RESULTS

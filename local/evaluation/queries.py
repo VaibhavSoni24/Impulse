@@ -50,6 +50,8 @@ def list_runs(
     candidate_id: str | None = None,
     task_id: str | None = None,
     status: str | None = None,
+    split_name: str | None = None,
+    split_version: str | None = None,
 ) -> list[dict[str, Any]]:
     """Returns filtered run records."""
     query = """
@@ -67,6 +69,12 @@ def list_runs(
     if status:
         query += " AND status = ?"
         params.append(status)
+    if split_name:
+        query += " AND split_name = ?"
+        params.append(split_name)
+    if split_version:
+        query += " AND split_version = ?"
+        params.append(split_version)
 
     query += " ORDER BY created_at ASC, run_id ASC;"
     cur = conn.cursor()

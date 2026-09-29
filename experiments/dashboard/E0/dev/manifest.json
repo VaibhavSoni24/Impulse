@@ -1,0 +1,27 @@
+{
+  "artifact_hashes": {
+    "failures_jsonl": "ee6c0ae297266e189ad5718495b31c0263217b2f492b28b1df13034cf2845882",
+    "metrics_csv": "6515a0cf5b23b71d91f45d869c94123e8a559d1ab22e7fd456a435a23febf3e0",
+    "summary_md": "ec6896619ce37d105844b4fbc0f035e0d39288d34105fa4813b331274215dda8"
+  },
+  "candidate_id": "E0",
+  "evidence_mode": "UNAVAILABLE",
+  "generated_at": "2026-09-29T07:40:27.484164+00:00",
+  "generator_version": "1.0.0",
+  "git_commit": "5c45f53f3321c4e7ea987eda43b43809f8d2f73a",
+  "record_counts": {
+    "completed_run_count": 0,
+    "eligible_run_count": 0,
+    "failed_runs_extracted": 2,
+    "failure_count": 0,
+    "success_count": 0,
+    "total_runs_recorded": 2,
+    "total_tasks_in_split": 67,
+    "unavailable_count": 2
+  },
+  "report_status": "NO_LIVE_RESULTS",
+  "source_db_sha256": "e4061bfa79749c154ddef0096557d8d015440131f8536a75fe282e67d894cfa7",
+  "split_manifest_sha256": "ddbd2baab4567cbafcdb29a3c0e131b0ae2db33abdd6c6967db3f83db6fc00e8",
+  "split_name": "dev",
+  "split_version": "v1"
+}

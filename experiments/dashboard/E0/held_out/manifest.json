@@ -1,0 +1,27 @@
+{
+  "artifact_hashes": {
+    "failures_jsonl": "073fcd9d528b7240428d1ed7ccd60d3463bb1d565f14388c4f8deff3b3932a0b",
+    "metrics_csv": "dcff43fef0096023ddb4e1378398dbafc109329b7aaae8bf8705b7b4e49f5956",
+    "summary_md": "658ad1dd964e2215ea6fe18a40e513037633528396097515d78088420fa0b7f8"
+  },
+  "candidate_id": "E0",
+  "evidence_mode": "UNAVAILABLE",
+  "generated_at": "2026-09-29T07:40:27.865969+00:00",
+  "generator_version": "1.0.0",
+  "git_commit": "5c45f53f3321c4e7ea987eda43b43809f8d2f73a",
+  "record_counts": {
+    "completed_run_count": 0,
+    "eligible_run_count": 0,
+    "failed_runs_extracted": 2,
+    "failure_count": 0,
+    "success_count": 0,
+    "total_runs_recorded": 2,
+    "total_tasks_in_split": 14,
+    "unavailable_count": 2
+  },
+  "report_status": "NO_LIVE_RESULTS",
+  "source_db_sha256": "bedb81a891110120fbadf6aebc2007a2a7c914fa6ae8a8d9888746b49195b119",
+  "split_manifest_sha256": "ddbd2baab4567cbafcdb29a3c0e131b0ae2db33abdd6c6967db3f83db6fc00e8",
+  "split_name": "held_out",
+  "split_version": "v1"
+}
