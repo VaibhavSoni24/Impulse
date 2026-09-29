@@ -1,0 +1,31 @@
+{
+  "artifact_hashes": {
+    "report.md": "36586ee826a35a8256d0595dc6027fe258ec3812d82896998f55d3a06808859b",
+    "root.md": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e"
+  },
+  "benchmark_manifest_hash": "",
+  "benchmark_split": "dev",
+  "candidate_id": "P0",
+  "changed_files": [
+    "root.md"
+  ],
+  "changed_section": "NONE",
+  "created_at": "2026-09-29T11:08:45.033302+00:00",
+  "created_from_commit": "",
+  "decision": "PROMOTED",
+  "decision_rationale": "Immutable baseline prompt established from M0 root topology.",
+  "evidence_mode": "UNAVAILABLE",
+  "experiment_id": "exp-p0-baseline",
+  "held_out_lock_hash": "",
+  "hypothesis": null,
+  "intervention_type": "BASELINE",
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "parent_candidate_id": null,
+  "parent_prompt_sha256": "",
+  "prompt_id": "P0_root",
+  "prompt_path": "experiments/prompts/P0/root.md",
+  "prompt_sha256": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+  "source_failure_cluster_id": null,
+  "target_failure_mode": "BASELINE",
+  "topology_id": "root_only"
+}
