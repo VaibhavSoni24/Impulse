@@ -1,0 +1,41 @@
+{
+  "budget_diff": {},
+  "candidate_id": "T3",
+  "candidate_policy_hash": "033142e460c9db117c6dcca70d7ceb306c2d4e172243d164a84b4e367ef343f9",
+  "candidate_variant": "T3",
+  "enabled_flags_diff": {
+    "adaptive_enabled": [
+      false,
+      true
+    ]
+  },
+  "escalation_rules_diff": {
+    "escalate_on_incomplete_fix": [
+      null,
+      true
+    ]
+  },
+  "fallback_rules_diff": {},
+  "feasibility_rules_diff": {},
+  "is_identical": false,
+  "is_isolated_progression": true,
+  "parent_candidate_id": "T2",
+  "parent_policy_hash": "cada62c1b0291ee4db996080671bf80b0249a21f810171fd17c21a91cd739d25",
+  "parent_variant": "T2",
+  "stop_rules_diff": {
+    "stop_on_adjacent_pass_if_no_regressions": [
+      false,
+      true
+    ],
+    "stop_on_targeted_pass_if_low_risk": [
+      false,
+      true
+    ]
+  },
+  "summary_messages": [
+    "adaptive_enabled: False -> True",
+    "escalation_rules['escalate_on_incomplete_fix']: None -> True",
+    "stop_rules['stop_on_adjacent_pass_if_no_regressions']: False -> True",
+    "stop_rules['stop_on_targeted_pass_if_low_risk']: False -> True"
+  ]
+}

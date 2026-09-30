@@ -1,0 +1,46 @@
+{
+  "cost": {
+    "adjacent_commands": 0,
+    "duplicate_test_case_count": 0,
+    "full_suite_commands": 0,
+    "mean_test_duration_ms": null,
+    "median_test_duration_ms": null,
+    "p95_test_duration_ms": null,
+    "repeated_command_count": 0,
+    "subsystem_commands": 0,
+    "targeted_commands": 0,
+    "testing_tool_call_share": null,
+    "total_agent_runtime_ms": null,
+    "total_output_bytes": 0,
+    "total_test_commands": 0,
+    "total_test_duration_ms": null,
+    "total_test_runtime_ms": 0,
+    "total_tests_executed": 0
+  },
+  "diagnostics": {
+    "diagnostic_messages": [],
+    "duplicate_case_count": 0,
+    "duplicate_command_count": 0,
+    "repeated_failure_count": 0,
+    "rerun_unchanged_code_count": 0,
+    "unnecessary_full_suite_count": 0,
+    "zero_new_evidence_adjacent_count": 0,
+    "zero_new_evidence_subsystem_count": 0
+  },
+  "quality": {
+    "adjacent_failures_discovered": 0,
+    "clean_copy_verification_success": true,
+    "early_detection_level": "NONE",
+    "failure_rate": 0.0,
+    "false_confidence_count": 0,
+    "full_suite_failures_discovered": 0,
+    "incomplete_fixes_detected": 0,
+    "pass_rate": 0.0,
+    "regressions_detected": 0,
+    "subsystem_failures_discovered": 0,
+    "targeted_behavior_confirmed": 0,
+    "targeted_failure_count": 0,
+    "targeted_failure_mode": "INCOMPLETE_FIX",
+    "targeted_failure_rate": 0.0
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "adaptive_enabled": false,
+  "adjacent_enabled": true,
+  "candidate_id": "T1",
+  "escalation_rules": {
+    "escalate_on_adjacent_regression": false,
+    "escalate_on_high_risk": false,
+    "escalate_on_targeted_failure": true
+  },
+  "fallback_rules": {
+    "on_command_launch_error": "FALLBACK_RUNNER",
+    "on_framework_unavailable": "CLASSIFY_INFRASTRUCTURE",
+    "on_full_suite_infeasible": "STOP_AT_SUBSYSTEM",
+    "on_targeted_not_found": "BROADER_DISCOVERY"
+  },
+  "full_suite_enabled": false,
+  "full_suite_feasibility_rules": {
+    "max_estimated_runtime_seconds": 120.0,
+    "max_suite_test_count": 200,
+    "require_stable_env": true
+  },
+  "max_test_cases": 40,
+  "max_test_commands": 4,
+  "runtime_budget_seconds": 180.0,
+  "stop_rules": {
+    "stop_on_adjacent_pass_if_no_regressions": true,
+    "stop_on_budget_exhaustion": true,
+    "stop_on_targeted_pass_if_low_risk": false
+  },
+  "subsystem_enabled": false,
+  "targeted_enabled": true,
+  "variant": "T1"
+}

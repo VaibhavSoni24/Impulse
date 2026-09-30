@@ -1,0 +1,62 @@
+{
+  "budget_diff": {
+    "max_test_cases": [
+      40,
+      80
+    ],
+    "max_test_commands": [
+      4,
+      6
+    ],
+    "runtime_budget_seconds": [
+      180.0,
+      300.0
+    ]
+  },
+  "candidate_id": "T2",
+  "candidate_policy_hash": "cada62c1b0291ee4db996080671bf80b0249a21f810171fd17c21a91cd739d25",
+  "candidate_variant": "T2",
+  "enabled_flags_diff": {
+    "full_suite_enabled": [
+      false,
+      true
+    ],
+    "subsystem_enabled": [
+      false,
+      true
+    ]
+  },
+  "escalation_rules_diff": {
+    "escalate_on_adjacent_regression": [
+      false,
+      true
+    ],
+    "escalate_on_high_risk": [
+      false,
+      true
+    ]
+  },
+  "fallback_rules_diff": {},
+  "feasibility_rules_diff": {},
+  "is_identical": false,
+  "is_isolated_progression": true,
+  "parent_candidate_id": "T1",
+  "parent_policy_hash": "418d055b9cdcdc02923afeee8b8aa57d715c89d45283dfcd8b094fdcaa9dbff1",
+  "parent_variant": "T1",
+  "stop_rules_diff": {
+    "stop_on_adjacent_pass_if_no_regressions": [
+      true,
+      false
+    ]
+  },
+  "summary_messages": [
+    "subsystem_enabled: False -> True",
+    "full_suite_enabled: False -> True",
+    "max_test_commands: 4 -> 6",
+    "max_test_cases: 40 -> 80",
+    "runtime_budget_seconds: 180.0 -> 300.0",
+    "escalation_rules['escalate_on_adjacent_regression']: False -> True",
+    "escalation_rules['escalate_on_high_risk']: False -> True",
+    "stop_rules['stop_on_adjacent_pass_if_no_regressions']: True -> False"
+  ]
+}

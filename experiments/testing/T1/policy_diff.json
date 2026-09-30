@@ -1,0 +1,52 @@
+{
+  "budget_diff": {
+    "max_test_cases": [
+      20,
+      40
+    ],
+    "max_test_commands": [
+      2,
+      4
+    ],
+    "runtime_budget_seconds": [
+      120.0,
+      180.0
+    ]
+  },
+  "candidate_id": "T1",
+  "candidate_policy_hash": "418d055b9cdcdc02923afeee8b8aa57d715c89d45283dfcd8b094fdcaa9dbff1",
+  "candidate_variant": "T1",
+  "enabled_flags_diff": {
+    "adjacent_enabled": [
+      false,
+      true
+    ]
+  },
+  "escalation_rules_diff": {
+    "escalate_on_targeted_failure": [
+      false,
+      true
+    ]
+  },
+  "fallback_rules_diff": {},
+  "feasibility_rules_diff": {},
+  "is_identical": false,
+  "is_isolated_progression": true,
+  "parent_candidate_id": "T0",
+  "parent_policy_hash": "76820d5c5e2a983e4d013180d80dda7601b7cba14ad6bebeb56a93e42e730c36",
+  "parent_variant": "T0",
+  "stop_rules_diff": {
+    "stop_on_targeted_pass_if_low_risk": [
+      true,
+      false
+    ]
+  },
+  "summary_messages": [
+    "adjacent_enabled: False -> True",
+    "max_test_commands: 2 -> 4",
+    "max_test_cases: 20 -> 40",
+    "runtime_budget_seconds: 120.0 -> 180.0",
+    "escalation_rules['escalate_on_targeted_failure']: False -> True",
+    "stop_rules['stop_on_targeted_pass_if_low_risk']: True -> False"
+  ]
+}
