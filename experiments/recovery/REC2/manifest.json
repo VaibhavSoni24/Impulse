@@ -1,0 +1,16 @@
+{
+  "candidate_id": "REC2",
+  "parent_candidate": "REC0",
+  "policy_hash": "12182d63be0a0211468cb05a0b387d3401a02831cc9c8c31d0859b8cff20c519",
+  "intervention_id": "int_rec2",
+  "root_prompt_hash": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+  "retrieval_policy_hash": "3e1b234a2ac756a8d83395f37f3ddf0043758f5da731c097b412d333a8459cf7",
+  "testing_policy_hash": "76820d5c5e2a983e4d013180d80dda7601b7cba14ad6bebeb56a93e42e730c36",
+  "topology_hash": "root_only",
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "test_strategy_skill_hash": "3d027b0f9a7f830bfc68452cc98d962bb702ab16963a62574fcd4e85e31b7148",
+  "repo_triage_skill_hash": "ac7a967136bba6ebd085511595ecbbcd7b3c258927518bfede77cc82a9bb10ce",
+  "evidence_mode": "UNAVAILABLE",
+  "benchmark_split": "dev",
+  "created_at": "2026-09-30T17:50:26.924478+00:00"
+}

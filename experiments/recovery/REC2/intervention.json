@@ -1,0 +1,23 @@
+{
+  "intervention_id": "int_rec2",
+  "source_cluster_id": "cluster_rec2",
+  "target_failure_mode": "FAILED_RECOVERY / RETRY_WASTE",
+  "hypothesis": "Routing immediately to an alternate recovery tool/path avoids wasted retries.",
+  "expected_behavior_change": "Eliminates wasted retries on failed actions; increases alternate path success.",
+  "intervention_scope": "RECOVERY",
+  "changed_dimensions": [
+    "recovery_policy"
+  ],
+  "affected_files": [
+    "experiments/recovery/REC2/policy.json"
+  ],
+  "baseline_candidate": "REC0",
+  "candidate_id": "REC2",
+  "smoke_tasks": [],
+  "validation_split": "validation",
+  "held_out_policy": "WHEN_PROMISING",
+  "success_metric": "retry_count decreases; alternate_path_success_rate increases.",
+  "rejection_condition": "New recovery loops or collateral regressions.",
+  "status": "PROPOSED",
+  "created_at": "2026-09-30T17:50:26.926497+00:00"
+}

@@ -1,0 +1,42 @@
+{
+  "variant": "REC0",
+  "candidate_id": "REC0",
+  "retry_budgets": {
+    "max_same_action_retries": 2,
+    "max_total_recovery_attempts": 4,
+    "max_alternate_paths": 1,
+    "max_recovery_runtime_seconds": 120.0,
+    "max_recovery_tool_calls": 8
+  },
+  "early_detection_enabled": false,
+  "loop_guard_enabled": false,
+  "alternate_path_routing_enabled": false,
+  "no_progress_threshold_turns": 3,
+  "triggers": {
+    "budget_pressure_remaining_tools": 10,
+    "budget_pressure_remaining_seconds": 300.0,
+    "test_failure_escalate_attempts": 2,
+    "bad_edit_max_attempts": 2,
+    "search_fallback_max_attempts": 5
+  },
+  "actions": {
+    "bad_edit_safe_ownership_only": true,
+    "allow_revert": true,
+    "allow_alternate_tool": true,
+    "allow_stack_inspection": true
+  },
+  "fallback_rules": {
+    "on_tool_failure": "RETRY_THEN_ALTERNATE",
+    "on_test_failure": "CLASSIFY_THEN_INSPECT",
+    "on_bad_edit": "REPAIR_OR_REVERT",
+    "on_search_exhaustion": "EXACT_THEN_TREE_THEN_GRAPH",
+    "on_budget_pressure": "TARGETED_VALIDATION_THEN_REVIEW"
+  },
+  "stop_conditions": [
+    "budget_exhausted",
+    "loop_detected",
+    "path_exhausted",
+    "target_state_recovered"
+  ],
+  "prompt_instruction": null
+}

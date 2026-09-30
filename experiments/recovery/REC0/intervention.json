@@ -1,0 +1,23 @@
+{
+  "intervention_id": "int_rec0",
+  "source_cluster_id": "cluster_rec0",
+  "target_failure_mode": "Baseline Canonical Recovery Paths",
+  "hypothesis": "Baseline configuration for bounded recovery across 5 families.",
+  "expected_behavior_change": "Establish baseline recovery latency, cost, and loop metrics.",
+  "intervention_scope": "RECOVERY",
+  "changed_dimensions": [
+    "recovery_policy"
+  ],
+  "affected_files": [
+    "experiments/recovery/REC0/policy.json"
+  ],
+  "baseline_candidate": "REC0",
+  "candidate_id": "REC0",
+  "smoke_tasks": [],
+  "validation_split": "validation",
+  "held_out_policy": "WHEN_PROMISING",
+  "success_metric": "Baseline metrics established.",
+  "rejection_condition": "Baseline is immutable.",
+  "status": "BASELINE",
+  "created_at": "2026-09-30T17:50:26.905150+00:00"
+}

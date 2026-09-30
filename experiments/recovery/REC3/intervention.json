@@ -1,0 +1,23 @@
+{
+  "intervention_id": "int_rec3",
+  "source_cluster_id": "cluster_rec3",
+  "target_failure_mode": "RECOVERY_LOOP / RECOVERY_THRASHING",
+  "hypothesis": "Explicit state-fingerprint checking and oscillation suppression will terminate loops cleanly.",
+  "expected_behavior_change": "Stops execution cleanly on cycle detection; prevents runaway recovery tool calls.",
+  "intervention_scope": "RECOVERY",
+  "changed_dimensions": [
+    "recovery_policy"
+  ],
+  "affected_files": [
+    "experiments/recovery/REC3/policy.json"
+  ],
+  "baseline_candidate": "REC0",
+  "candidate_id": "REC3",
+  "smoke_tasks": [],
+  "validation_split": "validation",
+  "held_out_policy": "WHEN_PROMISING",
+  "success_metric": "recovery_loop_count reaches 0; runtime decreases.",
+  "rejection_condition": "Collateral regressions or premature termination of solvable tasks.",
+  "status": "PROPOSED",
+  "created_at": "2026-09-30T17:50:26.935882+00:00"
+}

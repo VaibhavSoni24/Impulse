@@ -1,0 +1,21 @@
+{
+  "cluster_id": "cluster_rec0",
+  "pattern_type": "REPEATED_FAILURE",
+  "canonical_signature": "Repeated command or error signature",
+  "affected_runs": [],
+  "affected_unique_tasks": [],
+  "evidence_modes": [
+    "UNAVAILABLE"
+  ],
+  "repositories": [],
+  "splits": [],
+  "recurrence_count": 0,
+  "successful_recovery_count": 0,
+  "failed_recovery_count": 0,
+  "loop_count": 0,
+  "earliest_detection_opportunity": null,
+  "representative_trace_references": [],
+  "actionable_status": false,
+  "actionability_reason": "Local Windows host lacks 4x L4 GPUs for live inference.",
+  "representative_failure": null
+}

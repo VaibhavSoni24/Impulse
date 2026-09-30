@@ -1,0 +1,45 @@
+{
+  "variant": "REC2",
+  "candidate_id": "REC2",
+  "retry_budgets": {
+    "max_same_action_retries": 1,
+    "max_total_recovery_attempts": 4,
+    "max_alternate_paths": 3,
+    "max_recovery_runtime_seconds": 120.0,
+    "max_recovery_tool_calls": 8
+  },
+  "early_detection_enabled": true,
+  "loop_guard_enabled": false,
+  "alternate_path_routing_enabled": true,
+  "no_progress_threshold_turns": 1,
+  "triggers": {
+    "budget_pressure_remaining_tools": 10,
+    "budget_pressure_remaining_seconds": 300.0,
+    "test_failure_escalate_attempts": 1,
+    "bad_edit_max_attempts": 1,
+    "search_fallback_max_attempts": 3,
+    "alternate_path_on_failure": true
+  },
+  "actions": {
+    "bad_edit_safe_ownership_only": true,
+    "allow_revert": true,
+    "allow_alternate_tool": true,
+    "allow_stack_inspection": true,
+    "route_alternate_investigation": true
+  },
+  "fallback_rules": {
+    "on_tool_failure": "ALTERNATE_TOOL_ROUTE",
+    "on_test_failure": "REVISE_HYPOTHESIS_ALTERNATE_PATH",
+    "on_bad_edit": "REVERT_AND_ALTERNATE_APPROACH",
+    "on_search_exhaustion": "TREE_THEN_GRAPH_ROUTE",
+    "on_budget_pressure": "TARGETED_VALIDATION_THEN_REVIEW"
+  },
+  "stop_conditions": [
+    "budget_exhausted",
+    "loop_detected",
+    "no_alternate_path_available",
+    "path_exhausted",
+    "target_state_recovered"
+  ],
+  "prompt_instruction": null
+}

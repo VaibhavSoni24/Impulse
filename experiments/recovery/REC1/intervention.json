@@ -1,0 +1,23 @@
+{
+  "intervention_id": "int_rec1",
+  "source_cluster_id": "cluster_rec1",
+  "target_failure_mode": "LATE_RECOVERY / REPEATED_COMMAND",
+  "hypothesis": "Triggering recovery on the first failure recurrence will decrease latency without increasing loops.",
+  "expected_behavior_change": "Recovery initiates 2-3 turns earlier on repeated failures.",
+  "intervention_scope": "RECOVERY",
+  "changed_dimensions": [
+    "recovery_policy"
+  ],
+  "affected_files": [
+    "experiments/recovery/REC1/policy.json"
+  ],
+  "baseline_candidate": "REC0",
+  "candidate_id": "REC1",
+  "smoke_tasks": [],
+  "validation_split": "validation",
+  "held_out_policy": "WHEN_PROMISING",
+  "success_metric": "detection_latency_events reduces by >= 2; zero loop regression.",
+  "rejection_condition": "New recovery loops or collateral regressions.",
+  "status": "PROPOSED",
+  "created_at": "2026-09-30T17:50:26.917257+00:00"
+}

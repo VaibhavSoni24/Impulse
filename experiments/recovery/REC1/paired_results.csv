@@ -1,0 +1,3 @@
+task_id,baseline_task_result,candidate_task_result,transition,baseline_recovery_action,candidate_recovery_action,baseline_detection_latency,candidate_detection_latency,baseline_loops,candidate_loops,baseline_attempts,candidate_attempts
+task_s1,FAIL,FAIL,FAIL_TO_STILL_FAILING,REPAIR_EDIT,RETRY_TOOL,0,0,0,0,1,1
+task_s2,FAIL,FAIL,FAIL_TO_STILL_FAILING,REPAIR_EDIT,RETRY_TOOL,0,0,0,0,1,1

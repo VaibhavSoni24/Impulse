@@ -1,0 +1,48 @@
+{
+  "quality_metrics": {
+    "targeted_recovery_success_rate": 0.0,
+    "targeted_failure_reduction": 0,
+    "recovery_loop_count": 0,
+    "detection_latency_events": 0.0,
+    "detection_latency_turns": 0.0,
+    "average_recovery_attempts": 1.0,
+    "mean_recovery_runtime_ms": 0.0,
+    "tasks_recovered_after_failure": 0,
+    "tasks_abandoned_after_failure": 2,
+    "alternate_path_success_rate": 0.0,
+    "first_attempt_recovery_success_rate": 0.0
+  },
+  "cost_metrics": {
+    "recovery_tool_calls": 0,
+    "recovery_turns": 1,
+    "retry_count": 0,
+    "recovery_runtime_ms": 0.0,
+    "additional_tests_caused": 0,
+    "additional_retrieval_calls": 0,
+    "additional_context_growth_bytes": 0,
+    "repeated_failed_interventions": 2
+  },
+  "diagnostics": {
+    "late_recovery": false,
+    "repeated_identical_recovery": true,
+    "recovery_oscillation": false,
+    "retry_waste": false,
+    "recovery_without_state_change": true,
+    "missed_recovery_opportunity": false,
+    "failed_recovery": true,
+    "recovery_causing_unrelated_regression": false,
+    "recovery_causing_excessive_testing": false,
+    "recovery_causing_excessive_retrieval": false,
+    "recovery_budget_exhaustion": false,
+    "recovery_success_after_unnecessary_repetitions": false,
+    "diagnostic_notes": [
+      "Repeated identical recovery: action 'RETRY_TOOL' executed repeatedly with no state change.",
+      "Recovery without state change: action finished with state_before == state_after.",
+      "Failed recovery: one or more recovery attempts failed to resolve the failure."
+    ]
+  },
+  "baseline_loops": 0,
+  "candidate_loops": 0,
+  "decision": "REJECTED",
+  "rationale": "Targeted failure mode remained unchanged at 2 failures."
+}
