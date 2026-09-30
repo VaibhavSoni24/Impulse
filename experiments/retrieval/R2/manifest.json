@@ -1,0 +1,36 @@
+{
+  "artifact_hashes": {
+    "metrics.json": "295c8ea684929c936e87fa2716fddf8b2e32adf424b7afe8a2255489598ecc12",
+    "policy.json": "fac16b321ea1e59efb836171ee0810cb6b65974f2da4ad2287e3d8d3c0fc85a0",
+    "report.md": "46edae42963b60449e83e4beed90d6d1614af9cbb914e3de8ed6468c0035ec72",
+    "retrieval_trace.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "benchmark_manifest_hash": "",
+  "benchmark_split": "validation",
+  "candidate_id": "R2",
+  "created_at": "2026-09-30T16:58:35.735320+00:00",
+  "created_from_commit": "",
+  "decision": "INCONCLUSIVE",
+  "decision_rationale": "Live inference unavailable locally on Windows host.",
+  "evidence_mode": "UNAVAILABLE",
+  "experiment_id": "exp-retrieval-r2",
+  "held_out_lock_hash": "",
+  "hypothesis": {
+    "expected_signal": "Reduction in missing context failures.",
+    "hypothesis": "Selective neighbor retrieval surfaces incoming and outgoing symbol relations without bloating context.",
+    "observation": "Agent identifies seed symbol but misses direct caller/callee relationships necessary for the fix.",
+    "rejection_condition": "Context explosion or zero new useful entities.",
+    "retrieval_change": "Enable get_code_neighbors selectively after inspecting seed symbol.",
+    "target_failure": "MISSING_CALLER_CONTEXT"
+  },
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "parent_candidate_id": "R1",
+  "prompt_id": "P0",
+  "prompt_sha256": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+  "retrieval_policy_hash": "0b792bbf15a3a4026052a4ea8d8464fd972546feaeb21b898e693c923509ba1a",
+  "retrieval_variant": "R2",
+  "source_failure_cluster_id": null,
+  "target_failure_mode": "MISSING_CALLER_CONTEXT",
+  "tool_budget_id": "standard_stage26",
+  "topology_id": "root_only"
+}

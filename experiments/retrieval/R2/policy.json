@@ -1,0 +1,36 @@
+{
+  "candidate_id": "R2",
+  "dynamic_config": {
+    "early_stop_on_sufficient": true,
+    "max_depth": 3,
+    "max_rounds": 3,
+    "min_depth": 1,
+    "redundancy_stop_threshold": 0.5
+  },
+  "dynamic_depth_enabled": false,
+  "expansion_policy": "selective_neighbors",
+  "fallback_behavior": {
+    "on_budget_exhausted": "STOP_RETRIEVAL",
+    "on_neighbor_failure": "INSPECT_CURRENT_SYMBOLS",
+    "on_semantic_failure": "EXACT_SEARCH"
+  },
+  "max_neighbor_calls": 3,
+  "max_retrieval_calls": 5,
+  "max_retrieved_items": 20,
+  "max_semantic_calls": 2,
+  "max_subgraph_calls": 0,
+  "neighbor_depth": 1,
+  "neighbor_retrieval_enabled": true,
+  "semantic_retrieval_enabled": true,
+  "semantic_top_k": 5,
+  "similarity_threshold": 0.5,
+  "subgraph_breadth_k": 0,
+  "subgraph_depth": 0,
+  "subgraph_retrieval_enabled": false,
+  "trigger_conditions": {
+    "min_similarity": 0.5,
+    "require_exact_ambiguity": true,
+    "require_promising_symbol": true
+  },
+  "variant": "R2"
+}

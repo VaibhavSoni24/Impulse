@@ -1,0 +1,38 @@
+{
+  "candidate_id": "R4",
+  "dynamic_config": {
+    "confidence_threshold": 0.75,
+    "early_stop_on_sufficient": true,
+    "max_depth": 3,
+    "max_rounds": 4,
+    "min_depth": 1,
+    "redundancy_stop_threshold": 0.5
+  },
+  "dynamic_depth_enabled": true,
+  "expansion_policy": "dynamic_adaptive",
+  "fallback_behavior": {
+    "on_budget_exhausted": "STOP_RETRIEVAL",
+    "on_neighbor_failure": "INSPECT_CURRENT_SYMBOLS",
+    "on_semantic_failure": "EXACT_SEARCH",
+    "on_subgraph_failure": "INSPECT_CURRENT_SYMBOLS"
+  },
+  "max_neighbor_calls": 3,
+  "max_retrieval_calls": 8,
+  "max_retrieved_items": 30,
+  "max_semantic_calls": 3,
+  "max_subgraph_calls": 2,
+  "neighbor_depth": 1,
+  "neighbor_retrieval_enabled": true,
+  "semantic_retrieval_enabled": true,
+  "semantic_top_k": 5,
+  "similarity_threshold": 0.5,
+  "subgraph_breadth_k": 4,
+  "subgraph_depth": 2,
+  "subgraph_retrieval_enabled": true,
+  "trigger_conditions": {
+    "adaptive_uncertainty": true,
+    "min_similarity": 0.5,
+    "require_exact_ambiguity": true
+  },
+  "variant": "R4"
+}

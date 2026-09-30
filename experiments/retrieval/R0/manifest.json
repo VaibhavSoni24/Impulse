@@ -1,0 +1,29 @@
+{
+  "artifact_hashes": {
+    "metrics.json": "e9d5e62dbaa55bdb25ab76e707e84df8d887442618f86a695e05d7402cd65da1",
+    "policy.json": "e1611a2ce4e00ddc0f28b2ed812d5e85f56d2c0572257741a3a5486cad2e2257",
+    "report.md": "c60006a7799dd4a921ff9ad359a960af40d3950f3d48fa6be0d01f81da0230f2",
+    "retrieval_trace.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "benchmark_manifest_hash": "",
+  "benchmark_split": "validation",
+  "candidate_id": "R0",
+  "created_at": "2026-09-30T16:58:18.131579+00:00",
+  "created_from_commit": "",
+  "decision": "PROMOTED",
+  "decision_rationale": "Immutable baseline R0 established (no semantic/graph retrieval).",
+  "evidence_mode": "UNAVAILABLE",
+  "experiment_id": "exp-retrieval-r0-baseline",
+  "held_out_lock_hash": "",
+  "hypothesis": null,
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "parent_candidate_id": null,
+  "prompt_id": "P0",
+  "prompt_sha256": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+  "retrieval_policy_hash": "3e1b234a2ac756a8d83395f37f3ddf0043758f5da731c097b412d333a8459cf7",
+  "retrieval_variant": "R0",
+  "source_failure_cluster_id": null,
+  "target_failure_mode": "BASELINE",
+  "tool_budget_id": "standard_stage26",
+  "topology_id": "root_only"
+}

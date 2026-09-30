@@ -1,0 +1,38 @@
+{
+  "cost": {
+    "cache_hit_count": 0,
+    "cache_hit_ratio": null,
+    "duplicate_entities": 0,
+    "mean_retrieval_duration_ms": null,
+    "median_retrieval_duration_ms": null,
+    "neighbor_calls": 0,
+    "p95_retrieval_duration_ms": null,
+    "retrieval_call_count": 0,
+    "retrieval_tool_call_share": null,
+    "retrieved_entities": 0,
+    "semantic_calls": 0,
+    "source_files_exposed": 0,
+    "subgraph_calls": 0,
+    "total_agent_tool_calls": null,
+    "total_context_growth_tokens": null,
+    "total_runtime_ms": null,
+    "turns": null,
+    "unique_entities": 0,
+    "unique_entities_per_retrieval_call": null,
+    "unique_files_per_retrieval_call": null
+  },
+  "quality": {
+    "clean_copy_verification_success": true,
+    "fail_to_other_fail_count": 0,
+    "fail_to_pass_count": 0,
+    "failure_rate": 0.0,
+    "localization_failure_count": 0,
+    "pass_rate": 0.0,
+    "pass_to_fail_count": 0,
+    "recovery_success_count": 0,
+    "targeted_failure_count": 0,
+    "targeted_failure_mode": "BASELINE",
+    "targeted_failure_rate": 0.0,
+    "unchanged_failure_count": 0
+  }
+}

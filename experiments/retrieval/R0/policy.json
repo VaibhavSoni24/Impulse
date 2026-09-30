@@ -1,0 +1,35 @@
+{
+  "candidate_id": "R0",
+  "dynamic_config": {
+    "early_stop_on_sufficient": true,
+    "max_depth": 3,
+    "max_rounds": 3,
+    "min_depth": 1,
+    "redundancy_stop_threshold": 0.5
+  },
+  "dynamic_depth_enabled": false,
+  "expansion_policy": "none",
+  "fallback_behavior": {
+    "on_budget_exhausted": "STOP_RETRIEVAL",
+    "on_semantic_failure": "EXACT_SEARCH"
+  },
+  "max_neighbor_calls": 0,
+  "max_retrieval_calls": 0,
+  "max_retrieved_items": 0,
+  "max_semantic_calls": 0,
+  "max_subgraph_calls": 0,
+  "neighbor_depth": 0,
+  "neighbor_retrieval_enabled": false,
+  "semantic_retrieval_enabled": false,
+  "semantic_top_k": 0,
+  "similarity_threshold": 0.5,
+  "subgraph_breadth_k": 0,
+  "subgraph_depth": 0,
+  "subgraph_retrieval_enabled": false,
+  "trigger_conditions": {
+    "allow_file_inspection": true,
+    "allow_text_search": true,
+    "semantic_enabled": false
+  },
+  "variant": "R0"
+}

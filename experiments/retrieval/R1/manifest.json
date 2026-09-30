@@ -1,0 +1,36 @@
+{
+  "artifact_hashes": {
+    "metrics.json": "1e328b1bf90745c4794f8a5ca24d598bd8277c2cc448b50357d33a64c1a34fc7",
+    "policy.json": "a8e6150faf89b8f5ab3326acd8080fcda83c0a0bc4d36b8ade8d86b2ac4f4675",
+    "report.md": "ac184f0981e60b1e129902554e443183d5f54e2cc285bd303452ecc56d219823",
+    "retrieval_trace.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "benchmark_manifest_hash": "",
+  "benchmark_split": "validation",
+  "candidate_id": "R1",
+  "created_at": "2026-09-30T16:58:35.710955+00:00",
+  "created_from_commit": "",
+  "decision": "INCONCLUSIVE",
+  "decision_rationale": "Live inference unavailable locally on Windows host.",
+  "evidence_mode": "UNAVAILABLE",
+  "experiment_id": "exp-retrieval-r1",
+  "held_out_lock_hash": "",
+  "hypothesis": {
+    "expected_signal": "Reduction in wrong file localization failures.",
+    "hypothesis": "Semantic retrieval maps natural-language problem terminology to relevant code entities.",
+    "observation": "Agent fails to localize target files when issue terms do not match source identifiers.",
+    "rejection_condition": "No improvement in target failure or increased failure rate.",
+    "retrieval_change": "Enable search_similar_code under controlled ambiguity trigger.",
+    "target_failure": "WRONG_FILE_LOCALIZATION"
+  },
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "parent_candidate_id": "R0",
+  "prompt_id": "P0",
+  "prompt_sha256": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+  "retrieval_policy_hash": "121bdeee30d315b3793d6f1863fad9c27bb5136524da55f0694f47ee4818a166",
+  "retrieval_variant": "R1",
+  "source_failure_cluster_id": null,
+  "target_failure_mode": "WRONG_FILE_LOCALIZATION",
+  "tool_budget_id": "standard_stage26",
+  "topology_id": "root_only"
+}
