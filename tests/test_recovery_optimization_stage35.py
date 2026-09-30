@@ -428,7 +428,7 @@ class TestRecoveryOptimizationStage35(unittest.TestCase):
 
     # 30. FDD integration
     def test_30_fdd_integration(self) -> None:
-        manager = RecoveryExperimentManager(repo_root=Path.cwd())
+        manager = RecoveryExperimentManager(repo_root=self.tmp_path)
         b_evs, c_evs = fixture_s_targeted_failure_reduction()
         dec, rat, metrics = manager.evaluate_candidate(
             "REC1",
@@ -449,7 +449,7 @@ class TestRecoveryOptimizationStage35(unittest.TestCase):
 
     # 32. Unchanged target
     def test_32_unchanged_target(self) -> None:
-        manager = RecoveryExperimentManager(repo_root=Path.cwd())
+        manager = RecoveryExperimentManager(repo_root=self.tmp_path)
         b_evs, c_evs = fixture_t_unchanged_target_failure()
         dec, rat, _ = manager.evaluate_candidate(
             "REC1",

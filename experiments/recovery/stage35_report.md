@@ -7,7 +7,7 @@ COMPLETE, FROZEN, AND VERIFIED
 ef49d3c77c2c94ba19bfca3499573eaece8e0892
 
 ## Current Commit
-PENDING_GIT_COMMIT
+`9871f96c38649cc3fc8d4e63a7de38816fd99684`
 
 ## Recovery Pattern Mining
 The Stage 35 recovery pattern mining engine (`local.recovery_opt.mining.RecoveryTraceMiner`) deterministically inspects existing authoritative evaluation sources (`experiments/evaluation.db`, `run_events`, `failures`, `results.jsonl`, tool and test execution traces) without creating redundant databases or duplicating raw trace files.
