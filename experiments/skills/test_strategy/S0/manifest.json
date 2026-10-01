@@ -1,0 +1,33 @@
+{
+  "candidate_id": "S0",
+  "parent_candidate_id": "S0",
+  "skill_id": "test_strategy",
+  "skill_version": "1.0.0",
+  "skill_hash": "3d027b0f9a7f830bfc68452cc98d962bb702ab16963a62574fcd4e85e31b7148",
+  "parent_skill_hash": "3d027b0f9a7f830bfc68452cc98d962bb702ab16963a62574fcd4e85e31b7148",
+  "intervention_id": "int_skill_ts_s0",
+  "scope": "TESTING",
+  "change_type": "NONE_BASELINE",
+  "changed_section": "None (Immutable Baseline Snapshot)",
+  "target_failure": "None (Baseline)",
+  "hypothesis": "Baseline systematic testing strategy frozen at Stage 24.",
+  "expected_behavior": "Establish baseline testing discovery, reproduction, and verification behavior.",
+  "benchmark_task_set": [
+    "task-001",
+    "task-002",
+    "task-003",
+    "task-004"
+  ],
+  "benchmark_split": "dev",
+  "benchmark_manifest_hash": "",
+  "prompt_hash": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+  "retrieval_policy_hash": "3e1b234a2ac756a8d83395f37f3ddf0043758f5da731c097b412d333a8459cf7",
+  "testing_policy_hash": "76820d5c5e2a983e4d013180d80dda7601b7cba14ad6bebeb56a93e42e730c36",
+  "recovery_policy_hash": "ee77ab01ea322ad61276eeb627de6eab64f5b732adc868110e8e6f4fdd713f7f",
+  "topology_identity": "root_only",
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "evidence_mode": "FIXTURE",
+  "status": "BASELINE",
+  "decision": "PROMOTED",
+  "created_at": "2026-10-01T11:09:32.902716+00:00"
+}

@@ -1,0 +1,23 @@
+{
+  "parent_id": "S0",
+  "candidate_id": "S1",
+  "parent_sha256": "3d027b0f9a7f830bfc68452cc98d962bb702ab16963a62574fcd4e85e31b7148",
+  "candidate_sha256": "d12b18bb5d621cab56148516680c58ba2befb9b9010053d9981935430d8ff89d",
+  "is_identical": false,
+  "cost_metrics": {
+    "char_count": 7656,
+    "line_count": 123,
+    "word_count": 1039,
+    "estimated_tokens": 1632,
+    "char_delta": -111,
+    "line_delta": -1,
+    "word_delta": -16,
+    "token_delta": -24
+  },
+  "lines_added_count": 0,
+  "lines_removed_count": 1,
+  "added_lines": [],
+  "removed_lines": [
+    "   - Avoid executing broad suites during reproduction. Target exactly one test function, method, or test file."
+  ]
+}

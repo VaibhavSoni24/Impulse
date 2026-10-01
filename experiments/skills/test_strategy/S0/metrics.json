@@ -1,0 +1,30 @@
+{
+  "cost_metrics": {
+    "char_count": 7767,
+    "line_count": 124,
+    "word_count": 1055,
+    "estimated_tokens": 1656,
+    "char_delta": 0,
+    "line_delta": 0,
+    "word_delta": 0,
+    "token_delta": 0
+  },
+  "duplication_report": {
+    "total_skill_lines": 76,
+    "exact_duplicate_lines": 0,
+    "near_duplicate_lines": 0,
+    "unique_lines": 76,
+    "duplication_ratio": 0.0,
+    "duplicate_items": []
+  },
+  "diagnostics": {
+    "has_root_duplication": false,
+    "has_internal_duplication": false,
+    "has_contradictions": false,
+    "has_scope_leakage": false,
+    "has_bloat": false,
+    "is_overly_generic": false,
+    "diagnostic_notes": [],
+    "contradictions": []
+  }
+}

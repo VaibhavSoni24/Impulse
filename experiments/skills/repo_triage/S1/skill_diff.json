@@ -1,0 +1,21 @@
+{
+  "parent_id": "S0",
+  "candidate_id": "S1",
+  "parent_sha256": "ac7a967136bba6ebd085511595ecbbcd7b3c258927518bfede77cc82a9bb10ce",
+  "candidate_sha256": "ac7a967136bba6ebd085511595ecbbcd7b3c258927518bfede77cc82a9bb10ce",
+  "is_identical": true,
+  "cost_metrics": {
+    "char_count": 7322,
+    "line_count": 124,
+    "word_count": 911,
+    "estimated_tokens": 1507,
+    "char_delta": 0,
+    "line_delta": 0,
+    "word_delta": 0,
+    "token_delta": 0
+  },
+  "lines_added_count": 0,
+  "lines_removed_count": 0,
+  "added_lines": [],
+  "removed_lines": []
+}

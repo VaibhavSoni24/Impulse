@@ -1,0 +1,5 @@
+task_id,skill_id,parent_candidate,candidate_id,parent_result,candidate_result,transition,parent_behavior_metric,candidate_behavior_metric,behavior_transition
+task-001,test_strategy,S0,S0,PASS,PASS,PASS_TO_PASS,1.0,1.0,UNCHANGED
+task-002,test_strategy,S0,S0,PASS,PASS,PASS_TO_PASS,1.0,1.0,UNCHANGED
+task-003,test_strategy,S0,S0,PASS,PASS,PASS_TO_PASS,1.0,1.0,UNCHANGED
+task-004,test_strategy,S0,S0,PASS,PASS,PASS_TO_PASS,1.0,1.0,UNCHANGED
