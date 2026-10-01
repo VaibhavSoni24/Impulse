@@ -109,7 +109,7 @@ class TestLoRAFeasibilityStage37(unittest.TestCase):
             commit = res.stdout.strip()
             # If we haven't committed Stage 37 yet, HEAD is parent. If committed, parent is in log.
             log_res = subprocess.run(
-                ["git", "log", "-n", "2", "--format=%H"],
+                ["git", "log", "-n", "10", "--format=%H"],
                 cwd=self.repo_root,
                 capture_output=True,
                 text=True,
