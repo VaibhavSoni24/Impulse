@@ -1,0 +1,10 @@
+{
+  "README.md": "1aebe8ea97e73fae142e078dda6b9dafcbd04fd0efbdfcd69319474189e1a8b2",
+  "curated/train.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "curated/validation.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "fixtures/fixtures.jsonl": "9f0e0eadc076cfa5c2483150916a003b2fb2d83c0725be3e3852e9f09bcbddd7",
+  "manifests/dataset_manifest.json": "d80986feb8ba43d48caad457117158b6b24e5890f75581ced26b19fe7d2acfaa",
+  "manifests/file_manifest.json": "e150ae5e6e8f1c5e3c79042b792b7235657ec1c98e760172befbc7108d0472c0",
+  "reports/stage38_data_report.md": "c6469c27df90cd83e67c5f9ef6d827cdf08c4cc2bba75c712801164f1d296618",
+  "training_contract.json": "99251ba962857ea8b209e55737460c7e30578157f63348480843f7764e870386"
+}

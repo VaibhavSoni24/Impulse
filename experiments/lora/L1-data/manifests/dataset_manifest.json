@@ -1,0 +1,61 @@
+{
+  "creation_timestamp": "2026-10-01T16:49:02.461230+00:00",
+  "dataset_id": "L0-TOOL-DISCIPLINE-DATA-v1",
+  "dataset_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dataset_status": "BLOCKED_BY_DATA",
+  "dataset_version": "1.0.0",
+  "duplicate_count": 0,
+  "evidence_modes": {
+    "FIXTURE": 5,
+    "INFRASTRUCTURE_ONLY": 5,
+    "LIVE": 0
+  },
+  "excluded_count": 0,
+  "hardware_note": "EXTERNAL_GPU_REQUIRED",
+  "leakage_results": {
+    "cross_split_leaks": 0,
+    "held_out_leaks": 0,
+    "status": "VERIFIED_ZERO_LEAKAGE"
+  },
+  "license_results": {
+    "excluded_unknown_or_unpermitted": 0,
+    "permitted_count": 0
+  },
+  "objective_id": "OBJ-TOOL-DISCIPLINE",
+  "parent_git_commit": "0d66dd9cf6b8e23289c3a92bda4d12268d2b8920",
+  "quality_results": {
+    "evaluated_count": 0,
+    "fixture_count": 5,
+    "fixture_evidence_mode": "FIXTURE",
+    "rejection_counts": {
+      "REJECT_AMBIGUOUS": 0,
+      "REJECT_DUPLICATE": 0,
+      "REJECT_FIXTURE_ISOLATION": 0,
+      "REJECT_INFRASTRUCTURE_ONLY": 0,
+      "REJECT_LEAKAGE": 0,
+      "REJECT_NOT_PERMITTED": 0,
+      "REJECT_NO_DECISION_SIGNAL": 0,
+      "REJECT_NO_PROVENANCE": 0,
+      "REJECT_OBJECTIVE_MISMATCH": 0,
+      "REJECT_SECRET": 0,
+      "REJECT_UNSAFE": 0
+    }
+  },
+  "sanitization_results": {
+    "sanitized_secrets_count": 0,
+    "zero_secret_policy": "ENFORCED"
+  },
+  "seed": 42,
+  "selection_policy": "TOOL_DISCIPLINE_EVIDENCE_FIRST",
+  "source_hashes": {
+    "held_out_lock": "80fbcabf19423f1967879ced8efa761821da03327769ad7920ad1851c1a7ee31",
+    "held_out_sha256": "8dae6b4c276bd880b06abdbac0f729b48c4fc818401f3e820b1a2b6f6f581fcd"
+  },
+  "source_manifests": [
+    "benchmark/splits/v1/held_out.lock",
+    "experiments/lora/L0/manifest.json"
+  ],
+  "split_policy": "DETERMINISTIC_TASK_DISJOINT",
+  "train_count": 0,
+  "validation_count": 0
+}

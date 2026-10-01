@@ -1,0 +1,92 @@
+"""Stage 39 Training Contract Generation Subsystem (Stage 38 Section 26).
+
+Creates the binding machine-readable contract connecting Stage 38 data to Stage 39 PEFT execution.
+Records all fixed cryptographic dimensions and evaluation gates without guessing
+or hardcoding Stage 39 training hyperparameters.
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+from typing import Any, Dict, Optional
+
+from local.lora_data.models import Stage39TrainingContract
+
+
+def build_stage39_training_contract(
+    dataset_manifest_hash: str = "",
+    train_manifest_hash: str = "",
+    validation_manifest_hash: str = "",
+    repo_root: Optional[Path] = None,
+) -> Stage39TrainingContract:
+    """Constructs the formal Stage 39 training contract from authoritative project artifacts."""
+    root = Path(repo_root or Path(".")).resolve()
+    held_out_lock_path = root / "benchmark" / "splits" / "v1" / "held_out.lock"
+
+    held_out_hash = ""
+    if held_out_lock_path.exists():
+        try:
+            with open(held_out_lock_path, "r", encoding="utf-8") as f:
+                lock = json.load(f)
+                held_out_hash = lock.get("held_out_file_sha256", "")
+        except Exception:
+            pass
+
+    # Authoritative tool contract hashes from Stage 37
+    tool_contract_hashes = {
+        "run_command": "d48386318ec0eee1fa585ca53d1d3a8cc04ec06cc9acb851229aa9258cb95d8a",
+        "submit_patch": "7ad08c240566f903e9fbcc217fd1af8dbf4796019812be1857b4bba6c9cb9490",
+        "get_status": "59d2bdd46f070c357aeba14267cad7f67a394758908eb2c41b6ed140dda0bfe1",
+        "read_file": "7c1fc9cd8769c270c8a7895f4322304c09c0212bc515ff24c75e1a39e241cfdc",
+        "edit_file": "700f0f4920bd2095d9179a5a743d6dee0ce6997258c7c2dbbb6916645fd7eb50",
+        "write_file": "b27c17afe3d7d7ed78cdeebcfca97fe02d866bf885dd088fb760a6ec8daa5183",
+        "get_code_neighbors": "ff0902e2aa436c0f62607e95f7e02c9b56f57dfed11579feb81714be2b24b865",
+        "search_similar_code": "3e378d8d83a59d3e736b3113db12ddf8ba52d5df929bd16851be4146348e55d7",
+        "get_code_subgraph": "48fae3adc006e8e811c1b7dff61e5fe10a83dabbc80ddfc3681d098431b6f784",
+    }
+
+    contract = Stage39TrainingContract(
+        base_model="gemma-4-31b-it-qat-w4a16-ct",
+        objective_id="OBJ-TOOL-DISCIPLINE",
+        dataset_id="L0-TOOL-DISCIPLINE-DATA-v1",
+        dataset_version="1.0.0",
+        train_manifest_hash=train_manifest_hash,
+        validation_manifest_hash=validation_manifest_hash,
+        held_out_manifest_hash=held_out_hash,
+        prompt_hash="2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+        tool_contract_hashes=tool_contract_hashes,
+        retrieval_version="R0",
+        testing_version="T0",
+        recovery_version="REC0",
+        topology="root_only",
+        adapter_role="ROOT_AGENT_ADAPTER",
+        primary_metric="command_redundancy_count",
+        secondary_metrics=[
+            "task_success_rate",
+            "target_failure_rate",
+            "tool_call_count",
+            "turn_count",
+            "runtime_ms",
+        ],
+        control_candidate="M0",
+        candidate_identifier="L1",
+        promotion_gate="VALIDATION_IMPROVEMENT_AND_NO_HELD_OUT_REGRESSION",
+        stop_conditions=[
+            "HELD_OUT_REGRESSION",
+            "TOOL_SCHEMA_VIOLATION",
+            "NON_TARGET_BEHAVIOR_COLLATERAL_DROP",
+            "COLLATERAL_PASS_TO_FAIL_REGRESSION",
+        ],
+    )
+    return contract
+
+
+def write_training_contract(
+    output_path: Path,
+    contract: Stage39TrainingContract,
+) -> None:
+    """Serializes the Stage 39 training contract to disk."""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(contract.to_dict(), f, indent=2, sort_keys=True)
