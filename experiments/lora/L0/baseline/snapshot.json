@@ -1,0 +1,39 @@
+{
+  "git_commit": "bad6390b8f2b26cd1125d0e14a7fa615b7987714",
+  "model_id": "gemma-4-31b-it-qat-w4a16-ct",
+  "prompt_hash": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+  "topology_identity": "root_only",
+  "retrieval_policy_hash": "3e1b234a2ac756a8d83395f37f3ddf0043758f5da731c097b412d333a8459cf7",
+  "testing_policy_hash": "76820d5c5e2a983e4d013180d80dda7601b7cba14ad6bebeb56a93e42e730c36",
+  "recovery_policy_hash": "ee77ab01ea322ad61276eeb627de6eab64f5b732adc868110e8e6f4fdd713f7f",
+  "skill_hashes": {
+    "test_strategy": "3d027b0f9a7f830bfc68452cc98d962bb702ab16963a62574fcd4e85e31b7148",
+    "repo_triage": "ac7a967136bba6ebd085511595ecbbcd7b3c258927518bfede77cc82a9bb10ce"
+  },
+  "benchmark_source_hash": "e4b3fd60f69dbc2b9213e54eeb9636db78aefe92c1d06269d73d9f5f8f3c8ad6",
+  "dev_manifest_hash": "1b95c9fcfad8f0078aafc5dc1a0482cfe35197d365649e959a2e263c5cd039d2",
+  "validation_manifest_hash": "32a26959af623169251af43b2911d635f69d3414ebd53920df77bdb6528dbab9",
+  "held_out_manifest_hash": "8dae6b4c276bd880b06abdbac0f729b48c4fc818401f3e820b1a2b6f6f581fcd",
+  "held_out_lock_hash": "80fbcabf19423f1967879ced8efa761821da03327769ad7920ad1851c1a7ee31",
+  "evaluator_version": "Stage 28 CleanCopyEvaluator v1.0",
+  "tool_contract_hashes": {
+    "run_command": "d48386318ec0eee1fa585ca53d1d3a8cc04ec06cc9acb851229aa9258cb95d8a",
+    "submit_patch": "7ad08c240566f903e9fbcc217fd1af8dbf4796019812be1857b4bba6c9cb9490",
+    "get_status": "59d2bdd46f070c357aeba14267cad7f67a394758908eb2c41b6ed140dda0bfe1",
+    "read_file": "7c1fc9cd8769c270c8a7895f4322304c09c0212bc515ff24c75e1a39e241cfdc",
+    "edit_file": "700f0f4920bd2095d9179a5a743d6dee0ce6997258c7c2dbbb6916645fd7eb50",
+    "write_file": "b27c17afe3d7d7ed78cdeebcfca97fe02d866bf885dd088fb760a6ec8daa5183",
+    "get_code_neighbors": "ff0902e2aa436c0f62607e95f7e02c9b56f57dfed11579feb81714be2b24b865",
+    "search_similar_code": "3e378d8d83a59d3e736b3113db12ddf8ba52d5df929bd16851be4146348e55d7",
+    "get_code_subgraph": "48fae3adc006e8e811c1b7dff61e5fe10a83dabbc80ddfc3681d098431b6f784"
+  },
+  "python_version": "3.10.11",
+  "package_versions": {
+    "torch": null,
+    "transformers": null,
+    "peft": null
+  },
+  "operating_system": "Windows-10-10.0.26300-SP0",
+  "gpu_info": "0x Intel(R) Iris(R) Xe Graphics (None GB VRAM)",
+  "captured_at": "2026-10-01T12:10:34.005724+00:00"
+}
