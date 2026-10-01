@@ -1,0 +1,25 @@
+{
+  "environment_id": "ENV_LOCAL_CPU_WINDOWS",
+  "environment_class": "LOCAL_CPU",
+  "experiment_id": "STAGE42_AUDIT",
+  "required_capabilities": [
+    "CPU_EXECUTION",
+    "PYTHON_310"
+  ],
+  "required_gpu_memory": "0GB",
+  "required_cuda": false,
+  "required_python": ">=3.10",
+  "required_packages": [
+    "pytest",
+    "psutil"
+  ],
+  "actual_capabilities": [
+    "CPU_EXECUTION",
+    "HOST_RAM_VALIDATION",
+    "psutil_7.2.2",
+    "pytest_9.1.1",
+    "scipy_1.15.3",
+    "numpy_2.2.6"
+  ],
+  "compatibility_status": "READY"
+}
