@@ -1,0 +1,9 @@
+{
+  "base_model": "gemma-4-31b-it-qat-w4a16-ct",
+  "candidate_id": "MA1",
+  "roles": {
+    "reviewer": null,
+    "root": null,
+    "scout": null
+  }
+}
