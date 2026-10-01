@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0.0",
+  "candidates": {
+    "E0": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": null,
+      "primary_dimension": "baseline",
+      "git_commit": "99c0da320af4940f4eca27d172592d1ed706d26f",
+      "manifest_hash": "ea693f54934d1c235250bbe02994b382e585769163e4d8402cb1bd14fc3b5ddd",
+      "created_at": "2026-09-26T09:45:00+00:00"
+    },
+    "E1": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "E0",
+      "primary_dimension": "prompt",
+      "git_commit": "99c0da320af4940f4eca27d172592d1ed706d26f",
+      "manifest_hash": "33e9c93b055f59a0b11b938d42a8cc95469f42349decdb2c693b48377844e560",
+      "created_at": "2026-09-26T10:00:00+00:00"
+    },
+    "E2": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "E1",
+      "primary_dimension": "state",
+      "git_commit": "24ea3df32d4b9c1d6837072ad8fa94459eb5ba0a",
+      "manifest_hash": "3e4c65c497751635aa1657b2f937640b861ead7a3da4057926ce08b7a28f28aa",
+      "created_at": "2026-09-26T11:00:00+00:00"
+    },
+    "R1": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "E2",
+      "primary_dimension": "retrieval",
+      "git_commit": "24ea3df32d4b9c1d6837072ad8fa94459eb5ba0a",
+      "manifest_hash": "6c5da4da85ddfcdd3d781f45cea61a92c103f6d2fafe186be579ca301ad7169d",
+      "created_at": "2026-09-27T08:00:00+00:00"
+    },
+    "R2": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "R1",
+      "primary_dimension": "retrieval",
+      "git_commit": "24ea3df32d4b9c1d6837072ad8fa94459eb5ba0a",
+      "manifest_hash": "7ca1372163f1a492c4944bfaa8cf53aba40b067ac7d32059e0f319df31b4e885",
+      "created_at": "2026-09-27T09:30:00+00:00"
+    },
+    "D1": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "E2",
+      "primary_dimension": "recovery",
+      "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+      "manifest_hash": "1e1fcf9c457ea91845ddb1eeced0d30967755b95cb30d9ecffa7f678b652b63b",
+      "created_at": "2026-09-28T08:00:00+00:00"
+    },
+    "S1": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "E2",
+      "primary_dimension": "topology",
+      "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+      "manifest_hash": "40c37cdb79ea6e7728a404f6efd7b2beebfcc140d0c9f3e56cdabb2c3ca4168e",
+      "created_at": "2026-09-28T09:00:00+00:00"
+    },
+    "V1": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "E2",
+      "primary_dimension": "topology",
+      "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+      "manifest_hash": "d687588fffdf55c4be078db34b56d067b088acccf7ab4b15fecbc822bfe681e4",
+      "created_at": "2026-09-28T09:30:00+00:00"
+    },
+    "C1": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "E2",
+      "primary_dimension": "prompt",
+      "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+      "manifest_hash": "27d4bcfe23e0b7706d285e5aa6638c24f9a3674ddf308d4b4c4e7e605aa668dc",
+      "created_at": "2026-09-28T10:00:00+00:00"
+    },
+    "M0": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "E0",
+      "primary_dimension": "topology",
+      "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+      "manifest_hash": "3302d97e41ccd334fe2dd4f63a382828ef433f8af12ee1007065bcfefce1217b",
+      "created_at": "2026-09-28T10:20:00+00:00"
+    },
+    "M1": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "M0",
+      "primary_dimension": "topology",
+      "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+      "manifest_hash": "be6f169eaa752ff4874c86619ea3dd7b8b2bfd7b76dfdb6cb6db7244d82ed046",
+      "created_at": "2026-09-28T10:30:00+00:00"
+    },
+    "M2": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "M0",
+      "primary_dimension": "topology",
+      "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+      "manifest_hash": "b25a98cb89cb5e84c1d89810973025cc59e95e82ca37c202273ce1a362989e87",
+      "created_at": "2026-09-28T10:30:00+00:00"
+    },
+    "M3": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "M0",
+      "primary_dimension": "topology",
+      "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+      "manifest_hash": "3e916e82eccb47619777f22c16c1aa41aa45a049fab4fb46e97dd460d6836bcb",
+      "created_at": "2026-09-28T10:30:00+00:00"
+    },
+    "M4": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "M0",
+      "primary_dimension": "topology",
+      "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+      "manifest_hash": "e736ebafb620b40f7180d5df1d9e695b77fae84582fc3f4bc674a5d08315c30c",
+      "created_at": "2026-09-28T10:30:00+00:00"
+    },
+    "M5": {
+      "version": "1.0.0",
+      "status": "VALIDATED",
+      "parent": "M0",
+      "primary_dimension": "topology",
+      "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+      "manifest_hash": "f8a1f41eac705f0b0b4e8b87b9336ee7ef6f12d2039b544ea8c2e5aba222191c",
+      "created_at": "2026-09-28T10:30:00+00:00"
+    },
+    "L1": {
+      "version": "1.0.0",
+      "status": "BLOCKED",
+      "parent": "M0",
+      "primary_dimension": "adapter",
+      "git_commit": "4f5c0d8cb3581893b7d1007fc0c699cd08c94c19",
+      "manifest_hash": "4363c83bdda86e5707c79bc79c421188156f2a1105957ca734eeb1e8d5267ccb",
+      "created_at": "2026-10-01T23:00:00+00:00"
+    },
+    "RC1": {
+      "version": "0.1.0",
+      "status": "RESERVED",
+      "parent": "M0",
+      "primary_dimension": "packaging",
+      "git_commit": "4f5c0d8cb3581893b7d1007fc0c699cd08c94c19",
+      "manifest_hash": "649283f9ec0fcf9217b47a472c339cd0d1a9cb23b74a274ac5bbfe7903cd1471",
+      "created_at": "2026-10-01T23:30:00+00:00"
+    }
+  }
+}

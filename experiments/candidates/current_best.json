@@ -1,0 +1,9 @@
+{
+  "candidate_id": "M0",
+  "candidate_version": "1.0.0",
+  "status": "VALIDATED",
+  "updated_at": "2026-10-01T18:31:43.111126+00:00",
+  "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+  "manifest_hash": "3302d97e41ccd334fe2dd4f63a382828ef433f8af12ee1007065bcfefce1217b",
+  "rationale": "M0 is the verified, frozen competition baseline candidate passing full validator and submission packaging checks."
+}

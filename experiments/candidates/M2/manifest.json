@@ -1,0 +1,70 @@
+{
+  "candidate_id": "M2",
+  "candidate_version": "1.0.0",
+  "status": "VALIDATED",
+  "parent_candidate_id": "M0",
+  "git_commit": "d8f8522f8a64b9bb4c93b314ed29563ca43a508d",
+  "created_at": "2026-09-28T10:30:00+00:00",
+  "description": "Frozen Stage 24 competition candidate (root_with_debugger).",
+  "experiment_type": "competition_candidate",
+  "primary_dimension": "topology",
+  "change_summary": {
+    "primary_dimension": "topology",
+    "changed_components": [
+      "sub_agents",
+      "topology"
+    ],
+    "unchanged_components": [
+      "base_model",
+      "root_prompt",
+      "tools"
+    ],
+    "rationale": "Frozen Stage 24 multi-agent topology candidate M2."
+  },
+  "base_model": "gemma-4-31b-it-qat-w4a16-ct",
+  "model_revision": null,
+  "root_prompt_hash": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+  "skill_hashes": {
+    "test_strategy": "3d027b0f9a7f830bfc68452cc98d962bb702ab16963a62574fcd4e85e31b7148",
+    "repo_triage": "ac7a967136bba6ebd085511595ecbbcd7b3c258927518bfede77cc82a9bb10ce"
+  },
+  "sub_agent_hashes": {
+    "debugger": "4e724b17cf90a07153b6da93c0429f6048d2fa619ba04fe8a04f27be368a1835"
+  },
+  "tool_contract_hashes": {
+    "run_command": "d48386318ec0eee1fa585ca53d1d3a8cc04ec06cc9acb851229aa9258cb95d8a",
+    "submit_patch": "7ad08c240566f903e9fbcc217fd1af8dbf4796019812be1857b4bba6c9cb9490",
+    "get_status": "59d2bdd46f070c357aeba14267cad7f67a394758908eb2c41b6ed140dda0bfe1",
+    "read_file": "7c1fc9cd8769c270c8a7895f4322304c09c0212bc515ff24c75e1a39e241cfdc",
+    "edit_file": "700f0f4920bd2095d9179a5a743d6dee0ce6997258c7c2dbbb6916645fd7eb50",
+    "write_file": "b27c17afe3d7d7ed78cdeebcfca97fe02d866bf885dd088fb760a6ec8daa5183"
+  },
+  "retrieval_version": "R0",
+  "testing_version": "T0",
+  "recovery_version": "REC0",
+  "topology": "root_with_debugger",
+  "adapter_id": null,
+  "adapter_sha256": null,
+  "benchmark_manifest_hash": "e4b3fd60f69dbc2b9213e54eeb9636db78aefe92c1d06269d73d9f5f8f3c8ad6",
+  "dev_split_hash": "1b95c9fcfad8f0078aafc5dc1a0482cfe35197d365649e959a2e263c5cd039d2",
+  "validation_split_hash": "32a26959af623169251af43b2911d635f69d3414ebd53920df77bdb6528dbab9",
+  "held_out_split_hash": "8dae6b4c276bd880b06abdbac0f729b48c4fc818401f3e820b1a2b6f6f581fcd",
+  "runtime_settings": {
+    "timeout_seconds": 600
+  },
+  "sampling_settings": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_output_tokens": 16384,
+    "thinking_config": {
+      "thinking_level": "high",
+      "thinking_budget": 4096,
+      "include_thoughts": true
+    }
+  },
+  "compute_environment_id": "LOCAL_CPU",
+  "evidence_mode": "INFRASTRUCTURE_ONLY",
+  "result_status": "PASS",
+  "promotion_status": "NOT_PROMOTED",
+  "manifest_hash": "b25a98cb89cb5e84c1d89810973025cc59e95e82ca37c202273ce1a362989e87"
+}

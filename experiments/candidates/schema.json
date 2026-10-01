@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ImpulseCandidateManifest",
+  "type": "object",
+  "required": [
+    "candidate_id",
+    "candidate_version",
+    "status",
+    "parent_candidate_id",
+    "git_commit",
+    "created_at",
+    "description",
+    "experiment_type",
+    "primary_dimension",
+    "change_summary",
+    "base_model",
+    "root_prompt_hash",
+    "benchmark_manifest_hash",
+    "compute_environment_id",
+    "evidence_mode",
+    "promotion_status"
+  ],
+  "properties": {
+    "candidate_id": {
+      "type": "string"
+    },
+    "candidate_version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DRAFT",
+        "CONFIGURED",
+        "SMOKE_PASSED",
+        "VALIDATED",
+        "HELD_OUT_CONFIRMED",
+        "PROMOTED",
+        "REJECTED",
+        "BLOCKED",
+        "ARCHIVED",
+        "RESERVED"
+      ]
+    },
+    "parent_candidate_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "git_commit": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "experiment_type": {
+      "type": "string"
+    },
+    "primary_dimension": {
+      "type": "string",
+      "enum": [
+        "baseline",
+        "prompt",
+        "state",
+        "retrieval",
+        "testing",
+        "recovery",
+        "topology",
+        "skill",
+        "adapter",
+        "multi_adapter",
+        "packaging",
+        "combined_ablation"
+      ]
+    },
+    "change_summary": {
+      "type": "object"
+    },
+    "base_model": {
+      "type": "string",
+      "const": "gemma-4-31b-it-qat-w4a16-ct"
+    },
+    "model_revision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "root_prompt_hash": {
+      "type": "string"
+    },
+    "skill_hashes": {
+      "type": "object"
+    },
+    "sub_agent_hashes": {
+      "type": "object"
+    },
+    "tool_contract_hashes": {
+      "type": "object"
+    },
+    "retrieval_version": {
+      "type": "string"
+    },
+    "testing_version": {
+      "type": "string"
+    },
+    "recovery_version": {
+      "type": "string"
+    },
+    "topology": {
+      "type": "string"
+    },
+    "adapter_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "adapter_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "benchmark_manifest_hash": {
+      "type": "string"
+    },
+    "dev_split_hash": {
+      "type": "string"
+    },
+    "validation_split_hash": {
+      "type": "string"
+    },
+    "held_out_split_hash": {
+      "type": "string"
+    },
+    "runtime_settings": {
+      "type": "object"
+    },
+    "sampling_settings": {
+      "type": "object"
+    },
+    "compute_environment_id": {
+      "type": "string"
+    },
+    "evidence_mode": {
+      "type": "string",
+      "enum": [
+        "LIVE",
+        "FIXTURE",
+        "INFRASTRUCTURE_ONLY",
+        "UNAVAILABLE"
+      ]
+    },
+    "result_status": {
+      "type": "string"
+    },
+    "promotion_status": {
+      "type": "string",
+      "enum": [
+        "NOT_PROMOTED",
+        "PROMOTED",
+        "REJECTED",
+        "PENDING_EVALUATION",
+        "BLOCKED",
+        "RESERVED"
+      ]
+    },
+    "manifest_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": true
+}
