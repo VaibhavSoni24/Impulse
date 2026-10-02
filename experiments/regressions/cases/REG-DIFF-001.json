@@ -1,0 +1,39 @@
+{
+  "category": "DIFF_DISCIPLINE",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Prevents unintentional modifications outside defect scope (e.g. CI workflow files or infrastructure scripts) from entering submission diffs.",
+  "execution_entrypoint": "local.regressions.invariants.diff:check_unrelated_file_diff_invariant",
+  "expected_invariants": [
+    "clean diff approved by reviewer rules",
+    "diff touching unrelated files blocked with CHANGES_REQUESTED",
+    "Scope violation reported in blocking findings"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "observed",
+  "provenance": {
+    "candidate_ids": [
+      "V1",
+      "M0"
+    ],
+    "note": "synthetic harness regression derived from Reviewer rules",
+    "plan_requirement": "agent changes unrelated file",
+    "source_file": "local/reviewer/rules.py",
+    "stage": "Stage 23"
+  },
+  "regression_id": "REG-DIFF-001",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "V1",
+    "M0"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "CRITICAL",
+  "signature": "DIFF_DISCIPLINE:UNRELATED_FILE_MODIFIED",
+  "source_failure_type": "UNRELATED_FILE_MODIFIED",
+  "status": "ACTIVE",
+  "title": "Detect and block modifications to unrelated files",
+  "version": "1.0.0"
+}

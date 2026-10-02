@@ -1,0 +1,37 @@
+{
+  "category": "RECOVERY",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Enforces clean escalation to alternate tool or path when primary recovery fails (RETRY_THEN_ALTERNATE).",
+  "execution_entrypoint": "local.regressions.invariants.recovery:check_failed_recovery_invariant",
+  "expected_invariants": [
+    "fallback_rules['on_tool_failure'] == 'RETRY_THEN_ALTERNATE'",
+    "alternate_path_routing_enabled == True"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "architectural_invariant",
+  "provenance": {
+    "candidate_ids": [
+      "REC0",
+      "REC3"
+    ],
+    "note": "synthetic harness regression derived from documented failure mode",
+    "source_file": "local/recovery_opt/models.py",
+    "stage": "Stage 35",
+    "taxonomy_entry": "FAILED_RECOVERY"
+  },
+  "regression_id": "REG-RECOVERY-010",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "REC3"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "RECOVERY:FAILED_RECOVERY",
+  "source_failure_type": "FAILED_RECOVERY",
+  "status": "ACTIVE",
+  "title": "Escalate failed recovery to alternate path",
+  "version": "1.0.0"
+}

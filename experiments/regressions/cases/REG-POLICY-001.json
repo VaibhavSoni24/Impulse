@@ -1,0 +1,39 @@
+{
+  "category": "POLICY",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Enforces strict operational workflow discipline: cheap direct reconnaissance and test evidence must precede edit hypothesis and file modifications.",
+  "execution_entrypoint": "local.regressions.invariants.policy:check_edit_before_evidence_policy",
+  "expected_invariants": [
+    "exact_recon_completed == False blocks edit hypothesis trigger",
+    "premature edit hypothesis blocks scout uncertainty trigger",
+    "workflow demands initial direct repository reconnaissance"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "architectural_invariant",
+  "provenance": {
+    "candidate_ids": [
+      "E1",
+      "M0"
+    ],
+    "note": "synthetic harness regression derived from documented failure mode",
+    "plan_requirement": "agent edits before reading tests",
+    "source_file": "local/scout/trigger.py",
+    "stage": "Stage 21"
+  },
+  "regression_id": "REG-POLICY-001",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "M0",
+    "S1"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "CRITICAL",
+  "signature": "POLICY:EDIT_BEFORE_TEST_OR_RECON",
+  "source_failure_type": "EDIT_BEFORE_TEST_OR_RECON",
+  "status": "ACTIVE",
+  "title": "Prohibit edits before reading tests and establishing reconnaissance",
+  "version": "1.0.0"
+}

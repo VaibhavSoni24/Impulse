@@ -1,0 +1,37 @@
+{
+  "category": "RECOVERY",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Detects rapid successive trial of disparate recovery actions without intermediate verification or evidence progress.",
+  "execution_entrypoint": "local.regressions.invariants.recovery:check_recovery_thrashing_invariant",
+  "expected_invariants": [
+    "tracks consecutive unimproved recovery attempts",
+    "flags thrashing when attempts exceed threshold without evidence change"
+  ],
+  "fixture_type": "harness_detector",
+  "observed_or_synthetic": "observed",
+  "provenance": {
+    "candidate_ids": [
+      "REC0",
+      "REC1"
+    ],
+    "note": "observed recovery failure pattern mined in Stage 35",
+    "source_file": "local/recovery_opt/loop_detector.py",
+    "stage": "Stage 35",
+    "taxonomy_entry": "RECOVERY_THRASHING"
+  },
+  "regression_id": "REG-RECOVERY-006",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "REC1"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "RECOVERY:RECOVERY_THRASHING",
+  "source_failure_type": "RECOVERY_THRASHING",
+  "status": "ACTIVE",
+  "title": "Detect recovery thrashing across unverified interventions",
+  "version": "1.0.0"
+}

@@ -1,0 +1,38 @@
+{
+  "category": "INFRASTRUCTURE",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Verifies the cryptographic held_out.lock and guarantees that no held-out benchmark task is consumed into development or regression suites.",
+  "execution_entrypoint": "local.regressions.invariants.infrastructure:check_held_out_protection_invariant",
+  "expected_invariants": [
+    "held-out lock file verified with 14 locked tasks",
+    "is_held_out_task returns True for locked tasks",
+    "validate_task_not_held_out raises HeldOutContaminationError on protected task",
+    "dev tasks pass cleanly"
+  ],
+  "fixture_type": "infrastructure_lock",
+  "observed_or_synthetic": "architectural_invariant",
+  "provenance": {
+    "candidate_ids": [
+      "M0"
+    ],
+    "note": "deterministic infrastructure regression verifying cryptographic held-out lock",
+    "plan_requirement": "Held-out protection",
+    "source_file": "benchmark/splits/held_out_lock.py",
+    "stage": "Stage 29"
+  },
+  "regression_id": "REG-BENCHMARK-001",
+  "regression_type": "INFRASTRUCTURE_REGRESSION",
+  "related_candidate_ids": [
+    "M0"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "CRITICAL",
+  "signature": "INFRASTRUCTURE:HELD_OUT_CONTAMINATION",
+  "source_failure_type": "HELD_OUT_CONTAMINATION",
+  "status": "ACTIVE",
+  "title": "Cryptographic held-out split protection and leakage prevention",
+  "version": "1.0.0"
+}

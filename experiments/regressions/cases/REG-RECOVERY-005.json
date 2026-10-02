@@ -1,0 +1,39 @@
+{
+  "category": "RECOVERY",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Detects cyclic oscillations between alternating recovery interventions on unchanged defect state.",
+  "execution_entrypoint": "local.regressions.invariants.recovery:check_recovery_loop_invariant",
+  "expected_invariants": [
+    "RecoveryLoopDetector.analyze_events detects oscillation",
+    "loop_detected == True",
+    "loop_type in ('OSCILLATION', 'DIRECT_LOOP')"
+  ],
+  "fixture_type": "harness_detector",
+  "observed_or_synthetic": "observed",
+  "provenance": {
+    "candidate_ids": [
+      "REC0",
+      "REC2"
+    ],
+    "note": "observed recovery failure pattern mined in Stage 35",
+    "plan_requirement": "agent loops on failing test",
+    "source_file": "local/recovery_opt/loop_detector.py",
+    "stage": "Stage 35",
+    "taxonomy_entry": "RECOVERY_LOOP"
+  },
+  "regression_id": "REG-RECOVERY-005",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "REC2"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "CRITICAL",
+  "signature": "RECOVERY:RECOVERY_LOOP",
+  "source_failure_type": "RECOVERY_LOOP",
+  "status": "ACTIVE",
+  "title": "Detect oscillating recovery actions (A -> B -> A -> B)",
+  "version": "1.0.0"
+}

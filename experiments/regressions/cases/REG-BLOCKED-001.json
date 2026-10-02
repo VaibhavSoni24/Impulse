@@ -1,0 +1,39 @@
+{
+  "category": "ENVIRONMENT_BLOCKED",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Captures documented reasoning degradation of Gemma 4 31B on long context (>32k tokens). Preserved honestly as BLOCKED on local CPU host.",
+  "execution_entrypoint": "local.regressions.invariants.blocked:check_long_context_degradation_blocked",
+  "expected_invariants": [
+    "status remains BLOCKED on local CPU",
+    "cannot be silently marked as PASS without live GPU inference"
+  ],
+  "fixture_type": "unrepresented_stub",
+  "observed_or_synthetic": "blocked_environment",
+  "provenance": {
+    "candidate_ids": [
+      "M0",
+      "L1"
+    ],
+    "note": "unrepresented blocked failure preserved without live GPU execution fabrication",
+    "plan_requirement": "honest blocked failure representation",
+    "source_file": "local/compute/environment.py",
+    "stage": "Stage 42"
+  },
+  "regression_id": "REG-BLOCKED-001",
+  "regression_type": "UNREPRESENTED_BLOCKED_FAILURE",
+  "related_candidate_ids": [
+    "M0",
+    "L1"
+  ],
+  "required_capabilities": [
+    "cuda_gpu",
+    "gemma_31b_weights"
+  ],
+  "severity": "HIGH",
+  "signature": "ENVIRONMENT_BLOCKED:CONTEXT_DEGRADATION_31B",
+  "source_failure_type": "CONTEXT_DEGRADATION_31B",
+  "status": "BLOCKED",
+  "title": "Gemma 4 31B long-context reasoning degradation (>32k tokens)",
+  "version": "1.0.0"
+}

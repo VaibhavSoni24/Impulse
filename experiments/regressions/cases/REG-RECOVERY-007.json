@@ -1,0 +1,37 @@
+{
+  "category": "RECOVERY",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Prevents wasteful infinite retry loops by terminating with BUDGET_EXHAUSTED once configured retry bounds are met.",
+  "execution_entrypoint": "local.regressions.invariants.recovery:check_retry_waste_invariant",
+  "expected_invariants": [
+    "attempts exceeding max_test_failure_retries flag is_exhausted",
+    "'budget_exhausted' included in policy stop_conditions"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "architectural_invariant",
+  "provenance": {
+    "candidate_ids": [
+      "REC0",
+      "REC1"
+    ],
+    "note": "synthetic harness regression derived from documented failure mode",
+    "source_file": "local/recovery_opt/models.py",
+    "stage": "Stage 35",
+    "taxonomy_entry": "RETRY_WASTE"
+  },
+  "regression_id": "REG-RECOVERY-007",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "REC1"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "RECOVERY:RETRY_WASTE",
+  "source_failure_type": "RETRY_WASTE",
+  "status": "ACTIVE",
+  "title": "Prevent retry waste via bounded retry budgets",
+  "version": "1.0.0"
+}

@@ -1,0 +1,36 @@
+{
+  "category": "RECOVERY",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Enforces that no-progress thresholds do not exceed 3 turns, triggering intervention before episode exhaustion.",
+  "execution_entrypoint": "local.regressions.invariants.recovery:check_late_recovery_invariant",
+  "expected_invariants": [
+    "no_progress_threshold_turns <= 3"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "architectural_invariant",
+  "provenance": {
+    "candidate_ids": [
+      "REC0",
+      "REC1"
+    ],
+    "note": "synthetic harness regression derived from documented failure mode",
+    "source_file": "local/recovery_opt/models.py",
+    "stage": "Stage 35",
+    "taxonomy_entry": "LATE_RECOVERY"
+  },
+  "regression_id": "REG-RECOVERY-009",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "REC1"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "MEDIUM",
+  "signature": "RECOVERY:LATE_RECOVERY",
+  "source_failure_type": "LATE_RECOVERY",
+  "status": "ACTIVE",
+  "title": "Prevent late recovery via early no-progress detection",
+  "version": "1.0.0"
+}

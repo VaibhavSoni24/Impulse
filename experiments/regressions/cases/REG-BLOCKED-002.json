@@ -1,0 +1,36 @@
+{
+  "category": "ENVIRONMENT_BLOCKED",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Captures container timeout in air-gapped Kaggle sandbox when external wheels are not pre-packaged. Preserved honestly as BLOCKED on local host.",
+  "execution_entrypoint": "local.regressions.invariants.blocked:check_kaggle_network_isolation_blocked",
+  "expected_invariants": [
+    "status remains BLOCKED on non-container host",
+    "requires verified Kaggle container runtime before activation"
+  ],
+  "fixture_type": "unrepresented_stub",
+  "observed_or_synthetic": "blocked_environment",
+  "provenance": {
+    "candidate_ids": [
+      "M0"
+    ],
+    "note": "unrepresented blocked failure preserved without live Kaggle container fabrication",
+    "plan_requirement": "honest blocked failure representation",
+    "source_file": "local/compute/environment.py",
+    "stage": "Stage 42"
+  },
+  "regression_id": "REG-BLOCKED-002",
+  "regression_type": "UNREPRESENTED_BLOCKED_FAILURE",
+  "related_candidate_ids": [
+    "M0"
+  ],
+  "required_capabilities": [
+    "kaggle_container_runtime"
+  ],
+  "severity": "HIGH",
+  "signature": "ENVIRONMENT_BLOCKED:KAGGLE_NETWORK_ISOLATION_TIMEOUT",
+  "source_failure_type": "KAGGLE_NETWORK_ISOLATION_TIMEOUT",
+  "status": "BLOCKED",
+  "title": "Kaggle air-gapped container network timeout on unbundled wheels",
+  "version": "1.0.0"
+}

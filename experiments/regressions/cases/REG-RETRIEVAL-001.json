@@ -1,0 +1,39 @@
+{
+  "category": "RETRIEVAL",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Prevents weak semantic search candidates from misleading agent localization; requires fallback to exact search when similarity is below threshold.",
+  "execution_entrypoint": "local.regressions.invariants.retrieval:check_weak_semantic_fallback",
+  "expected_invariants": [
+    "fallback_behavior['on_semantic_failure'] == 'EXACT_SEARCH'",
+    "similarity_threshold >= 0.50",
+    "low similarity candidate (< 0.50) triggers fallback"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "synthetic",
+  "provenance": {
+    "candidate_ids": [
+      "R0",
+      "R1"
+    ],
+    "note": "synthetic harness regression derived from documented failure mode",
+    "plan_requirement": "semantic search misleads agent",
+    "source_file": "local/retrieval_opt/policy.py",
+    "stage": "Stage 33"
+  },
+  "regression_id": "REG-RETRIEVAL-001",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "R1",
+    "M0"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "RETRIEVAL:WEAK_SEMANTIC_SEARCH_MISLEAD",
+  "source_failure_type": "WEAK_SEMANTIC_SEARCH_MISLEAD",
+  "status": "ACTIVE",
+  "title": "Weak semantic retrieval fallback to exact search",
+  "version": "1.0.0"
+}

@@ -1,0 +1,40 @@
+{
+  "category": "HYGIENE",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Detects scratch scripts, temporary patches, and debug logs; verifies that SafeCleaner approves removal for untracked files while protecting tracked files.",
+  "execution_entrypoint": "local.regressions.invariants.hygiene:check_temporary_file_hygiene",
+  "expected_invariants": [
+    "scratch files detected with recommended_action REMOVE",
+    "temp patches detected with recommended_action REMOVE",
+    "debug logs detected with recommended_action REMOVE",
+    "SafeCleaner approves untracked removal, rejects tracked removal"
+  ],
+  "fixture_type": "harness_filesystem",
+  "observed_or_synthetic": "observed",
+  "provenance": {
+    "candidate_ids": [
+      "D1",
+      "M0"
+    ],
+    "note": "synthetic filesystem harness regression derived from Stage 27 hygiene discipline",
+    "plan_requirement": "agent leaves temporary file",
+    "source_file": "local/diff_discipline/detectors.py",
+    "stage": "Stage 27"
+  },
+  "regression_id": "REG-HYGIENE-001",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "D1",
+    "M0"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "CRITICAL",
+  "signature": "HYGIENE:TEMPORARY_FILE_LEFT_BEHIND",
+  "source_failure_type": "TEMPORARY_FILE_LEFT_BEHIND",
+  "status": "ACTIVE",
+  "title": "Detect and clean temporary scratch files and debug logs",
+  "version": "1.0.0"
+}

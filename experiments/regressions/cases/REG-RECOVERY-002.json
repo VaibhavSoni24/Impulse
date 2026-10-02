@@ -1,0 +1,37 @@
+{
+  "category": "RECOVERY",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Detects recurring identical failure signature and stack trace without diagnostic shift.",
+  "execution_entrypoint": "local.regressions.invariants.recovery:check_repeated_error_invariant",
+  "expected_invariants": [
+    "identical error signature flags NO_PROGRESS at threshold=2",
+    "reason == REPEATED_FAILURE"
+  ],
+  "fixture_type": "harness_detector",
+  "observed_or_synthetic": "observed",
+  "provenance": {
+    "candidate_ids": [
+      "REC0",
+      "REC1"
+    ],
+    "note": "observed recovery failure pattern mined in Stage 35",
+    "source_file": "local/progress/detector.py",
+    "stage": "Stage 35",
+    "taxonomy_entry": "REPEATED_ERROR"
+  },
+  "regression_id": "REG-RECOVERY-002",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "REC1"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "RECOVERY:REPEATED_ERROR",
+  "source_failure_type": "REPEATED_ERROR",
+  "status": "ACTIVE",
+  "title": "Detect repeated identical error signature without new evidence",
+  "version": "1.0.0"
+}

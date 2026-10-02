@@ -1,0 +1,38 @@
+{
+  "category": "RETRIEVAL",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Prevents unbounded semantic tool expansion by enforcing strict call budgets and stopping retrieval on budget exhaustion.",
+  "execution_entrypoint": "local.regressions.invariants.retrieval:check_retrieval_budget_exhaustion",
+  "expected_invariants": [
+    "max_semantic_calls bounded (1-5)",
+    "fallback_behavior['on_budget_exhausted'] == 'STOP_RETRIEVAL'",
+    "max_retrieved_items bounded (<= 25)"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "synthetic",
+  "provenance": {
+    "candidate_ids": [
+      "R1",
+      "R4"
+    ],
+    "note": "synthetic harness regression derived from documented failure mode",
+    "plan_requirement": "semantic search call budget exhaustion",
+    "source_file": "local/retrieval_opt/policy.py",
+    "stage": "Stage 33"
+  },
+  "regression_id": "REG-RETRIEVAL-002",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "R1"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "RETRIEVAL:RETRIEVAL_BUDGET_EXHAUSTION",
+  "source_failure_type": "RETRIEVAL_BUDGET_EXHAUSTION",
+  "status": "ACTIVE",
+  "title": "Semantic retrieval budget exhaustion and bounded expansion",
+  "version": "1.0.0"
+}

@@ -1,0 +1,868 @@
+{
+  "cases": [
+    {
+      "category": "RETRIEVAL",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Prevents weak semantic search candidates from misleading agent localization; requires fallback to exact search when similarity is below threshold.",
+      "execution_entrypoint": "local.regressions.invariants.retrieval:check_weak_semantic_fallback",
+      "expected_invariants": [
+        "fallback_behavior['on_semantic_failure'] == 'EXACT_SEARCH'",
+        "similarity_threshold >= 0.50",
+        "low similarity candidate (< 0.50) triggers fallback"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "synthetic",
+      "provenance": {
+        "candidate_ids": [
+          "R0",
+          "R1"
+        ],
+        "note": "synthetic harness regression derived from documented failure mode",
+        "plan_requirement": "semantic search misleads agent",
+        "source_file": "local/retrieval_opt/policy.py",
+        "stage": "Stage 33"
+      },
+      "regression_id": "REG-RETRIEVAL-001",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "R1",
+        "M0"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "RETRIEVAL:WEAK_SEMANTIC_SEARCH_MISLEAD",
+      "source_failure_type": "WEAK_SEMANTIC_SEARCH_MISLEAD",
+      "status": "ACTIVE",
+      "title": "Weak semantic retrieval fallback to exact search",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RETRIEVAL",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Prevents unbounded semantic tool expansion by enforcing strict call budgets and stopping retrieval on budget exhaustion.",
+      "execution_entrypoint": "local.regressions.invariants.retrieval:check_retrieval_budget_exhaustion",
+      "expected_invariants": [
+        "max_semantic_calls bounded (1-5)",
+        "fallback_behavior['on_budget_exhausted'] == 'STOP_RETRIEVAL'",
+        "max_retrieved_items bounded (<= 25)"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "synthetic",
+      "provenance": {
+        "candidate_ids": [
+          "R1",
+          "R4"
+        ],
+        "note": "synthetic harness regression derived from documented failure mode",
+        "plan_requirement": "semantic search call budget exhaustion",
+        "source_file": "local/retrieval_opt/policy.py",
+        "stage": "Stage 33"
+      },
+      "regression_id": "REG-RETRIEVAL-002",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "R1"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "RETRIEVAL:RETRIEVAL_BUDGET_EXHAUSTION",
+      "source_failure_type": "RETRIEVAL_BUDGET_EXHAUSTION",
+      "status": "ACTIVE",
+      "title": "Semantic retrieval budget exhaustion and bounded expansion",
+      "version": "1.0.0"
+    },
+    {
+      "category": "POLICY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Enforces strict operational workflow discipline: cheap direct reconnaissance and test evidence must precede edit hypothesis and file modifications.",
+      "execution_entrypoint": "local.regressions.invariants.policy:check_edit_before_evidence_policy",
+      "expected_invariants": [
+        "exact_recon_completed == False blocks edit hypothesis trigger",
+        "premature edit hypothesis blocks scout uncertainty trigger",
+        "workflow demands initial direct repository reconnaissance"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "architectural_invariant",
+      "provenance": {
+        "candidate_ids": [
+          "E1",
+          "M0"
+        ],
+        "note": "synthetic harness regression derived from documented failure mode",
+        "plan_requirement": "agent edits before reading tests",
+        "source_file": "local/scout/trigger.py",
+        "stage": "Stage 21"
+      },
+      "regression_id": "REG-POLICY-001",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "M0",
+        "S1"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "CRITICAL",
+      "signature": "POLICY:EDIT_BEFORE_TEST_OR_RECON",
+      "source_failure_type": "EDIT_BEFORE_TEST_OR_RECON",
+      "status": "ACTIVE",
+      "title": "Prohibit edits before reading tests and establishing reconnaissance",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RECOVERY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Detects repeated execution of identical test command without progress within 2 cycles.",
+      "execution_entrypoint": "local.regressions.invariants.recovery:check_repeated_command_invariant",
+      "expected_invariants": [
+        "NoProgressDetectorV1 flags lack of progress on cycle 2",
+        "assessment.status == NO_PROGRESS",
+        "assessment.reason in (REPEATED_FAILURE, REPEATED_EDIT)"
+      ],
+      "fixture_type": "harness_detector",
+      "observed_or_synthetic": "observed",
+      "provenance": {
+        "candidate_ids": [
+          "E10",
+          "REC0"
+        ],
+        "note": "observed recovery failure pattern mined in Stage 35",
+        "plan_requirement": "agent loops on failing test",
+        "source_file": "local/progress/detector.py",
+        "stage": "Stage 19",
+        "taxonomy_entry": "REPEATED_COMMAND"
+      },
+      "regression_id": "REG-RECOVERY-001",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "E10",
+        "M0"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "RECOVERY:REPEATED_COMMAND",
+      "source_failure_type": "REPEATED_COMMAND",
+      "status": "ACTIVE",
+      "title": "Detect repeated failing command across cycle threshold",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RECOVERY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Detects recurring identical failure signature and stack trace without diagnostic shift.",
+      "execution_entrypoint": "local.regressions.invariants.recovery:check_repeated_error_invariant",
+      "expected_invariants": [
+        "identical error signature flags NO_PROGRESS at threshold=2",
+        "reason == REPEATED_FAILURE"
+      ],
+      "fixture_type": "harness_detector",
+      "observed_or_synthetic": "observed",
+      "provenance": {
+        "candidate_ids": [
+          "REC0",
+          "REC1"
+        ],
+        "note": "observed recovery failure pattern mined in Stage 35",
+        "source_file": "local/progress/detector.py",
+        "stage": "Stage 35",
+        "taxonomy_entry": "REPEATED_ERROR"
+      },
+      "regression_id": "REG-RECOVERY-002",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "REC1"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "RECOVERY:REPEATED_ERROR",
+      "source_failure_type": "REPEATED_ERROR",
+      "status": "ACTIVE",
+      "title": "Detect repeated identical error signature without new evidence",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RECOVERY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Detects when the agent re-applies materially identical or cosmetic code modifications after verification failure.",
+      "execution_entrypoint": "local.regressions.invariants.recovery:check_repeated_edit_invariant",
+      "expected_invariants": [
+        "normalized edit comparison detects equivalence across whitespace",
+        "assessment.status == NO_PROGRESS"
+      ],
+      "fixture_type": "harness_detector",
+      "observed_or_synthetic": "observed",
+      "provenance": {
+        "candidate_ids": [
+          "E10",
+          "REC0"
+        ],
+        "note": "observed recovery failure pattern mined in Stage 35",
+        "source_file": "local/progress/detector.py",
+        "stage": "Stage 19",
+        "taxonomy_entry": "REPEATED_EDIT"
+      },
+      "regression_id": "REG-RECOVERY-003",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "E10"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "RECOVERY:REPEATED_EDIT",
+      "source_failure_type": "REPEATED_EDIT",
+      "status": "ACTIVE",
+      "title": "Detect materially identical repeated code edits",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RECOVERY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Detects repeated exploration of an already-falsified root-cause hypothesis.",
+      "execution_entrypoint": "local.regressions.invariants.recovery:check_repeated_hypothesis_invariant",
+      "expected_invariants": [
+        "normalized hypothesis comparison detects case-insensitive equivalence",
+        "assessment.status == NO_PROGRESS"
+      ],
+      "fixture_type": "harness_detector",
+      "observed_or_synthetic": "observed",
+      "provenance": {
+        "candidate_ids": [
+          "E10",
+          "REC0"
+        ],
+        "note": "observed recovery failure pattern mined in Stage 35",
+        "source_file": "local/progress/detector.py",
+        "stage": "Stage 19",
+        "taxonomy_entry": "REPEATED_HYPOTHESIS"
+      },
+      "regression_id": "REG-RECOVERY-004",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "E10"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "MEDIUM",
+      "signature": "RECOVERY:REPEATED_HYPOTHESIS",
+      "source_failure_type": "REPEATED_HYPOTHESIS",
+      "status": "ACTIVE",
+      "title": "Detect repeated root-cause hypothesis without new evidence",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RECOVERY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Detects cyclic oscillations between alternating recovery interventions on unchanged defect state.",
+      "execution_entrypoint": "local.regressions.invariants.recovery:check_recovery_loop_invariant",
+      "expected_invariants": [
+        "RecoveryLoopDetector.analyze_events detects oscillation",
+        "loop_detected == True",
+        "loop_type in ('OSCILLATION', 'DIRECT_LOOP')"
+      ],
+      "fixture_type": "harness_detector",
+      "observed_or_synthetic": "observed",
+      "provenance": {
+        "candidate_ids": [
+          "REC0",
+          "REC2"
+        ],
+        "note": "observed recovery failure pattern mined in Stage 35",
+        "plan_requirement": "agent loops on failing test",
+        "source_file": "local/recovery_opt/loop_detector.py",
+        "stage": "Stage 35",
+        "taxonomy_entry": "RECOVERY_LOOP"
+      },
+      "regression_id": "REG-RECOVERY-005",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "REC2"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "CRITICAL",
+      "signature": "RECOVERY:RECOVERY_LOOP",
+      "source_failure_type": "RECOVERY_LOOP",
+      "status": "ACTIVE",
+      "title": "Detect oscillating recovery actions (A -> B -> A -> B)",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RECOVERY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Detects rapid successive trial of disparate recovery actions without intermediate verification or evidence progress.",
+      "execution_entrypoint": "local.regressions.invariants.recovery:check_recovery_thrashing_invariant",
+      "expected_invariants": [
+        "tracks consecutive unimproved recovery attempts",
+        "flags thrashing when attempts exceed threshold without evidence change"
+      ],
+      "fixture_type": "harness_detector",
+      "observed_or_synthetic": "observed",
+      "provenance": {
+        "candidate_ids": [
+          "REC0",
+          "REC1"
+        ],
+        "note": "observed recovery failure pattern mined in Stage 35",
+        "source_file": "local/recovery_opt/loop_detector.py",
+        "stage": "Stage 35",
+        "taxonomy_entry": "RECOVERY_THRASHING"
+      },
+      "regression_id": "REG-RECOVERY-006",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "REC1"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "RECOVERY:RECOVERY_THRASHING",
+      "source_failure_type": "RECOVERY_THRASHING",
+      "status": "ACTIVE",
+      "title": "Detect recovery thrashing across unverified interventions",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RECOVERY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Prevents wasteful infinite retry loops by terminating with BUDGET_EXHAUSTED once configured retry bounds are met.",
+      "execution_entrypoint": "local.regressions.invariants.recovery:check_retry_waste_invariant",
+      "expected_invariants": [
+        "attempts exceeding max_test_failure_retries flag is_exhausted",
+        "'budget_exhausted' included in policy stop_conditions"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "architectural_invariant",
+      "provenance": {
+        "candidate_ids": [
+          "REC0",
+          "REC1"
+        ],
+        "note": "synthetic harness regression derived from documented failure mode",
+        "source_file": "local/recovery_opt/models.py",
+        "stage": "Stage 35",
+        "taxonomy_entry": "RETRY_WASTE"
+      },
+      "regression_id": "REG-RECOVERY-007",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "REC1"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "RECOVERY:RETRY_WASTE",
+      "source_failure_type": "RETRY_WASTE",
+      "status": "ACTIVE",
+      "title": "Prevent retry waste via bounded retry budgets",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RECOVERY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Requires explicit failure classification and eligibility evaluation whenever meaningful test verification fails.",
+      "execution_entrypoint": "local.regressions.invariants.recovery:check_recovery_omission_invariant",
+      "expected_invariants": [
+        "meaningful failure classes require fallback rule assignment",
+        "'on_test_failure' present in recovery fallback rules"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "architectural_invariant",
+      "provenance": {
+        "candidate_ids": [
+          "M0",
+          "REC0"
+        ],
+        "note": "synthetic harness regression derived from documented failure mode",
+        "source_file": "local/recovery_opt/models.py",
+        "stage": "Stage 35",
+        "taxonomy_entry": "RECOVERY_OMISSION"
+      },
+      "regression_id": "REG-RECOVERY-008",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "M0"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "RECOVERY:RECOVERY_OMISSION",
+      "source_failure_type": "RECOVERY_OMISSION",
+      "status": "ACTIVE",
+      "title": "Prevent recovery omission upon verified test failure",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RECOVERY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Enforces that no-progress thresholds do not exceed 3 turns, triggering intervention before episode exhaustion.",
+      "execution_entrypoint": "local.regressions.invariants.recovery:check_late_recovery_invariant",
+      "expected_invariants": [
+        "no_progress_threshold_turns <= 3"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "architectural_invariant",
+      "provenance": {
+        "candidate_ids": [
+          "REC0",
+          "REC1"
+        ],
+        "note": "synthetic harness regression derived from documented failure mode",
+        "source_file": "local/recovery_opt/models.py",
+        "stage": "Stage 35",
+        "taxonomy_entry": "LATE_RECOVERY"
+      },
+      "regression_id": "REG-RECOVERY-009",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "REC1"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "MEDIUM",
+      "signature": "RECOVERY:LATE_RECOVERY",
+      "source_failure_type": "LATE_RECOVERY",
+      "status": "ACTIVE",
+      "title": "Prevent late recovery via early no-progress detection",
+      "version": "1.0.0"
+    },
+    {
+      "category": "RECOVERY",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Enforces clean escalation to alternate tool or path when primary recovery fails (RETRY_THEN_ALTERNATE).",
+      "execution_entrypoint": "local.regressions.invariants.recovery:check_failed_recovery_invariant",
+      "expected_invariants": [
+        "fallback_rules['on_tool_failure'] == 'RETRY_THEN_ALTERNATE'",
+        "alternate_path_routing_enabled == True"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "architectural_invariant",
+      "provenance": {
+        "candidate_ids": [
+          "REC0",
+          "REC3"
+        ],
+        "note": "synthetic harness regression derived from documented failure mode",
+        "source_file": "local/recovery_opt/models.py",
+        "stage": "Stage 35",
+        "taxonomy_entry": "FAILED_RECOVERY"
+      },
+      "regression_id": "REG-RECOVERY-010",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "REC3"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "RECOVERY:FAILED_RECOVERY",
+      "source_failure_type": "FAILED_RECOVERY",
+      "status": "ACTIVE",
+      "title": "Escalate failed recovery to alternate path",
+      "version": "1.0.0"
+    },
+    {
+      "category": "HYGIENE",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Detects scratch scripts, temporary patches, and debug logs; verifies that SafeCleaner approves removal for untracked files while protecting tracked files.",
+      "execution_entrypoint": "local.regressions.invariants.hygiene:check_temporary_file_hygiene",
+      "expected_invariants": [
+        "scratch files detected with recommended_action REMOVE",
+        "temp patches detected with recommended_action REMOVE",
+        "debug logs detected with recommended_action REMOVE",
+        "SafeCleaner approves untracked removal, rejects tracked removal"
+      ],
+      "fixture_type": "harness_filesystem",
+      "observed_or_synthetic": "observed",
+      "provenance": {
+        "candidate_ids": [
+          "D1",
+          "M0"
+        ],
+        "note": "synthetic filesystem harness regression derived from Stage 27 hygiene discipline",
+        "plan_requirement": "agent leaves temporary file",
+        "source_file": "local/diff_discipline/detectors.py",
+        "stage": "Stage 27"
+      },
+      "regression_id": "REG-HYGIENE-001",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "D1",
+        "M0"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "CRITICAL",
+      "signature": "HYGIENE:TEMPORARY_FILE_LEFT_BEHIND",
+      "source_failure_type": "TEMPORARY_FILE_LEFT_BEHIND",
+      "status": "ACTIVE",
+      "title": "Detect and clean temporary scratch files and debug logs",
+      "version": "1.0.0"
+    },
+    {
+      "category": "DIFF_DISCIPLINE",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Prevents unintentional modifications outside defect scope (e.g. CI workflow files or infrastructure scripts) from entering submission diffs.",
+      "execution_entrypoint": "local.regressions.invariants.diff:check_unrelated_file_diff_invariant",
+      "expected_invariants": [
+        "clean diff approved by reviewer rules",
+        "diff touching unrelated files blocked with CHANGES_REQUESTED",
+        "Scope violation reported in blocking findings"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "observed",
+      "provenance": {
+        "candidate_ids": [
+          "V1",
+          "M0"
+        ],
+        "note": "synthetic harness regression derived from Reviewer rules",
+        "plan_requirement": "agent changes unrelated file",
+        "source_file": "local/reviewer/rules.py",
+        "stage": "Stage 23"
+      },
+      "regression_id": "REG-DIFF-001",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "V1",
+        "M0"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "CRITICAL",
+      "signature": "DIFF_DISCIPLINE:UNRELATED_FILE_MODIFIED",
+      "source_failure_type": "UNRELATED_FILE_MODIFIED",
+      "status": "ACTIVE",
+      "title": "Detect and block modifications to unrelated files",
+      "version": "1.0.0"
+    },
+    {
+      "category": "CALLER_INSPECTION",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Enforces that contract-sensitive symbols undergo relational caller exploration while preventing context explosion when source is sufficient.",
+      "execution_entrypoint": "local.regressions.invariants.graph:check_caller_inspection_discipline",
+      "expected_invariants": [
+        "approves exploration when symbol is promising and relationships unresolved",
+        "blocks exploration when direct source is already sufficient",
+        "blocks consecutive neighbor calls without intermediate reading",
+        "blocks graph neighbor exploration outside localization phase"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "architectural_invariant",
+      "provenance": {
+        "candidate_ids": [
+          "E4",
+          "M0"
+        ],
+        "note": "synthetic harness regression derived from Graph Neighbor Policy V1",
+        "plan_requirement": "agent fails to inspect caller",
+        "source_file": "local/graph/controller.py",
+        "stage": "Stage 13"
+      },
+      "regression_id": "REG-GRAPH-001",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "E4",
+        "M0"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "CALLER_INSPECTION:CALLER_NOT_INSPECTED",
+      "source_failure_type": "CALLER_NOT_INSPECTED",
+      "status": "ACTIVE",
+      "title": "Disciplined caller and relationship exploration under contract changes",
+      "version": "1.0.0"
+    },
+    {
+      "category": "TESTING",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Enforces that test policies do not treat a failing test as sufficient final validation and mandate escalation on test failure.",
+      "execution_entrypoint": "local.regressions.invariants.testing:check_stop_after_first_red_test",
+      "expected_invariants": [
+        "T1 policy has escalate_on_targeted_failure=True",
+        "stop_rules forbid stopping on failure as pass",
+        "T2 policy escalates on adjacent regressions"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "architectural_invariant",
+      "provenance": {
+        "candidate_ids": [
+          "T0",
+          "T1",
+          "T2"
+        ],
+        "note": "synthetic harness regression derived from Testing Strategy policies",
+        "plan_requirement": "agent stops after first red test",
+        "source_file": "local/testing_opt/policy.py",
+        "stage": "Stage 34"
+      },
+      "regression_id": "REG-TESTING-001",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "T1",
+        "T2"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "HIGH",
+      "signature": "TESTING:STOP_AFTER_FIRST_RED_TEST",
+      "source_failure_type": "STOP_AFTER_FIRST_RED_TEST",
+      "status": "ACTIVE",
+      "title": "Prohibit premature stopping on first failing test; require escalation",
+      "version": "1.0.0"
+    },
+    {
+      "category": "TESTING",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Enforces bounded execution parameters in baseline test policy and verifies feasibility evaluator rejects full suite sweeps under T0.",
+      "execution_entrypoint": "local.regressions.invariants.testing:check_unconstrained_repo_sweep",
+      "expected_invariants": [
+        "full_suite_enabled == False in T0",
+        "max_test_commands bounded (<= 3)",
+        "feasibility evaluator returns NOT_FEASIBLE under T0"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "architectural_invariant",
+      "provenance": {
+        "candidate_ids": [
+          "T0"
+        ],
+        "note": "synthetic harness regression derived from Testing Feasibility evaluator",
+        "plan_requirement": "unconstrained repository sweeps",
+        "source_file": "local/testing_opt/feasibility.py",
+        "stage": "Stage 34"
+      },
+      "regression_id": "REG-TESTING-002",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "T0"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "MEDIUM",
+      "signature": "TESTING:UNCONSTRAINED_REPO_SWEEP",
+      "source_failure_type": "UNCONSTRAINED_REPO_SWEEP",
+      "status": "ACTIVE",
+      "title": "Prevent unconstrained repository-wide test sweeps on localized changes",
+      "version": "1.0.0"
+    },
+    {
+      "category": "SUBMISSION",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Structurally enforces that patch submission is rejected unless candidate diff, verification evidence, and final review readiness are complete.",
+      "execution_entrypoint": "local.regressions.invariants.submission:check_submit_without_final_diff",
+      "expected_invariants": [
+        "unverified patch rejected by is_review_ready",
+        "empty diff rejected by is_review_ready",
+        "valid verified diff confirmed ready for review"
+      ],
+      "fixture_type": "harness_policy",
+      "observed_or_synthetic": "architectural_invariant",
+      "provenance": {
+        "candidate_ids": [
+          "V1",
+          "M0"
+        ],
+        "note": "synthetic harness regression derived from Reviewer trigger rules",
+        "plan_requirement": "agent submits without final diff review",
+        "source_file": "local/reviewer/trigger.py",
+        "stage": "Stage 23"
+      },
+      "regression_id": "REG-SUBMISSION-001",
+      "regression_type": "HARNESS_REGRESSION",
+      "related_candidate_ids": [
+        "V1",
+        "M0"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "CRITICAL",
+      "signature": "SUBMISSION:SUBMIT_WITHOUT_FINAL_DIFF",
+      "source_failure_type": "SUBMIT_WITHOUT_FINAL_DIFF",
+      "status": "ACTIVE",
+      "title": "Require final diff review and verification evidence before submission",
+      "version": "1.0.0"
+    },
+    {
+      "category": "INFRASTRUCTURE",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Verifies the cryptographic held_out.lock and guarantees that no held-out benchmark task is consumed into development or regression suites.",
+      "execution_entrypoint": "local.regressions.invariants.infrastructure:check_held_out_protection_invariant",
+      "expected_invariants": [
+        "held-out lock file verified with 14 locked tasks",
+        "is_held_out_task returns True for locked tasks",
+        "validate_task_not_held_out raises HeldOutContaminationError on protected task",
+        "dev tasks pass cleanly"
+      ],
+      "fixture_type": "infrastructure_lock",
+      "observed_or_synthetic": "architectural_invariant",
+      "provenance": {
+        "candidate_ids": [
+          "M0"
+        ],
+        "note": "deterministic infrastructure regression verifying cryptographic held-out lock",
+        "plan_requirement": "Held-out protection",
+        "source_file": "benchmark/splits/held_out_lock.py",
+        "stage": "Stage 29"
+      },
+      "regression_id": "REG-BENCHMARK-001",
+      "regression_type": "INFRASTRUCTURE_REGRESSION",
+      "related_candidate_ids": [
+        "M0"
+      ],
+      "required_capabilities": [
+        "local_cpu"
+      ],
+      "severity": "CRITICAL",
+      "signature": "INFRASTRUCTURE:HELD_OUT_CONTAMINATION",
+      "source_failure_type": "HELD_OUT_CONTAMINATION",
+      "status": "ACTIVE",
+      "title": "Cryptographic held-out split protection and leakage prevention",
+      "version": "1.0.0"
+    },
+    {
+      "category": "ENVIRONMENT_BLOCKED",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Captures documented reasoning degradation of Gemma 4 31B on long context (>32k tokens). Preserved honestly as BLOCKED on local CPU host.",
+      "execution_entrypoint": "local.regressions.invariants.blocked:check_long_context_degradation_blocked",
+      "expected_invariants": [
+        "status remains BLOCKED on local CPU",
+        "cannot be silently marked as PASS without live GPU inference"
+      ],
+      "fixture_type": "unrepresented_stub",
+      "observed_or_synthetic": "blocked_environment",
+      "provenance": {
+        "candidate_ids": [
+          "M0",
+          "L1"
+        ],
+        "note": "unrepresented blocked failure preserved without live GPU execution fabrication",
+        "plan_requirement": "honest blocked failure representation",
+        "source_file": "local/compute/environment.py",
+        "stage": "Stage 42"
+      },
+      "regression_id": "REG-BLOCKED-001",
+      "regression_type": "UNREPRESENTED_BLOCKED_FAILURE",
+      "related_candidate_ids": [
+        "M0",
+        "L1"
+      ],
+      "required_capabilities": [
+        "cuda_gpu",
+        "gemma_31b_weights"
+      ],
+      "severity": "HIGH",
+      "signature": "ENVIRONMENT_BLOCKED:CONTEXT_DEGRADATION_31B",
+      "source_failure_type": "CONTEXT_DEGRADATION_31B",
+      "status": "BLOCKED",
+      "title": "Gemma 4 31B long-context reasoning degradation (>32k tokens)",
+      "version": "1.0.0"
+    },
+    {
+      "category": "ENVIRONMENT_BLOCKED",
+      "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+      "created_from_stage": "Stage 45",
+      "description": "Captures container timeout in air-gapped Kaggle sandbox when external wheels are not pre-packaged. Preserved honestly as BLOCKED on local host.",
+      "execution_entrypoint": "local.regressions.invariants.blocked:check_kaggle_network_isolation_blocked",
+      "expected_invariants": [
+        "status remains BLOCKED on non-container host",
+        "requires verified Kaggle container runtime before activation"
+      ],
+      "fixture_type": "unrepresented_stub",
+      "observed_or_synthetic": "blocked_environment",
+      "provenance": {
+        "candidate_ids": [
+          "M0"
+        ],
+        "note": "unrepresented blocked failure preserved without live Kaggle container fabrication",
+        "plan_requirement": "honest blocked failure representation",
+        "source_file": "local/compute/environment.py",
+        "stage": "Stage 42"
+      },
+      "regression_id": "REG-BLOCKED-002",
+      "regression_type": "UNREPRESENTED_BLOCKED_FAILURE",
+      "related_candidate_ids": [
+        "M0"
+      ],
+      "required_capabilities": [
+        "kaggle_container_runtime"
+      ],
+      "severity": "HIGH",
+      "signature": "ENVIRONMENT_BLOCKED:KAGGLE_NETWORK_ISOLATION_TIMEOUT",
+      "source_failure_type": "KAGGLE_NETWORK_ISOLATION_TIMEOUT",
+      "status": "BLOCKED",
+      "title": "Kaggle air-gapped container network timeout on unbundled wheels",
+      "version": "1.0.0"
+    }
+  ],
+  "cases_by_category": {
+    "CALLER_INSPECTION": 1,
+    "DIFF_DISCIPLINE": 1,
+    "ENVIRONMENT_BLOCKED": 2,
+    "HYGIENE": 1,
+    "INFRASTRUCTURE": 1,
+    "POLICY": 1,
+    "RECOVERY": 10,
+    "RETRIEVAL": 2,
+    "SUBMISSION": 1,
+    "TESTING": 2
+  },
+  "cases_by_status": {
+    "ACTIVE": 20,
+    "BLOCKED": 2
+  },
+  "cases_by_type": {
+    "HARNESS_REGRESSION": 19,
+    "INFRASTRUCTURE_REGRESSION": 1,
+    "UNREPRESENTED_BLOCKED_FAILURE": 2
+  },
+  "created_at": "2026-10-02T08:53:51.569635+00:00",
+  "git_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "manifest_sha256": "a156045c4c6b24adabb6fb1b4499116396725d98372ae3c149b0fd89d8cadc84",
+  "schema_version": "1.0.0",
+  "total_cases": 22
+}

@@ -1,0 +1,40 @@
+{
+  "category": "RECOVERY",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Detects repeated execution of identical test command without progress within 2 cycles.",
+  "execution_entrypoint": "local.regressions.invariants.recovery:check_repeated_command_invariant",
+  "expected_invariants": [
+    "NoProgressDetectorV1 flags lack of progress on cycle 2",
+    "assessment.status == NO_PROGRESS",
+    "assessment.reason in (REPEATED_FAILURE, REPEATED_EDIT)"
+  ],
+  "fixture_type": "harness_detector",
+  "observed_or_synthetic": "observed",
+  "provenance": {
+    "candidate_ids": [
+      "E10",
+      "REC0"
+    ],
+    "note": "observed recovery failure pattern mined in Stage 35",
+    "plan_requirement": "agent loops on failing test",
+    "source_file": "local/progress/detector.py",
+    "stage": "Stage 19",
+    "taxonomy_entry": "REPEATED_COMMAND"
+  },
+  "regression_id": "REG-RECOVERY-001",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "E10",
+    "M0"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "RECOVERY:REPEATED_COMMAND",
+  "source_failure_type": "REPEATED_COMMAND",
+  "status": "ACTIVE",
+  "title": "Detect repeated failing command across cycle threshold",
+  "version": "1.0.0"
+}

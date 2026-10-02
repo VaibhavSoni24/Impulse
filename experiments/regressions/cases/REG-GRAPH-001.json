@@ -1,0 +1,40 @@
+{
+  "category": "CALLER_INSPECTION",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Enforces that contract-sensitive symbols undergo relational caller exploration while preventing context explosion when source is sufficient.",
+  "execution_entrypoint": "local.regressions.invariants.graph:check_caller_inspection_discipline",
+  "expected_invariants": [
+    "approves exploration when symbol is promising and relationships unresolved",
+    "blocks exploration when direct source is already sufficient",
+    "blocks consecutive neighbor calls without intermediate reading",
+    "blocks graph neighbor exploration outside localization phase"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "architectural_invariant",
+  "provenance": {
+    "candidate_ids": [
+      "E4",
+      "M0"
+    ],
+    "note": "synthetic harness regression derived from Graph Neighbor Policy V1",
+    "plan_requirement": "agent fails to inspect caller",
+    "source_file": "local/graph/controller.py",
+    "stage": "Stage 13"
+  },
+  "regression_id": "REG-GRAPH-001",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "E4",
+    "M0"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "CALLER_INSPECTION:CALLER_NOT_INSPECTED",
+  "source_failure_type": "CALLER_NOT_INSPECTED",
+  "status": "ACTIVE",
+  "title": "Disciplined caller and relationship exploration under contract changes",
+  "version": "1.0.0"
+}

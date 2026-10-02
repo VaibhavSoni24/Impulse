@@ -1,0 +1,40 @@
+{
+  "category": "TESTING",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Enforces that test policies do not treat a failing test as sufficient final validation and mandate escalation on test failure.",
+  "execution_entrypoint": "local.regressions.invariants.testing:check_stop_after_first_red_test",
+  "expected_invariants": [
+    "T1 policy has escalate_on_targeted_failure=True",
+    "stop_rules forbid stopping on failure as pass",
+    "T2 policy escalates on adjacent regressions"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "architectural_invariant",
+  "provenance": {
+    "candidate_ids": [
+      "T0",
+      "T1",
+      "T2"
+    ],
+    "note": "synthetic harness regression derived from Testing Strategy policies",
+    "plan_requirement": "agent stops after first red test",
+    "source_file": "local/testing_opt/policy.py",
+    "stage": "Stage 34"
+  },
+  "regression_id": "REG-TESTING-001",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "T1",
+    "T2"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "TESTING:STOP_AFTER_FIRST_RED_TEST",
+  "source_failure_type": "STOP_AFTER_FIRST_RED_TEST",
+  "status": "ACTIVE",
+  "title": "Prohibit premature stopping on first failing test; require escalation",
+  "version": "1.0.0"
+}

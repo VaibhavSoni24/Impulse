@@ -1,0 +1,39 @@
+{
+  "category": "SUBMISSION",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Structurally enforces that patch submission is rejected unless candidate diff, verification evidence, and final review readiness are complete.",
+  "execution_entrypoint": "local.regressions.invariants.submission:check_submit_without_final_diff",
+  "expected_invariants": [
+    "unverified patch rejected by is_review_ready",
+    "empty diff rejected by is_review_ready",
+    "valid verified diff confirmed ready for review"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "architectural_invariant",
+  "provenance": {
+    "candidate_ids": [
+      "V1",
+      "M0"
+    ],
+    "note": "synthetic harness regression derived from Reviewer trigger rules",
+    "plan_requirement": "agent submits without final diff review",
+    "source_file": "local/reviewer/trigger.py",
+    "stage": "Stage 23"
+  },
+  "regression_id": "REG-SUBMISSION-001",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "V1",
+    "M0"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "CRITICAL",
+  "signature": "SUBMISSION:SUBMIT_WITHOUT_FINAL_DIFF",
+  "source_failure_type": "SUBMIT_WITHOUT_FINAL_DIFF",
+  "status": "ACTIVE",
+  "title": "Require final diff review and verification evidence before submission",
+  "version": "1.0.0"
+}

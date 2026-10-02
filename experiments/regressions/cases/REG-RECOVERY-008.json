@@ -1,0 +1,37 @@
+{
+  "category": "RECOVERY",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Requires explicit failure classification and eligibility evaluation whenever meaningful test verification fails.",
+  "execution_entrypoint": "local.regressions.invariants.recovery:check_recovery_omission_invariant",
+  "expected_invariants": [
+    "meaningful failure classes require fallback rule assignment",
+    "'on_test_failure' present in recovery fallback rules"
+  ],
+  "fixture_type": "harness_policy",
+  "observed_or_synthetic": "architectural_invariant",
+  "provenance": {
+    "candidate_ids": [
+      "M0",
+      "REC0"
+    ],
+    "note": "synthetic harness regression derived from documented failure mode",
+    "source_file": "local/recovery_opt/models.py",
+    "stage": "Stage 35",
+    "taxonomy_entry": "RECOVERY_OMISSION"
+  },
+  "regression_id": "REG-RECOVERY-008",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "M0"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "RECOVERY:RECOVERY_OMISSION",
+  "source_failure_type": "RECOVERY_OMISSION",
+  "status": "ACTIVE",
+  "title": "Prevent recovery omission upon verified test failure",
+  "version": "1.0.0"
+}

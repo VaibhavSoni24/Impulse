@@ -1,0 +1,37 @@
+{
+  "category": "RECOVERY",
+  "created_from_commit": "097ad5a90564c64da1c53714c600af8d4ee5a2ae",
+  "created_from_stage": "Stage 45",
+  "description": "Detects when the agent re-applies materially identical or cosmetic code modifications after verification failure.",
+  "execution_entrypoint": "local.regressions.invariants.recovery:check_repeated_edit_invariant",
+  "expected_invariants": [
+    "normalized edit comparison detects equivalence across whitespace",
+    "assessment.status == NO_PROGRESS"
+  ],
+  "fixture_type": "harness_detector",
+  "observed_or_synthetic": "observed",
+  "provenance": {
+    "candidate_ids": [
+      "E10",
+      "REC0"
+    ],
+    "note": "observed recovery failure pattern mined in Stage 35",
+    "source_file": "local/progress/detector.py",
+    "stage": "Stage 19",
+    "taxonomy_entry": "REPEATED_EDIT"
+  },
+  "regression_id": "REG-RECOVERY-003",
+  "regression_type": "HARNESS_REGRESSION",
+  "related_candidate_ids": [
+    "E10"
+  ],
+  "required_capabilities": [
+    "local_cpu"
+  ],
+  "severity": "HIGH",
+  "signature": "RECOVERY:REPEATED_EDIT",
+  "source_failure_type": "REPEATED_EDIT",
+  "status": "ACTIVE",
+  "title": "Detect materially identical repeated code edits",
+  "version": "1.0.0"
+}
