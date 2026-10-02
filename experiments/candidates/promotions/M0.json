@@ -1,0 +1,77 @@
+{
+  "candidate_id": "M0",
+  "baseline_candidate_id": "E0",
+  "decision": "BLOCKED",
+  "timestamp": "2026-10-02T08:05:01.323374+00:00",
+  "gate_version": "1.0.0",
+  "primary_metric": "task_success_rate",
+  "validation_result": {
+    "dimension_status": "UNKNOWN",
+    "primary_metric_name": "task_success_rate",
+    "direction": "HIGHER_IS_BETTER",
+    "baseline_value": null,
+    "candidate_value": null,
+    "delta": null,
+    "task_pairs": null,
+    "evidence_mode": "LIVE",
+    "notes": "No completed validation runs recorded for candidate."
+  },
+  "held_out_result": {
+    "dimension_status": "UNKNOWN",
+    "baseline_result": null,
+    "candidate_result": null,
+    "regression_count": 0,
+    "changed_tasks": 0,
+    "evidence_mode": "LIVE",
+    "notes": "No completed held-out runs recorded for candidate."
+  },
+  "runtime_result": {
+    "dimension_status": "UNKNOWN",
+    "avg_runtime_ms": null,
+    "median_runtime_ms": null,
+    "max_runtime_ms": null,
+    "budget_limit_ms": 900000.0,
+    "tool_call_count": null,
+    "budget_violated": false,
+    "evidence_mode": "LIVE",
+    "notes": "No run records available to measure candidate runtime."
+  },
+  "configuration_result": {
+    "dimension_status": "PASS",
+    "submission_valid": true,
+    "manifest_valid": true,
+    "model_permitted": true,
+    "is_multi_dimension": true,
+    "multi_dimension_allowed": true,
+    "secrets_found": false,
+    "missing_files": [],
+    "notes": "Configuration valid: schema verified, permitted base model, clean diff, zero secrets."
+  },
+  "reproducibility_result": {
+    "dimension_status": "UNKNOWN",
+    "git_commit_verified": true,
+    "manifest_hash_verified": true,
+    "benchmark_hashes_present": true,
+    "sampling_settings_present": true,
+    "compute_environment_present": true,
+    "single_run_only": false,
+    "notes": "No completed live runs available to verify outcome stability."
+  },
+  "overall_result": "BLOCKED",
+  "evidence_mode": "LIVE",
+  "reasons": [
+    "Validation: No completed validation runs recorded for candidate.",
+    "Held-Out: No completed held-out runs recorded for candidate.",
+    "Runtime: No run records available to measure candidate runtime.",
+    "Reproducibility: No completed live runs available to verify outcome stability."
+  ],
+  "source_manifests": {
+    "M0": "3302d97e41ccd334fe2dd4f63a382828ef433f8af12ee1007065bcfefce1217b",
+    "E0": "ea693f54934d1c235250bbe02994b382e585769163e4d8402cb1bd14fc3b5ddd"
+  },
+  "source_hashes": {
+    "candidate_manifest": "3302d97e41ccd334fe2dd4f63a382828ef433f8af12ee1007065bcfefce1217b",
+    "root_prompt": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+    "benchmark_manifest": "e4b3fd60f69dbc2b9213e54eeb9636db78aefe92c1d06269d73d9f5f8f3c8ad6"
+  }
+}

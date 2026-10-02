@@ -1,0 +1,74 @@
+{
+  "candidate_id": "E0",
+  "baseline_candidate_id": null,
+  "decision": "BLOCKED",
+  "timestamp": "2026-10-02T08:05:01.294222+00:00",
+  "gate_version": "1.0.0",
+  "primary_metric": "task_success_rate",
+  "validation_result": {
+    "dimension_status": "NOT_APPLICABLE",
+    "primary_metric_name": "task_success_rate",
+    "direction": "HIGHER_IS_BETTER",
+    "baseline_value": null,
+    "candidate_value": null,
+    "delta": null,
+    "task_pairs": null,
+    "evidence_mode": "INFRASTRUCTURE_ONLY",
+    "notes": "Root baseline candidate has no parent baseline for validation comparison."
+  },
+  "held_out_result": {
+    "dimension_status": "NOT_APPLICABLE",
+    "baseline_result": null,
+    "candidate_result": null,
+    "regression_count": 0,
+    "changed_tasks": 0,
+    "evidence_mode": "INFRASTRUCTURE_ONLY",
+    "notes": "Root baseline candidate has no parent for held-out regression comparison."
+  },
+  "runtime_result": {
+    "dimension_status": "UNKNOWN",
+    "avg_runtime_ms": null,
+    "median_runtime_ms": null,
+    "max_runtime_ms": null,
+    "budget_limit_ms": 900000.0,
+    "tool_call_count": null,
+    "budget_violated": false,
+    "evidence_mode": "INFRASTRUCTURE_ONLY",
+    "notes": "Runtime acceptability requires LIVE benchmark execution data (current: INFRASTRUCTURE_ONLY)."
+  },
+  "configuration_result": {
+    "dimension_status": "PASS",
+    "submission_valid": true,
+    "manifest_valid": true,
+    "model_permitted": true,
+    "is_multi_dimension": false,
+    "multi_dimension_allowed": false,
+    "secrets_found": false,
+    "missing_files": [],
+    "notes": "Configuration valid: schema verified, permitted base model, clean diff, zero secrets."
+  },
+  "reproducibility_result": {
+    "dimension_status": "UNKNOWN",
+    "git_commit_verified": true,
+    "manifest_hash_verified": true,
+    "benchmark_hashes_present": true,
+    "sampling_settings_present": true,
+    "compute_environment_present": true,
+    "single_run_only": false,
+    "notes": "Provenance hashes verified, but empirical run reproducibility is UNKNOWN (evidence mode: INFRASTRUCTURE_ONLY)."
+  },
+  "overall_result": "BLOCKED",
+  "evidence_mode": "INFRASTRUCTURE_ONLY",
+  "reasons": [
+    "Runtime: Runtime acceptability requires LIVE benchmark execution data (current: INFRASTRUCTURE_ONLY).",
+    "Reproducibility: Provenance hashes verified, but empirical run reproducibility is UNKNOWN (evidence mode: INFRASTRUCTURE_ONLY)."
+  ],
+  "source_manifests": {
+    "E0": "ea693f54934d1c235250bbe02994b382e585769163e4d8402cb1bd14fc3b5ddd"
+  },
+  "source_hashes": {
+    "candidate_manifest": "ea693f54934d1c235250bbe02994b382e585769163e4d8402cb1bd14fc3b5ddd",
+    "root_prompt": "62003214997e9231ed811bdf2faab7e0ba1234798313a4ef9743b601bc8ae431",
+    "benchmark_manifest": "e4b3fd60f69dbc2b9213e54eeb9636db78aefe92c1d06269d73d9f5f8f3c8ad6"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "candidate_id": "L1",
+  "baseline_candidate_id": "M0",
+  "decision": "BLOCKED",
+  "timestamp": "2026-10-02T08:05:01.317882+00:00",
+  "gate_version": "1.0.0",
+  "primary_metric": "command_redundancy_count",
+  "validation_result": {
+    "dimension_status": "UNKNOWN",
+    "primary_metric_name": "command_redundancy_count",
+    "direction": "LOWER_IS_BETTER",
+    "baseline_value": null,
+    "candidate_value": null,
+    "delta": null,
+    "task_pairs": null,
+    "evidence_mode": "UNAVAILABLE",
+    "notes": "Validation improvement cannot be verified without LIVE benchmark evidence (current: UNAVAILABLE)."
+  },
+  "held_out_result": {
+    "dimension_status": "UNKNOWN",
+    "baseline_result": null,
+    "candidate_result": null,
+    "regression_count": 0,
+    "changed_tasks": 0,
+    "evidence_mode": "UNAVAILABLE",
+    "notes": "Held-out confirmation requires LIVE evidence (current: UNAVAILABLE)."
+  },
+  "runtime_result": {
+    "dimension_status": "UNKNOWN",
+    "avg_runtime_ms": null,
+    "median_runtime_ms": null,
+    "max_runtime_ms": null,
+    "budget_limit_ms": 900000.0,
+    "tool_call_count": null,
+    "budget_violated": false,
+    "evidence_mode": "UNAVAILABLE",
+    "notes": "Runtime acceptability requires LIVE benchmark execution data (current: UNAVAILABLE)."
+  },
+  "configuration_result": {
+    "dimension_status": "FAIL",
+    "submission_valid": false,
+    "manifest_valid": true,
+    "model_permitted": true,
+    "is_multi_dimension": false,
+    "multi_dimension_allowed": false,
+    "secrets_found": false,
+    "missing_files": [
+      "adapter_weights"
+    ],
+    "notes": "Adapter candidate 'L1' references no valid adapter artifact."
+  },
+  "reproducibility_result": {
+    "dimension_status": "UNKNOWN",
+    "git_commit_verified": true,
+    "manifest_hash_verified": true,
+    "benchmark_hashes_present": true,
+    "sampling_settings_present": true,
+    "compute_environment_present": true,
+    "single_run_only": false,
+    "notes": "Provenance hashes verified, but empirical run reproducibility is UNKNOWN (evidence mode: UNAVAILABLE)."
+  },
+  "overall_result": "BLOCKED",
+  "evidence_mode": "UNAVAILABLE",
+  "reasons": [
+    "L1 adapter weights not trained; Stage 40 A/B unverified; zero measured adapter improvement."
+  ],
+  "source_manifests": {
+    "L1": "4363c83bdda86e5707c79bc79c421188156f2a1105957ca734eeb1e8d5267ccb",
+    "M0": "3302d97e41ccd334fe2dd4f63a382828ef433f8af12ee1007065bcfefce1217b"
+  },
+  "source_hashes": {
+    "candidate_manifest": "4363c83bdda86e5707c79bc79c421188156f2a1105957ca734eeb1e8d5267ccb",
+    "root_prompt": "2360d4bf64dd91cb905d1890b903cac26bed792787a79664db42c76cb252527e",
+    "benchmark_manifest": "e4b3fd60f69dbc2b9213e54eeb9636db78aefe92c1d06269d73d9f5f8f3c8ad6"
+  }
+}
