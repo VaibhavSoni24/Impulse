@@ -1,0 +1,34 @@
+{
+  "stress_id": "STRESS-BINARY-001",
+  "version": "1.0.0",
+  "title": "Binary File Null-Byte Detection and Safe Diagnostics",
+  "category": "BINARY_FILE",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "MEDIUM",
+  "scenario_description": "Binary file with null bytes is evaluated; detector prevents text corruption, avoids leaking binary characters into logs, and handles safely.",
+  "fixture_type": "synthetic_binary_file",
+  "source_requirement": "PLAN.md Stage 46 STRESS 9",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Binary null byte correctly detected",
+    "Text-only decode raises UnicodeDecodeError without silent corruption",
+    "Diagnostic preview formats safely without control characters"
+  ],
+  "execution_entrypoint": "local.stress.invariants.binary_file:check_binary_file_stress",
+  "resource_limits": {
+    "file_bytes": 128
+  },
+  "related_regression_ids": [
+    "REG-SUBMISSION-001"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "BINARY_FILE:STRESS-BINARY-001"
+}

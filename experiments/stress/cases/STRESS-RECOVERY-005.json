@@ -1,0 +1,32 @@
+{
+  "stress_id": "STRESS-RECOVERY-005",
+  "version": "1.0.0",
+  "title": "Recovery Direct Loop and Oscillation Detection",
+  "category": "REPEATED_FAILURE",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "HIGH",
+  "scenario_description": "Alternating A -> B -> A -> B recovery actions detected as an oscillation loop.",
+  "fixture_type": "synthetic_recovery_events",
+  "source_requirement": "PLAN.md Stage 46 STRESS 10",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Oscillation detected and cycle count accurately measured"
+  ],
+  "execution_entrypoint": "local.stress.invariants.repeated_failure:check_stress_recovery_loop",
+  "resource_limits": {
+    "max_direct_repeats": 2
+  },
+  "related_regression_ids": [
+    "REG-RECOVERY-005"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "REPEATED_FAILURE:STRESS-RECOVERY-005"
+}

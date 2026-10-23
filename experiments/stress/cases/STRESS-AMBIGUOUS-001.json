@@ -1,0 +1,35 @@
+{
+  "stress_id": "STRESS-AMBIGUOUS-001",
+  "version": "1.0.0",
+  "title": "Ambiguous Issue Reconnaissance Policy Enforcement",
+  "category": "AMBIGUOUS_ISSUE",
+  "stress_type": "ORCHESTRATION_POLICY",
+  "severity": "HIGH",
+  "scenario_description": "Issue presents multiple competing candidate symbols without clear winner; policy forbids premature edit and mandates focused reconnaissance.",
+  "fixture_type": "synthetic_ambiguous_issue",
+  "source_requirement": "PLAN.md Stage 46 STRESS 2",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Premature edit unauthorized when confidence < threshold",
+    "Routes to focused reconnaissance disambiguation",
+    "Probing bounded to avoid query explosion"
+  ],
+  "execution_entrypoint": "local.stress.invariants.ambiguous_issue:check_ambiguous_issue_stress",
+  "resource_limits": {
+    "max_candidate_probes": 5
+  },
+  "related_regression_ids": [
+    "REG-POLICY-001",
+    "REG-RETRIEVAL-001"
+  ],
+  "testing_tier": "orchestration_policy",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "AMBIGUOUS_ISSUE:STRESS-AMBIGUOUS-001"
+}

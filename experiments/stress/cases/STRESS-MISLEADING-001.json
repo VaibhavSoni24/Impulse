@@ -1,0 +1,35 @@
+{
+  "stress_id": "STRESS-MISLEADING-001",
+  "version": "1.0.0",
+  "title": "Misleading Function Name AST and Test Grounding",
+  "category": "MISLEADING_NAMES",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "HIGH",
+  "scenario_description": "Symbol names claim one semantic behavior while AST implementation and test assertions prove another; harness detects the contradiction.",
+  "fixture_type": "synthetic_misleading_source",
+  "source_requirement": "PLAN.md Stage 46 STRESS 3",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "AST inspection reveals conflicting operation (Mult vs Add)",
+    "Concrete test assertion failure reproduces contradiction",
+    "Symbol name similarity alone rejected as proof of behavior"
+  ],
+  "execution_entrypoint": "local.stress.invariants.misleading_names:check_misleading_names_stress",
+  "resource_limits": {
+    "max_duration_seconds": 5.0
+  },
+  "related_regression_ids": [
+    "REG-POLICY-001",
+    "REG-TESTING-001"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "MISLEADING_NAMES:STRESS-MISLEADING-001"
+}

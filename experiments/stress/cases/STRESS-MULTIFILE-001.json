@@ -1,0 +1,37 @@
+{
+  "stress_id": "STRESS-MULTIFILE-001",
+  "version": "1.0.0",
+  "title": "Multi-File Fix Patch Extraction and Clean-Copy Application",
+  "category": "MULTIFILE_FIX",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "HIGH",
+  "scenario_description": "A cross-contract bug fix spans caller, implementation, and test files; PatchExtractor captures all hunks while keeping intermediary files clean.",
+  "fixture_type": "synthetic_multifile_repository",
+  "source_requirement": "PLAN.md Stage 46 STRESS 4",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "All modified files represented in PatchBundle",
+    "Unified diff preserves hunks across all modified files",
+    "Untouched intermediary files remain clean",
+    "FreshPatchApplier applies patch without conflict to fresh copy",
+    "Tests pass in clean validation copy"
+  ],
+  "execution_entrypoint": "local.stress.invariants.multifile_fix:check_multifile_fix_stress",
+  "resource_limits": {
+    "max_duration_seconds": 10.0
+  },
+  "related_regression_ids": [
+    "REG-DIFF-001",
+    "REG-GRAPH-001"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "MULTIFILE_FIX:STRESS-MULTIFILE-001"
+}

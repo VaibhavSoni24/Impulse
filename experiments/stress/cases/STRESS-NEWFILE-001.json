@@ -1,0 +1,37 @@
+{
+  "stress_id": "STRESS-NEWFILE-001",
+  "version": "1.0.0",
+  "title": "Required New File Detection and Clean-Copy Reconstitution",
+  "category": "NEW_FILE",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "HIGH",
+  "scenario_description": "Defect fix requires adding a brand new untracked file; PatchExtractor stages it via 'git add -N .' and FreshPatchApplier creates it in clean copy.",
+  "fixture_type": "synthetic_new_file_repository",
+  "source_requirement": "PLAN.md Stage 46 STRESS 8",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Untracked new file detected in PatchBundle.added_files",
+    "Relative file path preserved",
+    "Unified diff includes new file creation from /dev/null",
+    "FreshPatchApplier writes new file into validation workspace",
+    "Validation tests execute and pass with new file present"
+  ],
+  "execution_entrypoint": "local.stress.invariants.new_file:check_new_file_stress",
+  "resource_limits": {
+    "max_duration_seconds": 10.0
+  },
+  "related_regression_ids": [
+    "REG-HYGIENE-001",
+    "REG-DIFF-001"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "NEW_FILE:STRESS-NEWFILE-001"
+}

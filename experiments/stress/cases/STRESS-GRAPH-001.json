@@ -1,0 +1,35 @@
+{
+  "stress_id": "STRESS-GRAPH-001",
+  "version": "1.0.0",
+  "title": "Hidden Dependency Bounded Graph Discovery",
+  "category": "HIDDEN_DEPENDENCY",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "HIGH",
+  "scenario_description": "Uncover indirect/hidden relational dependencies across 3 hops without triggering context explosion or exceeding neighbor retention bounds.",
+  "fixture_type": "synthetic_call_graph",
+  "source_requirement": "PLAN.md Stage 46 STRESS 5",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Hidden dependency discovered along relational path",
+    "Retained neighbors strictly bounded (<= max_retained)",
+    "Unrelated graph nodes pruned from expansion"
+  ],
+  "execution_entrypoint": "local.stress.invariants.hidden_dependency:check_hidden_dependency_stress",
+  "resource_limits": {
+    "max_retained_neighbors": 5,
+    "max_depth": 3
+  },
+  "related_regression_ids": [
+    "REG-GRAPH-001"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "HIDDEN_DEPENDENCY:STRESS-GRAPH-001"
+}

@@ -1,0 +1,33 @@
+{
+  "stress_id": "STRESS-LIVE-AMBIGUOUS-001",
+  "version": "1.0.0",
+  "title": "Live Model Cognitive Disambiguation of Ambiguous Issue",
+  "category": "LIVE_MODEL_EVALUATION",
+  "stress_type": "LIVE_MODEL_DRIVEN",
+  "severity": "CRITICAL",
+  "scenario_description": "Live Gemma 4 31B model cognitive reasoning across competing code candidates on real repository context.",
+  "fixture_type": "live_model_evaluation",
+  "source_requirement": "PLAN.md Stage 46 STRESS 2",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Live model accurately identifies root cause despite ambiguous phrasing"
+  ],
+  "execution_entrypoint": "local.stress.invariants.blocked_live:check_live_ambiguous_stress",
+  "resource_limits": {
+    "model": "google/gemma-4-31b-it",
+    "hardware": "GPU"
+  },
+  "related_regression_ids": [
+    "REG-BLOCKED-001"
+  ],
+  "testing_tier": "live_model_driven",
+  "status": "BLOCKED",
+  "terminal_status": "BLOCKED",
+  "blocked_reason": "Live Gemma 4 31B model inference is not available on local CPU-only host; cognitive disambiguation cannot be executed without live model.",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "LIVE_MODEL_EVALUATION:STRESS-LIVE-AMBIGUOUS-001"
+}

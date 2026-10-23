@@ -1,0 +1,33 @@
+{
+  "stress_id": "STRESS-RECOVERY-007",
+  "version": "1.0.0",
+  "title": "Retry Waste Prevention Under Exhausted Budget",
+  "category": "REPEATED_FAILURE",
+  "stress_type": "ORCHESTRATION_POLICY",
+  "severity": "HIGH",
+  "scenario_description": "Recovery policy halts further attempts once max retries per failure signature is reached.",
+  "fixture_type": "synthetic_retry_budget",
+  "source_requirement": "PLAN.md Stage 46 STRESS 10",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Retry rejected when attempt count reaches limit",
+    "Rationale documents budget exhaustion"
+  ],
+  "execution_entrypoint": "local.stress.invariants.repeated_failure:check_stress_retry_waste",
+  "resource_limits": {
+    "max_retries": 3
+  },
+  "related_regression_ids": [
+    "REG-RECOVERY-007"
+  ],
+  "testing_tier": "orchestration_policy",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "REPEATED_FAILURE:STRESS-RECOVERY-007"
+}

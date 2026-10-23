@@ -1,0 +1,32 @@
+{
+  "stress_id": "STRESS-RECOVERY-002",
+  "version": "1.0.0",
+  "title": "Repeated Error Signature Detection",
+  "category": "REPEATED_FAILURE",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "HIGH",
+  "scenario_description": "Recurring identical error signature across command variants is recognized as REPEATED_FAILURE.",
+  "fixture_type": "synthetic_cycle_history",
+  "source_requirement": "PLAN.md Stage 46 STRESS 10",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Recurring error signature classified as REPEATED_FAILURE"
+  ],
+  "execution_entrypoint": "local.stress.invariants.repeated_failure:check_stress_repeated_error",
+  "resource_limits": {
+    "threshold": 2
+  },
+  "related_regression_ids": [
+    "REG-RECOVERY-002"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "REPEATED_FAILURE:STRESS-RECOVERY-002"
+}

@@ -1,0 +1,39 @@
+{
+  "stress_id": "STRESS-REPO-001",
+  "version": "1.0.0",
+  "title": "Synthetic Large Repository Traversal and Containment",
+  "category": "LARGE_REPO",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "HIGH",
+  "scenario_description": "Traverse and index a synthetic repository with 120 files across 3 directory levels without path escape, memory leaks, or unbounded runtime.",
+  "fixture_type": "synthetic_nested_repository",
+  "source_requirement": "PLAN.md Stage 46 STRESS 1",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Exact file count discovered",
+    "Byte volume tracked accurately",
+    "Path containment strictly within fixture root",
+    "Inspection terminates within bounded time (< 5.0s)",
+    "Directory cleanup leaves zero temporary files"
+  ],
+  "execution_entrypoint": "local.stress.invariants.large_repo:check_large_repo_stress",
+  "resource_limits": {
+    "max_files": 1000,
+    "max_depth": 5,
+    "max_duration_seconds": 10.0
+  },
+  "related_regression_ids": [
+    "REG-RETRIEVAL-002",
+    "REG-TESTING-002"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "LARGE_REPO:STRESS-REPO-001"
+}

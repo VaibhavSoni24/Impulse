@@ -1,0 +1,37 @@
+{
+  "stress_id": "STRESS-LOG-001",
+  "version": "1.0.0",
+  "title": "Bounded Long-Log Compaction with Trace Preservation",
+  "category": "LONG_LOGS",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "MEDIUM",
+  "scenario_description": "Test execution outputs 50,000+ bytes of repetitive logs; compaction preserves critical initial traceback and final summary within 1,500 chars.",
+  "fixture_type": "synthetic_verbose_log",
+  "source_requirement": "PLAN.md Stage 46 STRESS 6",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Log output compacted to <= 1,500 characters",
+    "Core error trace key preserved",
+    "Final failure summary preserved",
+    "Truncation banner recorded",
+    "Temporary log cleaned up safely"
+  ],
+  "execution_entrypoint": "local.stress.invariants.long_log:check_long_log_stress",
+  "resource_limits": {
+    "log_bytes": 50000,
+    "max_summary_length": 1500
+  },
+  "related_regression_ids": [
+    "REG-TESTING-001"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "LONG_LOGS:STRESS-LOG-001"
+}

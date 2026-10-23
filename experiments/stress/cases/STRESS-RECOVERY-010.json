@@ -1,0 +1,31 @@
+{
+  "stress_id": "STRESS-RECOVERY-010",
+  "version": "1.0.0",
+  "title": "Failed Recovery Terminal Tracking",
+  "category": "REPEATED_FAILURE",
+  "stress_type": "ORCHESTRATION_POLICY",
+  "severity": "HIGH",
+  "scenario_description": "Records recovery exhaustion as a terminal failure without entering infinite retries.",
+  "fixture_type": "synthetic_recovery_outcome",
+  "source_requirement": "PLAN.md Stage 46 STRESS 10",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Terminal state set to True",
+    "Success marked False with documented final failure reason"
+  ],
+  "execution_entrypoint": "local.stress.invariants.repeated_failure:check_stress_failed_recovery",
+  "resource_limits": {},
+  "related_regression_ids": [
+    "REG-RECOVERY-010"
+  ],
+  "testing_tier": "orchestration_policy",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "REPEATED_FAILURE:STRESS-RECOVERY-010"
+}

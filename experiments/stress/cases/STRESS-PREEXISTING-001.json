@@ -1,0 +1,35 @@
+{
+  "stress_id": "STRESS-PREEXISTING-001",
+  "version": "1.0.0",
+  "title": "Pre-Existing Test Failure Isolation",
+  "category": "PREEXISTING_FAILURE",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "HIGH",
+  "scenario_description": "Baseline project contains a known failing legacy test; candidate change fixes target test without resolving or being blamed for baseline failure.",
+  "fixture_type": "synthetic_test_project",
+  "source_requirement": "PLAN.md Stage 46 STRESS 7",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Baseline test failure established prior to candidate changes",
+    "Pre-existing failure distinguished from newly introduced regression",
+    "Target test correctly classified as RESOLVED",
+    "Zero false regressions reported"
+  ],
+  "execution_entrypoint": "local.stress.invariants.preexisting_failure:check_preexisting_failure_stress",
+  "resource_limits": {
+    "max_duration_seconds": 5.0
+  },
+  "related_regression_ids": [
+    "REG-TESTING-001"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "PREEXISTING_FAILURE:STRESS-PREEXISTING-001"
+}

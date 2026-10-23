@@ -1,0 +1,32 @@
+{
+  "stress_id": "STRESS-RECOVERY-004",
+  "version": "1.0.0",
+  "title": "Repeated Hypothesis Diagnosis Detection",
+  "category": "REPEATED_FAILURE",
+  "stress_type": "DETERMINISTIC_COMPONENT",
+  "severity": "HIGH",
+  "scenario_description": "Identical root-cause hypothesis repeated without new diagnostic evidence triggers REPEATED_HYPOTHESIS.",
+  "fixture_type": "synthetic_cycle_history",
+  "source_requirement": "PLAN.md Stage 46 STRESS 10",
+  "provenance": {
+    "commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+    "stage": "Stage 46"
+  },
+  "expected_invariants": [
+    "Repeated hypothesis string classified as REPEATED_HYPOTHESIS"
+  ],
+  "execution_entrypoint": "local.stress.invariants.repeated_failure:check_stress_repeated_hypothesis",
+  "resource_limits": {
+    "threshold": 2
+  },
+  "related_regression_ids": [
+    "REG-RECOVERY-004"
+  ],
+  "testing_tier": "deterministic_component",
+  "status": "ACTIVE",
+  "terminal_status": "PASS",
+  "blocked_reason": "",
+  "created_from_stage": "Stage 46",
+  "created_from_commit": "9b137adcf25f90ba264f114980852afdd1bfeed0",
+  "signature": "REPEATED_FAILURE:STRESS-RECOVERY-004"
+}
