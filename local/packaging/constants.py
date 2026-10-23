@@ -44,25 +44,13 @@ ALLOWED_FILE_EXTENSIONS = {
     ".yaml", ".yml", ".md", ".txt", ".py", ".json", ".safetensors"
 }
 
-# Permitted base models from ModelRegistry
+# Permitted base models from ModelRegistry and official Kaggle competition announcement
 PRIMARY_BASE_MODEL = "gemma-4-31b-it-qat-w4a16-ct"
 ALLOWED_MODELS = {
     "gemma-4-31b-it-qat-w4a16-ct",
-    "gemma-4-31b-it",
-    "gemma-4-31b",
-    "gemma-4-27b-it",
-    "gemma-4-27b",
-    "gemma-4-26b-a4b-it",
-    "gemma-4-26b-a4b",
-    "diffusiongemma-26b-a4b-it",
-    "gemma-4-12b-it",
-    "gemma-4-12b",
-    "gemma-4-9b-it",
-    "gemma-4-9b",
-    "gemma-4-e4b-it",
-    "gemma-4-e4b",
-    "gemma-4-e2b-it",
-    "gemma-4-e2b",
+    "gemma-4-12b-it-qat-w4a16-ct",
+    "gemma-4-e4b-it-qat-w4a16-ct",
+    "gemma-4-e2b-it-qat-w4a16-ct",
 }
 
 # The 9 predefined SWE-bench tools from ToolRegistry

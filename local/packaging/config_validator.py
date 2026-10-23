@@ -28,11 +28,12 @@ from local.packaging.reader import PackageReader, normalize_rel_path
 
 
 def normalize_model_name(name: str) -> str:
-    """Strips provider prefixes per adk-submission."""
+    """Strips provider prefixes and surrounding quotes/whitespace per adk-submission."""
+    clean = str(name).strip().strip("'\"")
     for prefix in ("openai/", "google/", "hosted_vllm/", "custom/"):
-        if name.startswith(prefix):
-            return name[len(prefix):]
-    return name
+        if clean.startswith(prefix):
+            clean = clean[len(prefix):]
+    return clean
 
 
 def _clean_val(val: str) -> Any:
@@ -349,7 +350,24 @@ class ConfigurationValidator:
                 )
             )
 
+        agent_class = parsed.get("agent_class") or "LlmAgent"
         model = parsed.get("model")
+        if agent_class == "LlmAgent":
+            if model is None or (isinstance(model, str) and not model.strip()):
+                self.checks.append(
+                    CheckResult(
+                        check_id="CONFIG_AGENT_MODEL_REQUIRED",
+                        category=CheckCategory.SCHEMA_CONFIG,
+                        status=CheckStatus.FAIL,
+                        severity=CheckSeverity.FATAL,
+                        target=norm_path,
+                        expected="LlmAgent specifies non-empty 'model' field",
+                        observed=f"model: {repr(model)}",
+                        diagnostic=f"Agent '{name}' in {norm_path} is an LlmAgent but has missing or empty 'model'.",
+                        rule_ref="HARNESS_README.md Section 2.3",
+                    )
+                )
+
         if model:
             normalized = normalize_model_name(str(model))
             self.discovered_models.add(normalized)
@@ -358,13 +376,30 @@ class ConfigurationValidator:
                     CheckResult(
                         check_id="MODEL_PERMITTED_ALIAS",
                         category=CheckCategory.MODEL_TOOL,
-                        status=CheckStatus.WARNING,
-                        severity=CheckSeverity.WARNING,
+                        status=CheckStatus.FAIL,
+                        severity=CheckSeverity.FATAL,
                         target=norm_path,
-                        expected=f"Model in allowed aliases {sorted(ALLOWED_MODELS)}",
+                        expected=f"Model in approved competition variants: {sorted(ALLOWED_MODELS)}",
                         observed=f"Declared model: '{normalized}'",
-                        diagnostic=f"Declared model '{normalized}' in {norm_path} is not in canonical Gemma 4 registry aliases.",
-                        rule_ref="HARNESS_README.md Section 3.3",
+                        diagnostic=(
+                            f"ParticipantVisibleError: Declared model '{normalized}' in {norm_path} "
+                            f"is not in approved competition variants: {sorted(ALLOWED_MODELS)}."
+                        ),
+                        rule_ref="HARNESS_README.md Section 3.2",
+                    )
+                )
+            else:
+                self.checks.append(
+                    CheckResult(
+                        check_id="MODEL_PERMITTED_ALIAS",
+                        category=CheckCategory.MODEL_TOOL,
+                        status=CheckStatus.PASS,
+                        severity=CheckSeverity.INFO,
+                        target=norm_path,
+                        expected=f"Model in approved competition variants: {sorted(ALLOWED_MODELS)}",
+                        observed=f"Declared model: '{normalized}'",
+                        diagnostic=f"Declared model '{normalized}' in {norm_path} is an approved competition variant.",
+                        rule_ref="HARNESS_README.md Section 3.2",
                     )
                 )
 
@@ -416,21 +451,138 @@ class ConfigurationValidator:
                             )
                         )
                 elif isinstance(t, dict):
-                    agent_tool = t.get("agent_tool")
-                    if isinstance(agent_tool, dict):
-                        sub_cfg = agent_tool.get("config_path")
+                    if "agent_tool" in t:
+                        agent_tool = t.get("agent_tool")
+                        sub_cfg = None
+                        if isinstance(agent_tool, str):
+                            clean_cfg = agent_tool.strip()
+                            if not clean_cfg:
+                                self.checks.append(
+                                    CheckResult(
+                                        check_id="CONFIG_AGENT_TOOL_SPEC",
+                                        category=CheckCategory.SCHEMA_CONFIG,
+                                        status=CheckStatus.FAIL,
+                                        severity=CheckSeverity.FATAL,
+                                        target=norm_path,
+                                        expected="'agent_tool' must specify non-empty config path",
+                                        observed="Empty string",
+                                        diagnostic=f"'agent_tool' in {norm_path} is an empty string.",
+                                        rule_ref="HARNESS_README.md Section 2.3",
+                                    )
+                                )
+                                continue
+                            sub_cfg = clean_cfg
+                        elif isinstance(agent_tool, dict):
+                            if "config_path" not in agent_tool or not str(agent_tool["config_path"]).strip():
+                                self.checks.append(
+                                    CheckResult(
+                                        check_id="CONFIG_AGENT_TOOL_SPEC",
+                                        category=CheckCategory.SCHEMA_CONFIG,
+                                        status=CheckStatus.FAIL,
+                                        severity=CheckSeverity.FATAL,
+                                        target=norm_path,
+                                        expected="'agent_tool' must specify non-empty 'config_path'",
+                                        observed=f"{repr(agent_tool)}",
+                                        diagnostic=f"'agent_tool' in {norm_path} missing valid 'config_path'.",
+                                        rule_ref="HARNESS_README.md Section 2.3",
+                                    )
+                                )
+                                continue
+                            sub_cfg = str(agent_tool["config_path"]).strip()
+                        else:
+                            self.checks.append(
+                                CheckResult(
+                                    check_id="CONFIG_AGENT_TOOL_SPEC",
+                                    category=CheckCategory.SCHEMA_CONFIG,
+                                    status=CheckStatus.FAIL,
+                                    severity=CheckSeverity.FATAL,
+                                    target=norm_path,
+                                    expected="'agent_tool' must be a config path string or dictionary with 'config_path'",
+                                    observed=f"{repr(agent_tool)}",
+                                    diagnostic=f"'agent_tool' in {norm_path} must be a config path string or dictionary with 'config_path'.",
+                                    rule_ref="HARNESS_README.md Section 2.3",
+                                )
+                            )
+                            continue
+
                         if sub_cfg:
-                            sub_target = self._resolve_relative_path(parent_dir, str(sub_cfg))
+                            sub_target = self._resolve_relative_path(parent_dir, sub_cfg)
                             self._validate_agent_file(sub_target, depth + 1)
 
         # Validate sub_agents
-        sub_agents = parsed.get("sub_agents", [])
-        if isinstance(sub_agents, list):
-            for sa in sub_agents:
-                if isinstance(sa, dict) and "config_path" in sa:
-                    sub_cfg = sa["config_path"]
-                    sub_target = self._resolve_relative_path(parent_dir, str(sub_cfg))
-                    self._validate_agent_file(sub_target, depth + 1)
+        sub_agents = parsed.get("sub_agents")
+        if sub_agents is not None:
+            if not isinstance(sub_agents, list):
+                self.checks.append(
+                    CheckResult(
+                        check_id="CONFIG_SUB_AGENTS_LIST",
+                        category=CheckCategory.SCHEMA_CONFIG,
+                        status=CheckStatus.FAIL,
+                        severity=CheckSeverity.FATAL,
+                        target=norm_path,
+                        expected="'sub_agents' must be a list of sub-agent references",
+                        observed=f"type: {type(sub_agents).__name__}",
+                        diagnostic=f"'sub_agents' in {norm_path} must be a list.",
+                        rule_ref="HARNESS_README.md Section 2.3",
+                    )
+                )
+            else:
+                for idx, sa in enumerate(sub_agents):
+                    sub_cfg = None
+                    if isinstance(sa, str):
+                        clean_sa = sa.strip()
+                        if not clean_sa:
+                            self.checks.append(
+                                CheckResult(
+                                    check_id="CONFIG_SUB_AGENT_SPEC",
+                                    category=CheckCategory.SCHEMA_CONFIG,
+                                    status=CheckStatus.FAIL,
+                                    severity=CheckSeverity.FATAL,
+                                    target=norm_path,
+                                    expected=f"sub_agents[{idx}] must be a non-empty configuration path",
+                                    observed="Empty string",
+                                    diagnostic=f"sub_agents[{idx}] in {norm_path} is an empty string.",
+                                    rule_ref="HARNESS_README.md Section 2.3",
+                                )
+                            )
+                            continue
+                        sub_cfg = clean_sa
+                    elif isinstance(sa, dict):
+                        if "config_path" not in sa or not str(sa["config_path"]).strip():
+                            self.checks.append(
+                                CheckResult(
+                                    check_id="CONFIG_SUB_AGENT_SPEC",
+                                    category=CheckCategory.SCHEMA_CONFIG,
+                                    status=CheckStatus.FAIL,
+                                    severity=CheckSeverity.FATAL,
+                                    target=norm_path,
+                                    expected=f"sub_agents[{idx}] must have non-empty 'config_path'",
+                                    observed=f"{repr(sa)}",
+                                    diagnostic=f"sub_agents[{idx}] in {norm_path} missing valid 'config_path'.",
+                                    rule_ref="HARNESS_README.md Section 2.3",
+                                )
+                            )
+                            continue
+                        sub_cfg = str(sa["config_path"]).strip()
+                    else:
+                        self.checks.append(
+                            CheckResult(
+                                check_id="CONFIG_SUB_AGENT_SPEC",
+                                category=CheckCategory.SCHEMA_CONFIG,
+                                status=CheckStatus.FAIL,
+                                severity=CheckSeverity.FATAL,
+                                target=norm_path,
+                                expected=f"sub_agents[{idx}] must be a config path string or dictionary with 'config_path'",
+                                observed=f"{repr(sa)} (type: {type(sa).__name__})",
+                                diagnostic=f"sub_agents[{idx}] in {norm_path} must be a config path string or dictionary with 'config_path'.",
+                                rule_ref="HARNESS_README.md Section 2.3",
+                            )
+                        )
+                        continue
+
+                    if sub_cfg:
+                        sub_target = self._resolve_relative_path(parent_dir, sub_cfg)
+                        self._validate_agent_file(sub_target, depth + 1)
 
         # Validate generate_content_config
         gcc = parsed.get("generate_content_config")
