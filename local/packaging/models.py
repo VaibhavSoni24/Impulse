@@ -81,6 +81,8 @@ class ValidatorConfig:
     strict_mode: bool = False
     max_total_size_bytes: int = 3_221_225_472  # 3 GiB
     check_official_compiler: bool = True
+    ignore_excluded_dev_files: bool = False
+
 
 
 @dataclass
@@ -143,6 +145,84 @@ class PackageValidationResult:
             "yaml_files": self.yaml_files,
             "archive_metadata": self.archive_metadata.to_dict() if self.archive_metadata else None,
             "checks": [c.to_dict() for c in self.checks],
+        }
+
+    def to_json(self, indent: int = 2) -> str:
+        return json.dumps(self.to_dict(), indent=indent)
+
+
+@dataclass
+class PackagedMember:
+    """Represents a single member included in the deterministic package."""
+    posix_path: str
+    source_abs_path: str
+    size_bytes: int
+    sha256: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "path": self.posix_path,
+            "size_bytes": self.size_bytes,
+            "sha256": self.sha256,
+        }
+
+
+@dataclass
+class PackagerConfig:
+    """Configuration options for deterministic submission packaging."""
+    source_path: str
+    output_path: str = ""
+    manifest_path: str = ""
+    check_only: bool = False
+    strict_mode: bool = False
+    force: bool = False
+    fixed_timestamp: tuple[int, int, int, int, int, int] = (2026, 1, 1, 0, 0, 0)
+    compresslevel: int = 6
+
+
+
+@dataclass
+class PackagerResult:
+    """Outcome of a deterministic packaging run."""
+    success: bool
+    exit_code: int
+    source_path: str
+    output_path: Optional[str] = None
+    manifest_path: Optional[str] = None
+    archive_sha256: Optional[str] = None
+    archive_size_bytes: int = 0
+    total_files_packaged: int = 0
+    total_uncompressed_bytes: int = 0
+    candidate_id: Optional[str] = None
+    base_model: Optional[str] = None
+    agent_name: Optional[str] = None
+    source_validation: Optional[PackageValidationResult] = None
+    archive_validation: Optional[PackageValidationResult] = None
+    excluded_files: list[dict[str, str]] = field(default_factory=list)
+    errors: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+    manifest_data: Optional[dict[str, Any]] = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "success": self.success,
+            "exit_code": self.exit_code,
+            "source_path": self.source_path,
+            "output_path": self.output_path,
+            "manifest_path": self.manifest_path,
+            "archive_sha256": self.archive_sha256,
+            "archive_size_bytes": self.archive_size_bytes,
+            "total_files_packaged": self.total_files_packaged,
+            "total_uncompressed_bytes": self.total_uncompressed_bytes,
+            "candidate_id": self.candidate_id,
+            "base_model": self.base_model,
+            "agent_name": self.agent_name,
+            "source_validation": self.source_validation.to_dict() if self.source_validation else None,
+            "archive_validation": self.archive_validation.to_dict() if self.archive_validation else None,
+            "excluded_files": self.excluded_files,
+            "errors": self.errors,
+            "warnings": self.warnings,
+            "manifest_data": self.manifest_data,
         }
 
     def to_json(self, indent: int = 2) -> str:

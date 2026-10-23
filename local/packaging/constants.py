@@ -139,3 +139,10 @@ HOST_PATH_PATTERN = re.compile(
     r"(?:(?:[a-zA-Z]:[/\\]+|/(?:home|root|Users)/)[a-zA-Z0-9._-]+(?:[/\\]+[a-zA-Z0-9._-]+)*)",
     re.IGNORECASE,
 )
+
+# Packager and Manifest Constants (Stage 48)
+PACKAGER_VERSION = "1.0.0"
+MANIFEST_SCHEMA_VERSION = "1.0.0"
+FIXED_ZIP_DATETIME = (2026, 1, 1, 0, 0, 0)
+FIXED_FILE_MODE = 0o100644  # regular POSIX file (rw-r--r--)
+DEFAULT_COMPRESS_LEVEL = 6

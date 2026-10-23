@@ -63,71 +63,73 @@ def scan_package_secrets_and_hygiene(
                 )
             )
 
-        # 2. Check for prohibited development directories
-        for part in parts[:-1]:
-            if part in PROHIBITED_DEV_DIRECTORIES:
+        # 2. Check for prohibited development directories, files, logs, and tests
+        if not cfg.ignore_excluded_dev_files:
+            for part in parts[:-1]:
+                if part in PROHIBITED_DEV_DIRECTORIES:
+                    checks.append(
+                        CheckResult(
+                            check_id="HYGIENE_NO_DEV_DIRS",
+                            category=CheckCategory.SECRET_HYGIENE,
+                            status=CheckStatus.FAIL,
+                            severity=CheckSeverity.FATAL,
+                            target=norm,
+                            expected="Zero development-only directories in submission",
+                            observed=f"Member inside prohibited directory '{part}'",
+                            diagnostic=f"Prohibited development directory '{part}' found in package path: '{norm}'.",
+                            rule_ref="PLAN.md Stage 47",
+                        )
+                    )
+                    break
+
+            # 3. Check for prohibited development files
+            if filename in PROHIBITED_DEV_FILES:
                 checks.append(
                     CheckResult(
-                        check_id="HYGIENE_NO_DEV_DIRS",
+                        check_id="HYGIENE_NO_DEV_FILES",
                         category=CheckCategory.SECRET_HYGIENE,
                         status=CheckStatus.FAIL,
                         severity=CheckSeverity.FATAL,
                         target=norm,
-                        expected="Zero development-only directories in submission",
-                        observed=f"Member inside prohibited directory '{part}'",
-                        diagnostic=f"Prohibited development directory '{part}' found in package path: '{norm}'.",
+                        expected="Zero development metadata files in submission",
+                        observed=f"Found prohibited development file '{filename}'",
+                        diagnostic=f"Prohibited development file '{norm}' detected in submission package.",
                         rule_ref="PLAN.md Stage 47",
                     )
                 )
-                break
 
-        # 3. Check for prohibited development files
-        if filename in PROHIBITED_DEV_FILES:
-            checks.append(
-                CheckResult(
-                    check_id="HYGIENE_NO_DEV_FILES",
-                    category=CheckCategory.SECRET_HYGIENE,
-                    status=CheckStatus.FAIL,
-                    severity=CheckSeverity.FATAL,
-                    target=norm,
-                    expected="Zero development metadata files in submission",
-                    observed=f"Found prohibited development file '{filename}'",
-                    diagnostic=f"Prohibited development file '{norm}' detected in submission package.",
-                    rule_ref="PLAN.md Stage 47",
+            # 4. Check for logs and temporary files
+            if ext in (".log", ".tmp", ".bak", ".swp"):
+                checks.append(
+                    CheckResult(
+                        check_id="HYGIENE_NO_TEMP_FILES",
+                        category=CheckCategory.SECRET_HYGIENE,
+                        status=CheckStatus.FAIL,
+                        severity=CheckSeverity.FATAL,
+                        target=norm,
+                        expected="Zero logs or temporary scratch files in submission",
+                        observed=f"File extension '{ext}'",
+                        diagnostic=f"Temporary or log file '{norm}' detected in package.",
+                        rule_ref="PLAN.md Stage 47",
+                    )
                 )
-            )
 
-        # 4. Check for logs and temporary files
-        if ext in (".log", ".tmp", ".bak", ".swp"):
-            checks.append(
-                CheckResult(
-                    check_id="HYGIENE_NO_TEMP_FILES",
-                    category=CheckCategory.SECRET_HYGIENE,
-                    status=CheckStatus.FAIL,
-                    severity=CheckSeverity.FATAL,
-                    target=norm,
-                    expected="Zero logs or temporary scratch files in submission",
-                    observed=f"File extension '{ext}'",
-                    diagnostic=f"Temporary or log file '{norm}' detected in package.",
-                    rule_ref="PLAN.md Stage 47",
+            # 5. Check for test files outside skills
+            if filename.startswith("test_") and ext == ".py" and not norm.startswith("skills/"):
+                checks.append(
+                    CheckResult(
+                        check_id="HYGIENE_NO_TEST_FILES",
+                        category=CheckCategory.SECRET_HYGIENE,
+                        status=CheckStatus.FAIL,
+                        severity=CheckSeverity.FATAL,
+                        target=norm,
+                        expected="Zero unit tests packaged into agent submission root",
+                        observed=f"Found test script '{filename}'",
+                        diagnostic=f"Development test script '{norm}' packaged in submission. Remove unit tests from submission package.",
+                        rule_ref="PLAN.md Stage 47",
+                    )
                 )
-            )
 
-        # 5. Check for test files outside skills
-        if filename.startswith("test_") and ext == ".py" and not norm.startswith("skills/"):
-            checks.append(
-                CheckResult(
-                    check_id="HYGIENE_NO_TEST_FILES",
-                    category=CheckCategory.SECRET_HYGIENE,
-                    status=CheckStatus.FAIL,
-                    severity=CheckSeverity.FATAL,
-                    target=norm,
-                    expected="Zero unit tests packaged into agent submission root",
-                    observed=f"Found test script '{filename}'",
-                    diagnostic=f"Development test script '{norm}' packaged in submission. Remove unit tests from submission package.",
-                    rule_ref="PLAN.md Stage 47",
-                )
-            )
 
         # 6. Deep content inspection for text files: secrets & host paths
         if ext in (".yaml", ".yml", ".md", ".txt", ".json", ".py"):

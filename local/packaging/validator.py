@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import os
 from pathlib import Path
+import re
 from typing import Optional
 
 from local.packaging.adapter_validator import validate_adapters
@@ -16,7 +17,10 @@ from local.packaging.constants import (
     MAX_TOTAL_SIZE_BYTES,
     MAX_YAML_FILES,
     MAX_YAML_SIZE_BYTES,
+    PROHIBITED_DEV_DIRECTORIES,
+    PROHIBITED_DEV_FILES,
 )
+
 from local.packaging.models import (
     CheckCategory,
     CheckResult,
@@ -248,6 +252,23 @@ class PackageValidator:
         yaml_count = 0
 
         for entry in root_dir.rglob("*"):
+            if self.config.ignore_excluded_dev_files:
+                try:
+                    rel_parts = entry.relative_to(root_dir).parts
+                    if any(
+                        p in PROHIBITED_DEV_DIRECTORIES or (p.startswith(".") and p not in (".", ".."))
+                        for p in rel_parts[:-1]
+                    ):
+                        continue
+                    if entry.name in PROHIBITED_DEV_FILES or entry.name.startswith("."):
+                        continue
+                    if re.match(r"^test_.*\.py$", entry.name, re.IGNORECASE) or entry.name.endswith(".log"):
+                        continue
+                    if entry.suffix.lower() in (".pyc", ".pyo", ".pyd"):
+                        continue
+                except Exception:
+                    pass
+
             if entry.is_symlink():
                 resolved = entry.resolve()
                 if not str(resolved).startswith(str(root_dir)):
@@ -269,6 +290,7 @@ class PackageValidator:
                 total_files += 1
                 try:
                     size = entry.stat().st_size
+
                 except Exception:
                     size = 0
                 total_size += size

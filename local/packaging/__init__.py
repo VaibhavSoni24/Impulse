@@ -1,15 +1,20 @@
-"""IMPULSE Submission Package Validation Subsystem (Stage 47)."""
+"""IMPULSE Submission Package Validation and Packaging Subsystem (Stage 47 & Stage 48)."""
 
 from __future__ import annotations
 
 from local.packaging.constants import (
     ALLOWED_FILE_EXTENSIONS,
     ALLOWED_MODELS,
+    DEFAULT_COMPRESS_LEVEL,
+    FIXED_FILE_MODE,
+    FIXED_ZIP_DATETIME,
+    MANIFEST_SCHEMA_VERSION,
     MAX_FILE_COUNT,
     MAX_INSTRUCTION_CHARS,
     MAX_TOTAL_SIZE_BYTES,
     MAX_YAML_FILES,
     MAX_YAML_SIZE_BYTES,
+    PACKAGER_VERSION,
     PREDEFINED_TOOLS,
     PRIMARY_BASE_MODEL,
     RULESET_VERSION,
@@ -22,7 +27,18 @@ from local.packaging.models import (
     CheckSeverity,
     CheckStatus,
     PackageValidationResult,
+    PackagedMember,
+    PackagerConfig,
+    PackagerResult,
     ValidatorConfig,
+)
+from local.packaging.packager import (
+    SubmissionPackager,
+    build_manifest,
+    collect_source_files,
+    compute_file_sha256,
+    verify_manifest_archive_consistency,
+    verify_required_dependencies,
 )
 from local.packaging.reader import (
     ArchivePackageReader,
@@ -40,18 +56,32 @@ __all__ = [
     "CheckResult",
     "CheckSeverity",
     "CheckStatus",
+    "DEFAULT_COMPRESS_LEVEL",
     "DirectoryPackageReader",
+    "FIXED_FILE_MODE",
+    "FIXED_ZIP_DATETIME",
+    "MANIFEST_SCHEMA_VERSION",
     "MAX_FILE_COUNT",
     "MAX_INSTRUCTION_CHARS",
     "MAX_TOTAL_SIZE_BYTES",
     "MAX_YAML_FILES",
     "MAX_YAML_SIZE_BYTES",
+    "PACKAGER_VERSION",
     "PREDEFINED_TOOLS",
     "PRIMARY_BASE_MODEL",
     "PackageReader",
     "PackageValidationResult",
     "PackageValidator",
+    "PackagedMember",
+    "PackagerConfig",
+    "PackagerResult",
     "RULESET_VERSION",
+    "SubmissionPackager",
     "VALIDATOR_VERSION",
     "ValidatorConfig",
+    "build_manifest",
+    "collect_source_files",
+    "compute_file_sha256",
+    "verify_manifest_archive_consistency",
+    "verify_required_dependencies",
 ]
